@@ -33,7 +33,9 @@ Red Hat addresses these sovereignty challenges through UBI and Project Hummingbi
 
 ### What Makes UBI Unique
 
-[Detailed explanation of UBI's value proposition]
+Red Hat Universal Base Images provide what enterprise applications require most: consistency, security, and predictability. Unlike community base images that may change unpredictably or lack clear support boundaries, UBI follows the well-established lifecycle of Red Hat Enterprise Linux. Each UBI version aligns with a specific RHEL major release (UBI 8 with RHEL 8, UBI 9 with RHEL 9), inheriting its 10-year lifecycle with clearly defined phases for full support, maintenance support, and extended life cycle support.
+
+This lifecycle alignment means organizations can plan their application maintenance schedules with confidence. Security patches and critical bug fixes flow from RHEL to UBI on a predictable cadence, with the same enterprise-grade quality assurance and testing. The consistency extends across architectures—a container built on UBI 9 for x86_64 behaves identically when running on ARM64 or other supported platforms. This predictability is what separates enterprise-ready base images from community alternatives.
 
 **Key Characteristics:**
 - **Freely Redistributable**: Use in any environment, no subscription required for runtime
