@@ -13,7 +13,7 @@ metadata:
   projectType: Markdown
   language: Markdown
 projects:
-  - name: "cost-management-exporter"
+  - name: "sovereignty-paper"
     git:
       remotes:
         origin: "https://github.com/pittar/sovereignty-secruity-freedom"
