@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-[2-3 paragraphs explaining why base container images are the foundation of application security and portability, how Red Hat's approach differs from others, and the strategic value of UBI and Project Hummingbird.]
-
 The foundation of any containerized application is its base image. Poor choices here create security vulnerabilities, licensing complications, and portability challenges. Red Hat Universal Base Images (UBI) and Project Hummingbird provide freely redistributable, enterprise-grade base images that enable true cloud independence while maintaining the highest security standards.
+
+**Critically, UBI and Project Hummingbird images are completely free to use, redistribute, and run on any platform—including competitor clouds and non-Red Hat infrastructure.** There is no vendor lock-in: applications built on these images can run on AWS, Azure, Google Cloud, on-premises data centers, or any OCI-compliant container platform without requiring a Red Hat subscription for runtime. This freedom of choice is fundamental to digital sovereignty, allowing organizations to build portable applications while retaining the option to purchase enterprise support when needed, rather than being forced into proprietary ecosystems.
 
 ---
 
