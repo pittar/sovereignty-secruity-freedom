@@ -21,7 +21,7 @@ projects:
         revision: "main"
         remote: origin
 components:
-  - name: py
+  - name: tools
     container:
       image: registry.redhat.io/devspaces/udi-rhel9:3.25.0
       args: ['tail', '-f', '/dev/null']
