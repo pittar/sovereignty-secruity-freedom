@@ -12,7 +12,7 @@ The foundation of any containerized application is its base image. Poor choices 
 
 ### Traditional Challenges
 
-[Discussion of issues with common base images: Alpine, Ubuntu, Debian, etc.]
+Most organizations default to popular community base images like Alpine Linux, Ubuntu, or Debian for their containers. While these serve the community well, they present significant challenges in enterprise production environments. Alpine's use of musl libc can cause compatibility issues with applications expecting glibc. Ubuntu and Debian images often include unnecessary packages that expand the attack surface, and their security update cadences may not align with enterprise compliance requirements. More critically, these images typically lack clear redistribution rights, enterprise support options, and long-term lifecycle guarantees—creating hidden risks for organizations building mission-critical applications.
 
 - **Security and Patching**: Inconsistent security updates, unclear lifecycle
 - **Licensing Concerns**: Redistribution restrictions, compliance complexities
