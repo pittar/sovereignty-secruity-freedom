@@ -16,7 +16,7 @@ projects:
   - name: "cost-management-exporter"
     git:
       remotes:
-        origin: "https://github.com/pittar-rhdh/cost-management-exporter"
+        origin: "https://github.com/pittar/sovereignty-secruity-freedom"
       checkoutFrom:
         revision: "main"
         remote: origin
