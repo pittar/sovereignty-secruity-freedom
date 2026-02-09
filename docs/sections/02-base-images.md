@@ -21,7 +21,11 @@ Most organizations default to popular community base images for their containers
 
 ### Why Base Images Matter for Digital Sovereignty
 
-[Explain how the base image choice impacts sovereignty, supply chain security, and independence]
+The base image decision has profound implications for digital sovereignty. An organization's entire application portfolio sits atop these foundations—if the base images create vendor dependencies, lack transparency, or have unclear licensing terms, every application built on them inherits these constraints. Organizations lose the ability to freely move workloads between clouds, redistribute their applications to partners and customers, or maintain control over their security posture.
+
+Red Hat addresses these sovereignty challenges through UBI and Project Hummingbird by making enterprise-grade base images freely available to everyone—including organizations that are not Red Hat customers. These images can be pulled from public registries, used in any environment, and redistributed without restriction. The supply chain is fully transparent: every package is traceable to its source in RHEL, with public build provenance and cryptographic signing. Security updates follow a predictable, enterprise-grade lifecycle, eliminating the uncertainty that comes with community images.
+
+**The key sovereignty advantage**: Organizations can build portable applications on Red Hat's enterprise foundation without committing to Red Hat infrastructure or subscriptions. Applications containerized with UBI run identically on AWS ECS, Azure Container Instances, Google Cloud Run, or any Kubernetes distribution. If an organization later needs enterprise support, they can purchase it. If they don't, they continue running freely. This separates the foundation from the infrastructure—true digital sovereignty means having choices at every layer.
 
 ---
 
