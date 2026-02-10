@@ -2,11 +2,11 @@
 
 ## Executive Summary
 
-Security professionals have long secured data at rest through disk encryption and data in transit through TLS. Yet the most critical state—data in use during active processing—has remained exposed. Application memory contains plaintext data accessible to privileged users, hypervisors, and cloud administrators. For healthcare records, financial transactions, and personally identifiable information, this exposure creates unacceptable risk. Regulatory frameworks increasingly demand proof that data remains protected even during computation, especially when using public cloud infrastructure.
+Security professionals have long secured data at rest through disk encryption and data in transit through TLS. Yet the most critical state—data in use during active processing—has remained exposed. Application memory contains plaintext data accessible to privileged users, hypervisors, and cloud administrators. For Canadian government workloads processing citizen data, healthcare records, financial transactions, and classified information, this exposure creates unacceptable risk and potential regulatory non-compliance.
 
-Confidential computing addresses this gap using hardware-based Trusted Execution Environments (TEEs)—isolated memory regions protected by CPU-level encryption. Intel TDX, AMD SEV-SNP, and ARM CCA provide cryptographic isolation where even operating systems and hypervisors cannot access workload memory. Remote attestation enables cryptographic verification of the execution environment before releasing secrets. This technology transforms security models: organizations can process sensitive data in untrusted environments with mathematical guarantees of protection.
+**Confidential computing transforms existing public cloud infrastructure into sovereignty-compliant platforms.** Using hardware-based Trusted Execution Environments (TEEs)—isolated memory regions protected by CPU-level encryption—technologies like Intel TDX and AMD SEV-SNP provide cryptographic guarantees that cloud administrators cannot access workload memory even with full infrastructure privileges. Remote attestation enables cryptographic verification of the execution environment before releasing secrets. This technology is revolutionary for Canadian organizations already operating on AWS, Azure, or Google Cloud: you can immediately enhance security to meet Protected B requirements without migrating infrastructure, rewriting applications, or sacrificing cloud economics.
 
-Confidential Containers brings this capability to Kubernetes through the CNCF Confidential Containers project. Organizations run sensitive workloads in TEE-backed pods with minimal workflow changes—same kubectl commands, same deployment patterns. This enables secure multi-party computation (multiple organizations collaborating on sensitive data without trust), compliant cloud adoption for regulated industries, and confidential AI workloads where neither model provider nor data owner expose their assets. Digital sovereignty extends beyond infrastructure portability to cryptographic independence from infrastructure operators.
+Confidential Containers brings this capability to Kubernetes through the CNCF Confidential Containers project. Organizations run sensitive workloads in TEE-backed pods with minimal workflow changes—same kubectl commands, same deployment patterns. For Canadian departments, this means processing sensitive citizen data on existing public cloud infrastructure with mathematical proofs of protection, meeting TBS security requirements through hardware-enforced isolation rather than trust in foreign cloud providers. Digital sovereignty extends beyond infrastructure location to cryptographic independence from infrastructure operators—you control your data even when using someone else's computers.
 
 ---
 
@@ -205,15 +205,26 @@ The Key Broker Service (KBS) implements policy-based secret release tied to atte
 
 ## Use Cases for Confidential Containers
 
-### 1. Regulated Workloads (Healthcare, Finance)
+### 1. Canadian Government Workloads on Public Cloud
 
-Healthcare organizations must protect patient data under HIPAA, yet need to leverage cloud infrastructure for scalability and advanced analytics. Confidential containers enable HIPAA-compliant cloud processing: patient records remain encrypted until loaded into TEE-protected containers, cloud provider administrators cannot access PHI even with root privileges, attestation provides auditable proof of protection meeting regulatory requirements. Financial institutions similarly process sensitive transactions, customer data, and trading algorithms in confidential containers—achieving cloud economics without exposing regulated data to cloud infrastructure operators.
+Canadian federal departments and provincial agencies often operate on public cloud infrastructure (AWS, Azure, Google Cloud) for specific workloads, yet face sovereignty concerns about foreign cloud administrator access to citizen data. Confidential containers enable sovereignty-compliant cloud operations: citizen PII, healthcare records, and Protected B data remain encrypted until loaded into TEE-protected containers; cloud provider administrators cannot access sensitive data even with root and hypervisor privileges; attestation provides auditable cryptographic proof meeting TBS security categorization requirements. This transforms cloud deployment from "trust the provider" to "verify through hardware cryptography."
 
-**Example: Healthcare Data Processing**
+**Example: Service Canada Benefit Processing**
+- Citizen benefit applications processed on public cloud for elasticity
+- Personal information encrypted at rest, in transit, and in use
+- TEE protection ensures AWS/Azure administrators cannot access citizen data
+- Hardware attestation provides evidence for security authorization
+- Meet Protected B requirements on foreign cloud infrastructure
+
+### 2. Regulated Workloads (Healthcare, Finance)
+
+Healthcare organizations must protect patient data under PIPEDA and provincial health privacy laws, yet need to leverage cloud infrastructure for scalability and advanced analytics. Confidential containers enable compliant cloud processing: patient records remain encrypted until loaded into TEE-protected containers, cloud provider administrators cannot access PHI even with root privileges, attestation provides auditable proof of protection meeting regulatory requirements. Financial institutions similarly process sensitive transactions, customer data, and trading algorithms in confidential containers—achieving cloud economics without exposing regulated data to cloud infrastructure operators.
+
+**Example: Provincial Health Authority Analytics**
 - Patient data encrypted at rest and in transit
-- Data processed in confidential containers
+- Data processed in confidential containers on public cloud
 - Even cloud provider cannot access patient data
-- Cryptographic proof of compliance
+- Cryptographic proof of compliance with provincial privacy laws
 
 ### 2. Multi-Party Computation
 
@@ -352,19 +363,22 @@ The Confidential Computing Consortium drives industry standards for attestation 
 ## Key Benefits Summary
 
 **For Technical Teams:**
-- Hardware-based security guarantees
-- Integration with existing Kubernetes workflows
-- Open source and vendor-neutral
+- Hardware-based security guarantees through CPU-level encryption
+- Integration with existing Kubernetes workflows and OpenShift
+- Open source and vendor-neutral (works on any TEE-capable hardware)
 
 **For Organizations:**
-- Meet stringent compliance requirements
-- Enable multi-party collaboration
-- Reduce insider threat risk
+- **Enhance existing cloud security immediately**—no migration required to improve protection
+- Meet stringent compliance requirements (TBS Protected B, PIPEDA, provincial privacy laws)
+- Enable multi-party collaboration without trust or data sharing
+- Reduce insider threat and privileged access risk
 
 **For Digital Sovereignty:**
-- Run sensitive workloads on any infrastructure
-- Cryptographic independence from cloud providers
-- No trust required in infrastructure operators
+- **Use existing cloud providers more securely** through cryptographic guarantees
+- Cryptographic independence from cloud infrastructure operators
+- No trust required in foreign cloud administrators or hypervisors
+- Process Canadian citizen data on any infrastructure while maintaining sovereignty
+- Maintain option to repatriate to on-premises when policy requires
 
 ---
 
