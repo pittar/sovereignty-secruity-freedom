@@ -25,7 +25,7 @@ The base image decision has profound implications for digital sovereignty. An or
 
 Red Hat addresses these sovereignty challenges through UBI and Project Hummingbird by making enterprise-grade base images freely available to everyone—including organizations that are not Red Hat customers. These images can be pulled from public registries, used in any environment, and redistributed without restriction. The supply chain is fully transparent: every package is traceable to its source in RHEL, with public build provenance and cryptographic signing. Security updates follow a predictable, enterprise-grade lifecycle, eliminating the uncertainty that comes with community images.
 
-**The key sovereignty advantage**: Organizations can build portable applications on Red Hat's enterprise foundation without committing to Red Hat infrastructure or subscriptions. Applications containerized with UBI run identically on AWS ECS, Azure Container Instances, Google Cloud Run, or any Kubernetes distribution. If an organization later needs enterprise support, they can purchase it. If they don't, they continue running freely. This separates the foundation from the infrastructure—true digital sovereignty means having choices at every layer.
+**The key sovereignty advantage**: Organizations build on enterprise foundations without vendor commitment. Need support later? Purchase it. Don't need it? Continue running freely. This separates the foundation from the infrastructure—true digital sovereignty means having choices at every layer.
 
 ---
 
@@ -72,7 +72,7 @@ The update process is predictable: Red Hat publishes new UBI image tags whenever
 
 ### The Evolution of Minimal
 
-While UBI provides enterprise-grade foundations for containerized applications, modern cloud-native architectures increasingly demand even smaller attack surfaces and faster deployment times. Project Hummingbird represents Red Hat's response to this evolution—a next-generation family of ultra-minimal base images engineered specifically for stateless microservices, serverless functions, and ephemeral workloads. Built on the same enterprise RHEL foundation as UBI, Hummingbird strips away traditional system administration tools and reduces the image to only what modern applications require at runtime. The result is measurably smaller images (often 50-70% smaller than UBI Minimal), faster cold-start times in serverless environments, and a significantly reduced attack surface—all while maintaining the same free redistribution rights, security lifecycle, and sovereignty guarantees that make UBI valuable for enterprise adoption.
+Modern cloud-native architectures demand smaller attack surfaces and faster deployment than traditional base images provide. Project Hummingbird delivers ultra-minimal images engineered for stateless microservices, serverless functions, and ephemeral workloads. Built on the same RHEL foundation as UBI but stripped of system administration tools, Hummingbird achieves 50-70% size reduction compared to UBI Minimal while maintaining identical redistribution rights, security lifecycle, and sovereignty guarantees.
 
 **Hummingbird's Innovation:**
 - Ultra-minimal base images optimized for cloud-native workloads
@@ -82,7 +82,9 @@ While UBI provides enterprise-grade foundations for containerized applications, 
 
 ### Technical Architecture
 
-Project Hummingbird achieves its minimal footprint through aggressive package reduction and architectural constraints designed for immutable, single-process containers. Unlike traditional base images that include package managers, shell utilities, and system maintenance tools, Hummingbird images ship without `dnf`, `yum`, or even a full shell—the assumption is that containers are built once, validated through CI/CD pipelines, and run immutably in production. The image contains only the essential runtime libraries required by applications: core glibc dependencies, SSL/TLS libraries for secure communications, and critical system libraries like libcrypto. Security hardening is built into the image structure itself—the absence of package managers eliminates entire classes of runtime attacks, while the minimal library surface reduces exposure to CVEs. For package installation during builds, developers use multi-stage Dockerfiles: compile and install dependencies in a UBI-based builder stage, then copy only the application binary and runtime dependencies into the final Hummingbird layer. This separation ensures build-time tools never reach production while maintaining the enterprise security lifecycle for runtime components.
+Hummingbird ships without package managers (`dnf`, `yum`), shells, or system maintenance tools—designed for containers built once and run immutably in production. The image contains only essential runtime libraries: glibc, SSL/TLS, and libcrypto. This architectural constraint eliminates entire classes of runtime attacks while reducing CVE exposure.
+
+Developers use multi-stage Dockerfiles: compile and install dependencies in a UBI builder stage, then copy only the application binary and runtime dependencies to the final Hummingbird layer. Build-time tools never reach production, maintaining security while preserving the enterprise RHEL lifecycle for runtime components.
 
 ### When to Use Hummingbird vs. UBI
 
@@ -112,7 +114,7 @@ Choosing the right base image depends on your application architecture, operatio
 - **Containerizing traditional applications** designed to run multiple daemons within a single container
 - **Migration scenarios** where refactoring to single-process containers is not immediately feasible
 
-**The practical decision path**: Start with UBI Minimal for most new cloud-native applications. Once your deployment patterns mature, your CI/CD pipeline includes comprehensive validation, and your team embraces immutability, migrate to Hummingbird for maximum security and efficiency. Reserve UBI Standard for applications that genuinely need the full environment, and use UBI Init only when architectural constraints require multi-process containers.
+**Practical decision path**: Start with UBI Minimal for new cloud-native applications, graduate to Hummingbird as CI/CD and immutability practices mature.
 
 ---
 
@@ -127,7 +129,7 @@ Because UBI and Hummingbird are freely redistributable OCI-compliant images with
 - **Google Cloud**: Use with GKE, Cloud Run, or Compute Engine container-optimized VMs
 - **On-Premises**: Deploy to OpenShift, upstream Kubernetes, Podman, or any OCI-compatible runtime
 
-An application containerized with UBI can be developed on a developer's laptop, tested in Azure, staged in an on-premises OpenShift cluster, and deployed to production on AWS—with zero base image changes. This portability extends to hybrid and edge deployments: the same image that runs in a datacenter runs on edge nodes, industrial gateways, or disconnected environments. Organizations maintain true cloud independence—switching cloud providers requires no application repackaging, just registry migration.
+The same UBI-based application can be developed locally, tested in Azure, staged on-premises, and deployed to AWS—zero base image changes required. This portability extends to edge deployments and disconnected environments. Switching cloud providers requires only registry migration, not application repackaging.
 
 ### Supply Chain Integration
 
@@ -162,9 +164,7 @@ WORKDIR /app
 CMD ["python3", "main.py"]
 ```
 
-This example demonstrates UBI best practices: using the `:latest` tag pulls the most recent security updates (acceptable for development; use version-specific tags in production), `microdnf clean all` removes package metadata to reduce image size, and the registry path `registry.access.redhat.com` requires no authentication. The layering approach—install system packages first, copy dependency manifests, install application dependencies, then copy application code—optimizes Docker build caching so code changes don't trigger package reinstallation.
-
-For production hardening, specify a non-root user with `USER 1001`, use multi-stage builds to separate build-time dependencies from runtime, and pin to specific UBI versions like `ubi9/ubi-minimal:9.3-1361` for reproducible builds. Consider switching to Hummingbird for stateless applications that don't require runtime package installation.
+This example demonstrates best practices: `microdnf clean all` reduces image size, the layering sequence optimizes build caching (system packages → dependencies → code), and `registry.access.redhat.com` requires no authentication. The `:latest` tag works for development; production should pin to specific versions (`ubi9/ubi-minimal:9.3-1361`), specify non-root users (`USER 1001`), and use multi-stage builds. Consider Hummingbird for stateless applications.
 
 ---
 
@@ -205,7 +205,8 @@ The broader impact extends to standardization: by providing freely available ent
 
 ## References and Further Reading
 
-- [Red Hat UBI Documentation](https://developers.redhat.com/products/rhel/ubi)
-- [Project Hummingbird Resources]
-- [OCI Image Specification]
-- [Container Security Best Practices]
+- [Red Hat Universal Base Images Documentation](https://developers.redhat.com/products/rhel/ubi)
+- [Red Hat UBI FAQ](https://developers.redhat.com/articles/ubi-faq)
+- [OCI Image Format Specification](https://github.com/opencontainers/image-spec)
+- [NIST Application Container Security Guide](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf)
+- [Red Hat Container Security Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/building_running_and_managing_containers/index)
