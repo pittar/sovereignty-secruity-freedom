@@ -69,7 +69,7 @@ This lifecycle alignment means organizations can plan their application maintena
 
 ### The Evolution of Minimal
 
-[Introduction to Project Hummingbird and its goals]
+While UBI provides enterprise-grade foundations for containerized applications, modern cloud-native architectures increasingly demand even smaller attack surfaces and faster deployment times. Project Hummingbird represents Red Hat's response to this evolution—a next-generation family of ultra-minimal base images engineered specifically for stateless microservices, serverless functions, and ephemeral workloads. Built on the same enterprise RHEL foundation as UBI, Hummingbird strips away traditional system administration tools and reduces the image to only what modern applications require at runtime. The result is measurably smaller images (often 50-70% smaller than UBI Minimal), faster cold-start times in serverless environments, and a significantly reduced attack surface—all while maintaining the same free redistribution rights, security lifecycle, and sovereignty guarantees that make UBI valuable for enterprise adoption.
 
 **Hummingbird's Innovation:**
 - Ultra-minimal base images optimized for cloud-native workloads
