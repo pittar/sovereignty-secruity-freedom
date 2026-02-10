@@ -38,10 +38,10 @@ Red Hat's enterprise open source model solves the sovereignty challenge by combi
    - Long-term support and security
    - Upstream-first engineering investment
 
-3. **Cloud Independence**
-   - Platform abstraction
-   - Portability across providers
-   - Consistent operational model
+3. **Deployment Flexibility**
+   - Deploy anywhere: public cloud, private cloud, on-premises, edge, air-gapped
+   - Platform abstraction across all infrastructure
+   - Consistent operational model regardless of location
 
 4. **Supply Chain Security**
    - Cryptographic verification
@@ -53,8 +53,10 @@ Red Hat's enterprise open source model solves the sovereignty challenge by combi
 ## Business Outcomes
 
 - **Reduced Risk**: Eliminate vendor lock-in and single-point dependencies
-- **Regulatory Compliance**: Meet data sovereignty and security requirements
-- **Cost Optimization**: True multi-cloud flexibility enables cost arbitrage
+- **Regulatory Compliance**: Meet data sovereignty and security requirements through on-premises or regional deployment
+- **Deployment Freedom**: Run workloads in public cloud, on-premises data centers, or hybrid—choosing based on requirements, not vendor constraints
+- **Cost Optimization**: True multi-cloud and on-premises flexibility enables cost arbitrage and predictable CapEx economics
+- **Air-Gap Capability**: Operate in disconnected environments for classified, financial, or high-security requirements
 - **Innovation Velocity**: Leverage global open source innovation
 - **Talent Attraction**: Industry-standard, transferable skills
 
@@ -62,7 +64,7 @@ Red Hat's enterprise open source model solves the sovereignty challenge by combi
 
 ## What This Paper Covers
 
-This paper explores the complete journey from foundational container images through to AI-enabled platform engineering, demonstrating how organizations can achieve true digital sovereignty while maintaining enterprise-grade security and operational excellence.
+This paper explores the complete journey from foundational container images through to AI-enabled platform engineering, demonstrating how organizations can achieve true digital sovereignty while maintaining enterprise-grade security and operational excellence. Each section addresses deployment across public cloud, on-premises data centers, hybrid architectures, and air-gapped environments—ensuring sovereignty regardless of infrastructure location.
 
 **Reading paths:**
 - **Executives**: Read this overview and each section's executive summary (20 minutes)
