@@ -6,7 +6,7 @@ Secrets are the weakest link in modern security. API keys leaked in GitHub commi
 
 Zero trust security principles demand replacing secrets with cryptographic identity that cannot be stolen because it cannot be copied. SPIFFE (Secure Production Identity Framework for Everyone) and SPIRE (the SPIFFE Runtime Environment) provide this capability: workloads receive automatically-issued, short-lived cryptographic credentials based on verifiable properties (Kubernetes service account, cloud instance identity, process attestation). These credentials rotate continuously (hourly), exist only in memory, and prove workload identity without shareable secrets. Service-to-service authentication uses mutual TLS with SPIFFE identities, eliminating API keys and passwords.
 
-Red Hat's Zero Trust Workload Identity Manager brings enterprise-grade SPIFFE/SPIRE to OpenShift with operator-based deployment, multi-cluster federation, and integration across the platform. Organizations eliminate secret sprawl while achieving stronger security through cryptographic workload identity. This approach aligns with digital sovereignty: open standards for identity (not proprietary systems), infrastructure-independent authentication (works anywhere), and no dependency on vendor-specific IAM platforms.
+Red Hat's Zero Trust Workload Identity Manager brings enterprise-grade SPIFFE/SPIRE to OpenShift with operator-based deployment, multi-cluster federation, and integration across the platform. Organizations eliminate secret sprawl while achieving stronger security through cryptographic workload identity. **Critically for Canadian organizations, this technology works identically across any infrastructure**—AWS, Azure, Google Cloud, and on-premises government data centers—providing consistent zero trust security regardless of deployment location. This approach aligns with digital sovereignty: open standards for identity (not proprietary IAM systems), infrastructure-independent authentication (works anywhere), and no dependency on vendor-specific cloud security platforms. Canadian departments can implement zero trust security on existing public cloud infrastructure today, then migrate to on-premises with zero security architecture changes.
 
 ---
 
@@ -367,13 +367,16 @@ SPIFFE integration with cloud IAM enables workloads to access cloud resources wi
 
 ### Why On-Premises SPIFFE Matters
 
-Digital sovereignty demands the ability to operate workload identity infrastructure entirely within organizational control—no dependency on cloud provider IAM systems, no reliance on external certificate authorities, no requirement to route traffic through vendor endpoints. On-premises SPIRE deployments enable organizations to maintain cryptographic root of trust within their own data centers, meet regulatory requirements for data residency and operational independence, and operate in disconnected or air-gapped environments where cloud connectivity is prohibited. Whether driven by compliance (financial services, government), security posture (defense, critical infrastructure), or strategic independence (avoiding vendor lock-in), on-premises SPIFFE provides consistent workload identity without cloud dependencies.
+Digital sovereignty demands the ability to operate workload identity infrastructure entirely within organizational control—no dependency on cloud provider IAM systems, no reliance on external certificate authorities, no requirement to route traffic through vendor endpoints. For Canadian government organizations, on-premises SPIRE deployments enable maintaining cryptographic root of trust within Canadian data centers under Canadian legal jurisdiction, meeting TBS requirements for operational independence and data residency, and operating in air-gapped environments required for classified and Protected C workloads. Whether driven by compliance (federal/provincial government, financial services), security posture (defense, critical infrastructure), or strategic independence (avoiding foreign vendor control), on-premises SPIFFE provides consistent workload identity without cloud dependencies.
+
+**Critically, SPIFFE/SPIRE works identically across cloud and on-premises environments.** Canadian organizations can deploy zero trust workload identity on existing public cloud infrastructure (AWS, Azure, Google Cloud) today, gaining immediate security benefits by eliminating secrets and API keys. Later, when sovereignty or cost considerations dictate, applications migrate to on-premises Canadian data centers **with zero changes to security architecture**—same SPIFFE IDs, same mTLS authentication, same authorization policies. The security model is infrastructure-independent, providing a natural migration path from cloud to sovereign infrastructure without security redesign.
 
 **Key Sovereignty Benefits:**
-- **Complete Control**: Organization owns the root of trust and certificate authority
-- **No External Dependencies**: Identity infrastructure operates without internet connectivity
-- **Regulatory Compliance**: Data and cryptographic operations stay within geographical boundaries
-- **Operational Independence**: Identity system continues functioning during cloud outages or network partitions
+- **Complete Control**: Canadian government owns the root of trust and certificate authority
+- **No External Dependencies**: Identity infrastructure operates without internet connectivity or foreign systems
+- **Regulatory Compliance**: Cryptographic operations stay within Canadian geographical and legal boundaries
+- **Operational Independence**: Identity system functions during cloud outages, network partitions, or geopolitical disruptions
+- **Cloud-to-On-Prem Portability**: Implement on cloud, migrate to on-prem with zero security architecture changes
 
 ### On-Premises Architecture Patterns
 
@@ -726,19 +729,23 @@ The hybrid architecture enabled regulatory compliance (customer PII stays on-pre
 ## Key Benefits Summary
 
 **For Technical Teams:**
-- No more secret management overhead
-- Automatic credential rotation
-- Strong cryptographic identity
+- No more secret management overhead (eliminate API keys, passwords, tokens)
+- Automatic credential rotation (hourly, zero manual intervention)
+- Strong cryptographic identity with hardware attestation
+- **Works identically on AWS, Azure, GCP, and on-premises**
 
 **For Organizations:**
-- Eliminated secret leakage risk
-- Improved compliance posture
-- Reduced operational burden
+- Eliminated secret leakage risk (secrets can't leak if they don't exist)
+- Improved compliance posture (cryptographic audit trails, no credential sprawl)
+- Reduced operational burden (no rotation schedules, no vault management)
+- **Enhance cloud security immediately without migration**
 
 **For Digital Sovereignty:**
-- Open standard for workload identity
-- Works across any infrastructure
-- No proprietary identity systems
+- Open standard for workload identity (CNCF SPIFFE, not proprietary IAM)
+- **Infrastructure-independent security**—works on any cloud or on-premises
+- No dependency on vendor-specific IAM platforms (AWS IAM, Azure AD, Google IAM optional)
+- **Natural migration path from cloud to on-prem** with zero security redesign
+- Canadian government control over cryptographic root of trust
 
 ---
 

@@ -8,7 +8,7 @@
 
 ## The Strategic Imperative
 
-Cloud infrastructure has become essential to business operations, yet this dependence creates strategic vulnerabilities. Organizations face regulatory requirements for data sovereignty, geopolitical tensions affecting cloud service availability, and vendor lock-in that restricts operational flexibility and inflates costs. Digital sovereignty—maintaining control over data, infrastructure decisions, and technology direction—is no longer optional. It's a business imperative that determines an organization's ability to operate independently, meet compliance requirements, and adapt to changing market conditions.
+Cloud infrastructure has become essential to operations across Canadian government departments, agencies, and crown corporations, yet this dependence creates strategic vulnerabilities. Organizations face regulatory requirements for data sovereignty, geopolitical tensions affecting cloud service availability, and vendor lock-in that restricts operational flexibility and inflates costs. For Canadian public sector organizations, digital sovereignty—maintaining control over data, infrastructure decisions, and technology direction—is both a regulatory requirement and a strategic imperative. It determines an organization's ability to operate independently, meet federal and provincial compliance requirements, serve Canadian citizens securely, and adapt to changing policy and security conditions without external constraints.
 
 ---
 
@@ -25,6 +25,14 @@ Cloud infrastructure has become essential to business operations, yet this depen
 ## The Red Hat Approach
 
 Red Hat's enterprise open source model solves the sovereignty challenge by combining the global freedom of open source with enterprise-grade security, support, and lifecycle management. Unlike proprietary platforms that lock customers into specific clouds or vendors, Red Hat builds on upstream open source projects—contributing engineering resources, maintaining packages, and hardening code for production use. Organizations gain portable, transparent infrastructure that runs identically across any environment, with the option to purchase enterprise support without sacrificing control or flexibility.
+
+### Making Existing Clouds More Secure
+
+For Canadian organizations already operating on public cloud infrastructure (AWS, Azure, Google Cloud), Red Hat provides advanced security technologies that dramatically enhance protection without requiring immediate migration. **Confidential containers** use hardware-based encryption (Intel TDX, AMD SEV-SNP) to protect data even while it's being processed—ensuring that cloud administrators cannot access sensitive government data even with full infrastructure privileges. **Zero trust workload identity** eliminates vulnerable API keys and passwords, replacing them with cryptographically-verified identities that can't be stolen or leaked. These technologies enable Canadian departments to process sensitive citizen data on public clouds with cryptographic guarantees of protection, meeting sovereignty requirements while leveraging cloud economics and scale.
+
+### The Natural Offramp: Cloud to On-Premises
+
+Red Hat's platform provides a natural migration path from public cloud back to on-premises infrastructure when sovereignty, cost, or policy requirements dictate. Because OpenShift delivers identical Kubernetes APIs and operational models across all environments, applications built on public cloud run unchanged in Canadian government data centers. Organizations can start in the cloud for rapid deployment and experimentation, then repatriate workloads to on-premises infrastructure without application rewrites, vendor negotiations, or operational disruptions. This flexibility transforms cloud deployment from a one-way commitment into a strategic choice—use cloud providers when advantageous, move to sovereign infrastructure when required, maintaining full control over deployment decisions.
 
 ### Key Pillars
 
@@ -52,13 +60,15 @@ Red Hat's enterprise open source model solves the sovereignty challenge by combi
 
 ## Business Outcomes
 
-- **Reduced Risk**: Eliminate vendor lock-in and single-point dependencies
-- **Regulatory Compliance**: Meet data sovereignty and security requirements through on-premises or regional deployment
-- **Deployment Freedom**: Run workloads in public cloud, on-premises data centers, or hybrid—choosing based on requirements, not vendor constraints
-- **Cost Optimization**: True multi-cloud and on-premises flexibility enables cost arbitrage and predictable CapEx economics
-- **Air-Gap Capability**: Operate in disconnected environments for classified, financial, or high-security requirements
-- **Innovation Velocity**: Leverage global open source innovation
-- **Talent Attraction**: Industry-standard, transferable skills
+- **Canadian Data Sovereignty**: Meet federal and provincial requirements for data residency, processing, and control without sacrificing cloud capabilities
+- **Enhanced Cloud Security**: Protect sensitive citizen data on existing public cloud infrastructure through confidential computing and zero trust identity—no immediate migration required
+- **Deployment Flexibility**: Start in cloud for speed and scale, repatriate to on-premises when sovereignty or cost considerations demand it—with zero application changes
+- **Reduced Risk**: Eliminate vendor lock-in and single-point dependencies that create geopolitical vulnerability
+- **Regulatory Compliance**: Meet TBS guidelines, PIPEDA, provincial privacy laws, and security categorization requirements through cryptographic guarantees
+- **Cost Optimization**: True multi-cloud and on-premises flexibility enables cloud cost arbitrage and predictable CapEx economics for long-term infrastructure planning
+- **Air-Gap Capability**: Operate in disconnected environments for classified, protected, and sensitive government workloads
+- **Innovation Velocity**: Leverage global open source innovation while maintaining Canadian operational control
+- **Talent Attraction**: Industry-standard, transferable skills reduce dependency on specialized vendor training
 
 ---
 
