@@ -1,5 +1,9 @@
 # CI/CD: The Enabler of Cloud Agnostic Development
 
+[← Kubernetes Platform](04-kubernetes-platform.md) | [Table of Contents](../OUTLINE.md) | [Next: Developer Experience →](06-developer-experience.md)
+
+---
+
 ## Executive Summary
 
 Traditional CI/CD tools like Jenkins tie build processes to specific infrastructure—plugins for AWS services, Azure integrations, GCP-specific deployments. This infrastructure coupling creates lock-in at the automation layer. When organizations switch clouds or adopt hybrid strategies, they must rewrite pipelines, reconfigure integrations, and retrain teams. Cloud-native CI/CD with Tekton solves this by running pipelines as Kubernetes resources—portable across any Kubernetes cluster, any cloud, any infrastructure.
@@ -365,3 +369,7 @@ spec:
 - [GitOps Principles](https://opengitops.dev/)
 - [Continuous Delivery Foundation](https://cd.foundation/)
 - [Tekton Chains for Supply Chain Security](https://tekton.dev/docs/chains/)
+
+---
+
+**Next:** [6. Standardizing the Developer Experience →](06-developer-experience.md)

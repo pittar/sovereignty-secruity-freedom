@@ -1,5 +1,9 @@
 # Platform Engineering with Backstage
 
+[← Developer Experience](06-developer-experience.md) | [Table of Contents](../OUTLINE.md) | [Next: Confidential Containers →](08-confidential-containers.md)
+
+---
+
 ## Executive Summary
 
 Developers today navigate dozens of tools, services, and platforms just to deploy a simple application. GitHub for code, Jenkins or Tekton for builds, multiple Kubernetes clusters, separate monitoring tools, scattered documentation across wikis and repos—the cognitive load is staggering. Platform engineering emerged to solve this: dedicated teams building internal developer platforms (IDPs) that provide self-service infrastructure with "golden paths"—opinionated, secure defaults that make the right way the easy way.
@@ -408,3 +412,7 @@ Software templates integrate seamlessly with GitOps workflows. Templates generat
 - [CNCF Backstage Project](https://www.cncf.io/projects/backstage/)
 - [Platform Engineering](https://platformengineering.org/)
 - [Team Topologies](https://teamtopologies.com/)
+
+---
+
+**Next:** [8. Advanced Security: Confidential Containers →](08-confidential-containers.md)

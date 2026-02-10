@@ -1,5 +1,9 @@
 # Advanced Security: Confidential Containers
 
+[← Platform Engineering](07-platform-engineering.md) | [Table of Contents](../OUTLINE.md) | [Next: Workload Identity →](09-workload-identity.md)
+
+---
+
 ## Executive Summary
 
 Security professionals have long secured data at rest through disk encryption and data in transit through TLS. Yet the most critical state—data in use during active processing—has remained exposed. Application memory contains plaintext data accessible to privileged users, hypervisors, and cloud administrators. For Canadian government workloads processing citizen data, healthcare records, financial transactions, and classified information, this exposure creates unacceptable risk and potential regulatory non-compliance.
@@ -389,3 +393,7 @@ The Confidential Computing Consortium drives industry standards for attestation 
 - [Intel TDX Documentation](https://www.intel.com/content/www/us/en/developer/tools/trust-domain-extensions/overview.html)
 - [AMD SEV Documentation](https://www.amd.com/en/developer/sev.html)
 - [Kata Containers](https://katacontainers.io/)
+
+---
+
+**Next:** [9. Zero Trust Workload Identity →](09-workload-identity.md)

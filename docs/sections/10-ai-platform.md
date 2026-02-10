@@ -1,5 +1,9 @@
 # The AI-Enabled Platform
 
+[← Workload Identity](09-workload-identity.md) | [Table of Contents](../OUTLINE.md) | [Next: Conclusion →](11-conclusion.md)
+
+---
+
 ## Executive Summary
 
 AI transforms platform engineering at two levels: augmenting human developers through code generation and intelligent assistance, and enabling secure deployment of AI/ML workloads as business applications. GenAI in developer tools (copilots, documentation generators, intelligent search) accelerates development but raises data privacy concerns when integrated with external AI services. Running organizational AI models (fraud detection, recommendation systems, large language models) on sensitive data demands infrastructure protecting both training data and model intellectual property. The sovereignty challenge: organizations need AI capabilities without sending proprietary code, customer data, or model weights to external AI providers.
@@ -1017,3 +1021,7 @@ Red Hat holds leadership positions in CNCF AI/ML working groups, driving standar
 - [Confidential Computing Consortium](https://confidentialcomputing.io/)
 - [EU AI Act](https://artificialintelligenceact.eu/)
 - [MLOps Community](https://mlops.community/)
+
+---
+
+**Next:** [11. Conclusion: The Path to Digital Sovereignty →](11-conclusion.md)

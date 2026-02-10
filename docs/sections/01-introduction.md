@@ -1,5 +1,9 @@
 # Introduction: The Digital Sovereignty Imperative
 
+[← Executive Overview](00-executive-overview.md) | [Table of Contents](../OUTLINE.md) | [Next: Base Images →](02-base-images.md)
+
+---
+
 ## Executive Summary
 
 Digital sovereignty—the ability to control your data, infrastructure, and technology decisions without external constraints—has evolved from a theoretical concern to a mandatory requirement for Canadian government organizations. Federal departments, provincial agencies, and crown corporations face mounting regulatory requirements, geopolitical risks affecting cloud service availability, and vendor lock-in that restricts operational flexibility and drives costs.
@@ -136,3 +140,7 @@ All anchored in the power of enterprise-grade open source, deployable wherever y
 - [Linux Foundation State of Open Source Report](https://www.linuxfoundation.org/research)
 - [CNCF Annual Survey](https://www.cncf.io/reports/cncf-annual-survey-2023/)
 - [Red Hat's Commitment to Open Source](https://www.redhat.com/en/about/open-source)
+
+---
+
+**Next:** [2. Foundation: Trusted Base Images →](02-base-images.md)
