@@ -2,9 +2,11 @@
 
 ## Executive Summary
 
-[2-3 paragraphs on how AI and GenAI are transforming platform engineering, the importance of running AI workloads on sovereign infrastructure, and how the complete Red Hat platform enables secure, performant AI/ML operations.]
+AI transforms platform engineering at two levels: augmenting human developers through code generation and intelligent assistance, and enabling secure deployment of AI/ML workloads as business applications. GenAI in developer tools (copilots, documentation generators, intelligent search) accelerates development but raises data privacy concerns when integrated with external AI services. Running organizational AI models (fraud detection, recommendation systems, large language models) on sensitive data demands infrastructure protecting both training data and model intellectual property. The sovereignty challenge: organizations need AI capabilities without sending proprietary code, customer data, or model weights to external AI providers.
 
-Artificial Intelligence and Generative AI are fundamentally changing how we build and operate software platforms. From AI-assisted development to predictive infrastructure management, these capabilities are becoming essential for competitive advantage. However, AI introduces new challenges: model governance, data privacy, regulatory compliance, and significant computational requirements. The complete Red Hat platform—from confidential containers to platform engineering—enables organizations to harness AI's power while maintaining digital sovereignty and security.
+Traditional AI deployment exposes sensitive data to cloud AI services: training data uploaded for model building, inference requests sent to external APIs, model weights stored in vendor infrastructure. Regulatory frameworks (GDPR, HIPAA, financial services regulations) increasingly prohibit this data exposure, while competitive concerns demand protecting proprietary algorithms. Self-hosted AI infrastructure provides sovereignty—models run on organizational infrastructure, data never leaves boundaries—but requires significant technical capability: GPU management, model serving infrastructure, MLOps pipelines, and integration with existing platforms.
+
+The complete Red Hat platform—UBI base images, supply chain security, OpenShift, CI/CD, Dev Spaces, confidential containers, workload identity—extends to AI workloads. OpenShift AI provides enterprise MLOps (Jupyter notebooks, Kubeflow Pipelines, KServe model serving) integrated with platform security. Confidential containers enable training and inference on sensitive data with cryptographic guarantees. InstructLab delivers open source GenAI capabilities running entirely on organizational infrastructure. This approach enables AI innovation while maintaining digital sovereignty: self-hosted infrastructure, open source tooling, no dependency on proprietary AI platforms.
 
 ---
 
@@ -12,7 +14,7 @@ Artificial Intelligence and Generative AI are fundamentally changing how we buil
 
 ### The AI-Augmented Developer Experience
 
-[How AI enhances developer productivity across the platform]
+AI assistance integrates at natural friction points in developer workflows: when writing code, searching documentation, troubleshooting failures, or optimizing infrastructure. Rather than forcing developers to context-switch to separate AI tools, platform integration surfaces AI capabilities within existing interfaces—Dev Spaces editor suggestions, Developer Hub intelligent search, pipeline optimization recommendations. The key is privacy-preserving integration: AI models run within organizational infrastructure using retrieval-augmented generation (RAG) over internal documentation and code, avoiding external AI API calls that leak proprietary information.
 
 **AI Integration Points:**
 1. **Code Generation and Assistance**: Context-aware suggestions in Dev Spaces
@@ -24,7 +26,7 @@ Artificial Intelligence and Generative AI are fundamentally changing how we buil
 
 ### GenAI vs. Predictive AI
 
-[Distinguishing between different AI capabilities]
+Platform engineering leverages both generative and predictive AI capabilities serving distinct purposes. Generative AI (large language models, code generation) creates new content based on patterns learned from training data—useful for accelerating repetitive tasks like boilerplate code, documentation, and configuration generation. Predictive AI (traditional machine learning) forecasts future states based on historical patterns—valuable for capacity planning, failure prediction, and resource optimization. Both capabilities benefit from self-hosted deployment: GenAI models avoid sending code to external APIs, predictive models train on operational data that shouldn't leave infrastructure.
 
 - **Generative AI**: Creating new content (code, documentation, configurations)
 - **Predictive AI**: Forecasting and optimization (scaling, failures, performance)
@@ -36,7 +38,7 @@ Artificial Intelligence and Generative AI are fundamentally changing how we buil
 
 ### Code Generation from Templates
 
-[How AI enhances Backstage software templates]
+AI-enhanced templates in Developer Hub enable natural language service generation. Developers describe requirements in plain English ("Create a REST API for managing customer orders with PostgreSQL persistence"), AI generates appropriate project structure, boilerplate code, database schemas, and API definitions. The template system combines AI generation with organizational standards—generated code includes required security scanning, approved dependencies, and compliance configurations. This approach accelerates development while maintaining governance: AI suggests implementation, templates enforce standards.
 
 ```yaml
 # Example: AI-enhanced template
@@ -486,11 +488,11 @@ spec:
 
 ### Red Hat's AI/ML Open Source Contributions
 
-[Contributions to Kubeflow, KServe, Ray, and other projects]
+Red Hat engineers contribute to Kubeflow (pipeline orchestration), KServe (model serving), Ray (distributed AI training), and Kubernetes SIG AI initiatives. Engineering investment includes ~15 engineers dedicated to AI/ML open source ecosystem development. Contributions focus on enterprise requirements: multi-tenancy, security integration, air-gapped deployment support, and GPU resource management.
 
 ### Community Leadership
 
-[Red Hat's role in CNCF AI/ML working groups]
+Red Hat holds leadership positions in CNCF AI/ML working groups, driving standards for model packaging, serving interfaces, and GPU sharing. Participation in MLOps community initiatives ensures open source AI tooling addresses enterprise governance, compliance, and security requirements rather than only research use cases.
 
 ---
 
@@ -542,7 +544,7 @@ spec:
 - [OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai)
 - [Kubeflow](https://www.kubeflow.org/)
 - [KServe](https://kserve.github.io/)
-- [CNCF AI/ML Projects]
-- [Confidential Computing for AI]
-- [EU AI Act and Compliance]
-- [MLOps Best Practices]
+- [CNCF AI/ML Projects](https://landscape.cncf.io/guide#ai-ml)
+- [Confidential Computing Consortium](https://confidentialcomputing.io/)
+- [EU AI Act](https://artificialintelligenceact.eu/)
+- [MLOps Community](https://mlops.community/)
