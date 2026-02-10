@@ -2,9 +2,11 @@
 
 ## Executive Summary
 
-[2-3 paragraphs on the criticality of supply chain security, recent high-profile incidents (SolarWinds, Log4Shell), and how open source standards with Sigstore provide transparency and verification.]
+Software supply chain attacks have emerged as one of the most effective threat vectors for compromising systems at scale. SolarWinds demonstrated how a single compromised build system could affect 18,000 organizations, while Log4Shell showed how a vulnerability in a ubiquitous dependency could create global exposure overnight. Traditional security focused on perimeter defense; modern threats exploit the trust relationships in software dependencies and build pipelines.
 
 Modern software supply chains are complex, with dependencies spanning hundreds of open source projects and commercial components. A single compromised artifact can affect thousands of applications. Securing this supply chain requires cryptographic verification, transparency, and industry-standard tooling. Red Hat's implementation of Sigstore and related technologies provides enterprise-grade supply chain security built on open standards.
+
+Open source supply chain security tools—particularly Sigstore—provide transparency, cryptographic verification, and auditability without creating vendor lock-in. Unlike proprietary security platforms that become new dependencies, Sigstore operates as public infrastructure with open standards. Organizations can verify artifacts, generate provenance, and enforce policies using open tools that work across any cloud or infrastructure.
 
 ---
 
@@ -12,15 +14,19 @@ Modern software supply chains are complex, with dependencies spanning hundreds o
 
 ### High-Profile Incidents
 
-[Discussion of SolarWinds, Log4Shell, Codecov, and other major supply chain attacks]
+**SolarWinds (2020)**: Attackers compromised the build system for SolarWinds Orion, injecting malicious code into signed updates distributed to ~18,000 customers including US government agencies. The attack went undetected for months, demonstrating the catastrophic impact of build system compromise.
+
+**Log4Shell (2021)**: A critical remote code execution vulnerability in Log4j, a logging library used by millions of applications, created instant global exposure. The challenge wasn't just patching—organizations first had to discover where Log4j existed in their dependency trees, often buried several layers deep.
+
+**Codecov (2021)**: Attackers modified Codecov's Bash uploader script, harvesting credentials and tokens from thousands of CI/CD environments. The supply chain attack targeted developer tooling, exposing secrets across numerous organizations.
 
 ### The Scope of the Problem
 
-[Statistics on supply chain attacks, dependency complexity, and attack vectors]
+Modern applications average 200+ dependencies when including transitive dependencies. Each dependency represents potential attack surface. A 2023 analysis found 88% of organizations experienced a software supply chain attack, with average remediation costs exceeding $4.5 million. Attack vectors include compromised dependencies, malicious package typosquatting, build system intrusion, stolen signing keys, and man-in-the-middle attacks during artifact distribution.
 
 ### Regulatory Response
 
-[Overview of Executive Order 14028, EU regulations, and industry standards]
+**Executive Order 14028** (May 2021) mandates that software sold to US federal agencies must include Software Bills of Materials (SBOM) and follow secure software development practices. **EU Cyber Resilience Act** imposes similar requirements for products sold in European markets. **NIST Secure Software Development Framework (SSDF)** provides implementation guidance, while the **SLSA (Supply-chain Levels for Software Artifacts)** framework defines maturity levels for supply chain security practices.
 
 ---
 
@@ -28,11 +34,11 @@ Modern software supply chains are complex, with dependencies spanning hundreds o
 
 ### Why Open Standards Matter
 
-[Explanation of why proprietary supply chain security creates new lock-in]
+Proprietary supply chain security platforms create new dependencies and lock-in. Vendor-specific signing infrastructure, proprietary attestation formats, and closed verification tools tie organizations to specific platforms. If the vendor changes pricing, discontinues features, or becomes unavailable, the entire security infrastructure becomes a liability. Open standards ensure that security investments remain portable—artifacts signed with open tools can be verified anywhere, by anyone, using freely available software.
 
 ### The Sigstore Project
 
-[Introduction to Sigstore as a Linux Foundation project]
+Sigstore emerged from the Linux Foundation as public infrastructure for software signing and transparency. Launched in 2021 with contributions from Google, Red Hat, Purdue University, and others, Sigstore provides free signing and verification services designed to operate at internet scale. Unlike traditional PKI requiring organizations to manage long-lived signing keys, Sigstore enables keyless signing using existing identities (GitHub, Google, Microsoft accounts) with cryptographic proof recorded in an immutable transparency log.
 
 **Sigstore Components:**
 
@@ -47,7 +53,7 @@ Modern software supply chains are complex, with dependencies spanning hundreds o
 
 ### Cryptographic Signing with Cosign
 
-[Detailed explanation of how Cosign signs container images and other artifacts]
+Cosign signs OCI artifacts (container images, Helm charts, WASMs) and stores signatures as separate OCI artifacts in the same registry. This approach keeps signatures alongside what they protect without requiring separate infrastructure. Cosign supports both key-based and keyless signing—key-based works with existing PKI infrastructure, while keyless integrates with OpenID Connect providers for ephemeral certificates issued by Fulcio.
 
 ```bash
 # Example: Signing a container image
@@ -59,7 +65,7 @@ cosign verify --key cosign.pub registry.example.com/myapp:v1.0
 
 ### Keyless Signing with Fulcio
 
-[Explanation of how Fulcio eliminates long-lived signing keys using OIDC]
+Fulcio acts as a certificate authority that issues short-lived certificates (valid for minutes) based on OIDC identity tokens. When a developer signs an artifact, they authenticate with their identity provider (GitHub, Google, etc.), Fulcio issues a certificate bound to that identity, the artifact gets signed, and the certificate is recorded in Rekor. Because certificates expire quickly, stolen certificates have limited utility. The signing event remains permanently verifiable through Rekor's transparency log.
 
 **Benefits of Keyless Signing:**
 - No key management overhead
@@ -69,7 +75,7 @@ cosign verify --key cosign.pub registry.example.com/myapp:v1.0
 
 ### The Rekor Transparency Log
 
-[Deep dive into Rekor's role as an immutable, publicly auditable ledger]
+Rekor provides an immutable, append-only ledger of artifact signatures and attestations. Built on the same Merkle tree technology used by Certificate Transparency, Rekor ensures that signatures cannot be backdated, removed, or modified after creation. Anyone can query Rekor to verify when an artifact was signed, by whom, and under what conditions. This transparency prevents attackers from signing malicious artifacts after compromising signing infrastructure—the temporal record in Rekor proves authenticity.
 
 **How Rekor Works:**
 - Merkle tree-based transparency log
@@ -79,7 +85,7 @@ cosign verify --key cosign.pub registry.example.com/myapp:v1.0
 
 ### Software Bill of Materials (SBOM)
 
-[Explanation of SBOM generation, formats (SPDX, CycloneDX), and usage]
+An SBOM catalogs all components in a software artifact—libraries, dependencies, versions, licenses, and origins. SPDX (Software Package Data Exchange) and CycloneDX are the dominant standards, with SPDX favored for compliance and CycloneDX optimized for security use cases. SBOMs enable vulnerability management (identify affected systems when CVEs are disclosed), license compliance (verify license compatibility), and supply chain transparency (understand dependency provenance).
 
 **SBOM in Practice:**
 ```bash
@@ -96,15 +102,15 @@ cosign attach sbom --sbom sbom.json registry.example.com/myapp:v1.0
 
 ### Scanning and Detection
 
-[Integration with Clair, Trivy, and other vulnerability scanners]
+Vulnerability scanners like Clair, Trivy, Snyk, and Anchore analyze container images against CVE databases, matching packages to known vulnerabilities. These tools integrate with Sigstore—scan results can be attached as attestations to images, signed, and recorded in Rekor. Kubernetes admission controllers can query these attestations before allowing pod creation, blocking images with critical vulnerabilities or missing scan attestations.
 
 ### Remediation Workflows
 
-[How to respond to vulnerabilities: patching, rebuilding, re-signing]
+When a CVE is disclosed, SBOMs identify affected images. Remediation involves rebuilding images with patched dependencies, scanning the new image to verify CVE resolution, signing the image with Cosign, and deploying through CI/CD pipelines. The entire remediation chain—patch, rebuild, scan, sign, deploy—should be automated and produce verifiable attestations at each stage.
 
 ### Policy Enforcement
 
-[Using admission controllers to enforce signing and vulnerability policies]
+Kubernetes admission controllers like Sigstore Policy Controller, Kyverno, or OPA Gatekeeper intercept pod creation requests and enforce policies: require signatures from specific identities, mandate SBOM presence, block images with high-severity CVEs, or verify SLSA provenance levels. Policies as code in Git enable audit trails and version control for security requirements.
 
 ---
 
@@ -112,15 +118,15 @@ cosign attach sbom --sbom sbom.json registry.example.com/myapp:v1.0
 
 ### Red Hat's Sigstore Deployment
 
-[How Red Hat uses Sigstore to sign its container images and artifacts]
+Red Hat signs all official container images, operators, and Helm charts using Sigstore, with signatures publicly verifiable through Rekor. Red Hat's signing infrastructure uses Fulcio for certificate issuance and stores signatures in `registry.redhat.io`. Every image in Red Hat's registries includes attached signatures and SBOMs, enabling customers to verify provenance and audit supply chain integrity.
 
 ### Integration with OpenShift
 
-[Built-in support for signature verification in OpenShift]
+OpenShift includes built-in signature verification through machine config operators that configure `crio` and `podman` to enforce signature policies. Administrators define policies requiring signatures from specific issuers—OpenShift will refuse to run unsigned images or images from untrusted sources. The Sigstore Policy Controller integrates directly with OpenShift, enforcing keyless signature verification using Fulcio certificates.
 
 ### Enterprise Sigstore Services
 
-[Options for running private Sigstore infrastructure]
+Organizations can deploy private Sigstore infrastructure using the Sigstore Scaffolding project, running Fulcio, Rekor, and certificate transparency infrastructure in their own clusters. This provides air-gapped deployments, custom root of trust, and integration with enterprise identity providers. Red Hat provides enterprise support for Sigstore infrastructure as part of OpenShift's trusted software supply chain features.
 
 ---
 
@@ -128,15 +134,15 @@ cosign attach sbom --sbom sbom.json registry.example.com/myapp:v1.0
 
 ### SLSA Framework
 
-[Supply-chain Levels for Software Artifacts - explanation and Red Hat's approach]
+SLSA (Supply-chain Levels for Software Artifacts, pronounced "salsa") defines four maturity levels for supply chain security: SLSA 1 (documentation of build process), SLSA 2 (signed provenance from builds), SLSA 3 (hardened build platforms preventing tampering), and SLSA 4 (two-party review of changes). Red Hat's build systems target SLSA 3+, with signed build provenance, hermetic builds, and tamper-resistant infrastructure.
 
 ### Build Provenance
 
-[Generating and verifying build attestations]
+Build provenance attestations document how artifacts were built—source repository, commit hash, build timestamp, builder identity, and dependencies. Tekton Chains automatically generates and signs provenance for pipeline builds, attaching in-toto attestations to resulting images. Consumers verify provenance to ensure artifacts weren't built from tampered source or compromised build systems.
 
 ### Compliance Mappings
 
-[How Sigstore helps meet NIST, FedRAMP, and other compliance requirements]
+Sigstore addresses multiple NIST SSDF requirements: cryptographic verification (PS.1), provenance tracking (PS.3), and automated vulnerability detection (PW.8). FedRAMP continuous monitoring requirements benefit from Rekor's auditability, while SBOM mandates in Executive Order 14028 are satisfied through Syft integration. The transparency and verifiability of Sigstore align with zero-trust principles required in modern security frameworks.
 
 ---
 
@@ -171,7 +177,7 @@ spec:
       runAfter: [sign]
 ```
 
-[Detailed walkthrough of each stage]
+This pipeline implements defense-in-depth: **build** creates the image, **scan** checks for vulnerabilities, **generate-sbom** catalogs components, **sign** creates cryptographic proof of integrity, and **publish** makes the verified artifact available. Each stage produces attestations attached to the image. Admission controllers later verify these attestations before allowing deployment, ensuring only scanned, signed artifacts with known provenance run in production.
 
 ---
 
@@ -179,11 +185,11 @@ spec:
 
 ### Red Hat's Contributions to Sigstore
 
-[Specific engineering contributions, maintainers, and leadership roles]
+Red Hat engineers serve as maintainers across Sigstore projects, including Cosign, Rekor, and Fulcio. Red Hat contributed the Sigstore Policy Controller for Kubernetes policy enforcement, drives integration with Tekton for automated signing in CI/CD, and operates production Sigstore infrastructure used across the industry. Engineering investment includes ~20+ dedicated engineers contributing to Sigstore core projects and ecosystem integrations.
 
 ### Community Growth and Adoption
 
-[Industry adoption of Sigstore across vendors and clouds]
+Sigstore has achieved widespread adoption beyond its original contributors. GitHub signs npm packages with Sigstore, Google Cloud signs GKE images, Chainguard uses Sigstore for distroless image signing, and CNCF graduated projects increasingly adopt Sigstore for release signing. The public Sigstore infrastructure handles millions of signing operations monthly, demonstrating the scalability of open supply chain security.
 
 ---
 
@@ -210,6 +216,6 @@ spec:
 
 - [Sigstore Project](https://www.sigstore.dev/)
 - [SLSA Framework](https://slsa.dev/)
-- [Red Hat Supply Chain Security Guide]
-- [NIST Secure Software Development Framework (SSDF)]
-- [Executive Order 14028 on Cybersecurity]
+- [NIST Secure Software Development Framework (SSDF)](https://csrc.nist.gov/Projects/ssdf)
+- [Executive Order 14028 on Cybersecurity](https://www.whitehouse.gov/briefing-room/presidential-actions/2021/05/12/executive-order-on-improving-the-nations-cybersecurity/)
+- [Red Hat Trusted Software Supply Chain](https://www.redhat.com/en/solutions/trusted-software-supply-chain)
