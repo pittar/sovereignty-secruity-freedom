@@ -79,7 +79,7 @@ While UBI provides enterprise-grade foundations for containerized applications, 
 
 ### Technical Architecture
 
-[Deep dive into Hummingbird's design, what's included/excluded, and security model]
+Project Hummingbird achieves its minimal footprint through aggressive package reduction and architectural constraints designed for immutable, single-process containers. Unlike traditional base images that include package managers, shell utilities, and system maintenance tools, Hummingbird images ship without `dnf`, `yum`, or even a full shell—the assumption is that containers are built once, validated through CI/CD pipelines, and run immutably in production. The image contains only the essential runtime libraries required by applications: core glibc dependencies, SSL/TLS libraries for secure communications, and critical system libraries like libcrypto. Security hardening is built into the image structure itself—the absence of package managers eliminates entire classes of runtime attacks, while the minimal library surface reduces exposure to CVEs. For package installation during builds, developers use multi-stage Dockerfiles: compile and install dependencies in a UBI-based builder stage, then copy only the application binary and runtime dependencies into the final Hummingbird layer. This separation ensures build-time tools never reach production while maintaining the enterprise security lifecycle for runtime components.
 
 ### When to Use Hummingbird vs. UBI
 
