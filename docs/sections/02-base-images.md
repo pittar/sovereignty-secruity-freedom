@@ -83,7 +83,33 @@ Project Hummingbird achieves its minimal footprint through aggressive package re
 
 ### When to Use Hummingbird vs. UBI
 
-[Decision matrix for choosing between UBI variants and Hummingbird]
+Choosing the right base image depends on your application architecture, operational requirements, and deployment patterns. Here's practical guidance for matching workloads to base images:
+
+**Use Hummingbird when:**
+- **Deploying stateless microservices** that follow strict immutability patterns—no runtime modifications, no debugging in production
+- **Building serverless functions** where cold-start time and image size directly impact cost and performance (AWS Lambda, Azure Functions, Google Cloud Functions)
+- **Optimizing for security-critical environments** where minimal attack surface is paramount and you can enforce immutable infrastructure
+- **Running ephemeral workloads** that scale up and down frequently, where smaller images reduce registry bandwidth and node storage pressure
+- **You have mature CI/CD pipelines** that include comprehensive testing, since you cannot install debugging tools at runtime
+
+**Use UBI Minimal when:**
+- **Migrating existing applications** to containers where you may need `microdnf` to install additional packages for compatibility
+- **Building general-purpose microservices** that benefit from a small footprint but require occasional runtime package installation
+- **You need debugging flexibility** with access to package managers and common utilities during troubleshooting
+- **Teams are learning containerization** and need the safety net of traditional Linux tools
+
+**Use UBI Standard when:**
+- **Deploying monolithic applications** that expect a full Linux environment with standard utilities (`ls`, `ps`, `grep`, etc.)
+- **Running applications with complex dependencies** requiring build tools and development packages
+- **You need ISV-certified software** where vendors explicitly support UBI Standard
+- **Legacy application compatibility** requires specific system packages and tools
+
+**Use UBI Init when:**
+- **Running multi-process containers** that require a proper init system (systemd-based)
+- **Containerizing traditional applications** designed to run multiple daemons within a single container
+- **Migration scenarios** where refactoring to single-process containers is not immediately feasible
+
+**The practical decision path**: Start with UBI Minimal for most new cloud-native applications. Once your deployment patterns mature, your CI/CD pipeline includes comprehensive validation, and your team embraces immutability, migrate to Hummingbird for maximum security and efficiency. Reserve UBI Standard for applications that genuinely need the full environment, and use UBI Init only when architectural constraints require multi-process containers.
 
 ---
 
