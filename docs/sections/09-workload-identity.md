@@ -2,9 +2,11 @@
 
 ## Executive Summary
 
-[2-3 paragraphs on the limitations of secret-based authentication, the principles of zero trust security, and how SPIFFE/SPIRE provide cryptographic workload identity that replaces traditional credentials.]
+Secrets are the weakest link in modern security. API keys leaked in GitHub commits, database passwords shared across teams, long-lived tokens with excessive permissions—every secret represents an attack surface. Organizations manage thousands of credentials across hundreds of services, relying on manual rotation schedules rarely followed and access controls frequently misconfigured. When secrets leak (not if, but when), detecting and recovering from compromise is expensive and often incomplete. Traditional secret management tools mitigate symptoms but don't solve the fundamental problem: secrets are shareable, copyable, and stealable.
 
-Traditional security models rely on secrets—API keys, passwords, tokens—that must be distributed, rotated, and protected. These secrets are frequently leaked, stolen, or mismanaged. Zero trust workload identity, implemented through SPIFFE/SPIRE, replaces secrets with cryptographic identities that are automatically issued based on verifiable properties of workloads. Red Hat's Zero Trust Workload Identity Manager brings enterprise-grade SPIFFE/SPIRE to Kubernetes, enabling organizations to eliminate secrets while establishing strong, verifiable identity for every service.
+Zero trust security principles demand replacing secrets with cryptographic identity that cannot be stolen because it cannot be copied. SPIFFE (Secure Production Identity Framework for Everyone) and SPIRE (the SPIFFE Runtime Environment) provide this capability: workloads receive automatically-issued, short-lived cryptographic credentials based on verifiable properties (Kubernetes service account, cloud instance identity, process attestation). These credentials rotate continuously (hourly), exist only in memory, and prove workload identity without shareable secrets. Service-to-service authentication uses mutual TLS with SPIFFE identities, eliminating API keys and passwords.
+
+Red Hat's Zero Trust Workload Identity Manager brings enterprise-grade SPIFFE/SPIRE to OpenShift with operator-based deployment, multi-cluster federation, and integration across the platform. Organizations eliminate secret sprawl while achieving stronger security through cryptographic workload identity. This approach aligns with digital sovereignty: open standards for identity (not proprietary systems), infrastructure-independent authentication (works anywhere), and no dependency on vendor-specific IAM platforms.
 
 ---
 
@@ -12,7 +14,7 @@ Traditional security models rely on secrets—API keys, passwords, tokens—that
 
 ### Secret Sprawl in Modern Applications
 
-[How traditional authentication creates secret management nightmares]
+A typical microservices application uses dozens of secrets: database credentials for each service, API keys for third-party integrations, inter-service authentication tokens, cloud provider credentials for infrastructure access, TLS certificate private keys, and service-specific encryption keys. Multiply across environments (development, staging, production) and the count explodes. A 50-service application easily accumulates 200+ secrets requiring management, rotation, access control, and audit. Developers store secrets in environment variables, configuration files, Kubernetes secrets, external vaults—fragmented across tools with inconsistent practices. Secret discovery becomes impossible: which services use which secrets? Who has access? When were they last rotated?
 
 **Common Secret Types:**
 - API keys and tokens
@@ -24,7 +26,7 @@ Traditional security models rely on secrets—API keys, passwords, tokens—that
 
 ### Security Challenges
 
-[Why secrets are problematic]
+Secrets create security liability at every stage of their lifecycle. Distribution requires transmitting secrets from creation to consumption—processes prone to interception and logging. Storage demands encryption, access controls, and audit trails, but secrets inevitably end up in plaintext somewhere (environment variables, application memory, log files). Rotation requires coordinating updates across all consuming services without downtime—complex choreography often skipped in favor of long-lived credentials. Revocation after compromise is difficult when secrets may be cached, copied to multiple locations, or embedded in artifacts. Each additional secret multiplies attack surface and management overhead.
 
 **Issues with Traditional Secrets:**
 1. **Leakage**: Accidentally committed to Git, logged, exposed in environment variables
@@ -36,7 +38,7 @@ Traditional security models rely on secrets—API keys, passwords, tokens—that
 
 ### Real-World Secret Breaches
 
-[Examples of major security incidents caused by leaked secrets]
+GitHub reports millions of secrets leaked in public repositories annually—AWS keys, database credentials, API tokens committed to version control and never fully revocable. The Uber breach (2016) stemmed from AWS credentials in a GitHub repository, exposing 57 million customer records. Tesla's Kubernetes dashboard exposure (2018) allowed attackers to find AWS credentials and run cryptocurrency mining. Codecov supply chain attack (2021) harvested thousands of credentials from CI/CD environments. These incidents share a pattern: secrets stored in accessible locations, insufficient monitoring for leakage, difficulty revoking compromised credentials. No amount of secret management tooling prevents the fundamental problem—secrets can be copied and used by unauthorized parties.
 
 ---
 
