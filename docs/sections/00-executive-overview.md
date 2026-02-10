@@ -8,7 +8,7 @@
 
 ## The Strategic Imperative
 
-[Opening paragraph on why digital sovereignty matters in today's geopolitical and business climate]
+Cloud infrastructure has become essential to business operations, yet this dependence creates strategic vulnerabilities. Organizations face regulatory requirements for data sovereignty, geopolitical tensions affecting cloud service availability, and vendor lock-in that restricts operational flexibility and inflates costs. Digital sovereignty—maintaining control over data, infrastructure decisions, and technology direction—is no longer optional. It's a business imperative that determines an organization's ability to operate independently, meet compliance requirements, and adapt to changing market conditions.
 
 ---
 
@@ -24,7 +24,7 @@
 
 ## The Red Hat Approach
 
-[Overview of how Red Hat's enterprise-grade open source approach addresses these challenges]
+Red Hat's enterprise open source model solves the sovereignty challenge by combining the global freedom of open source with enterprise-grade security, support, and lifecycle management. Unlike proprietary platforms that lock customers into specific clouds or vendors, Red Hat builds on upstream open source projects—contributing engineering resources, maintaining packages, and hardening code for production use. Organizations gain portable, transparent infrastructure that runs identically across any environment, with the option to purchase enterprise support without sacrificing control or flexibility.
 
 ### Key Pillars
 
@@ -73,4 +73,10 @@ This paper explores the complete journey from foundational container images thro
 
 ## Next Steps
 
-[Call to action for readers]
+**Assess your current position**: Evaluate vendor dependencies, cloud portability, and regulatory compliance gaps in your existing infrastructure.
+
+**Start with foundations**: Begin with freely redistributable base images (UBI) and containerized workloads to establish portability without vendor commitment.
+
+**Build incrementally**: Add supply chain security, cloud-native CI/CD, and platform engineering capabilities as your team's practices mature.
+
+**Engage with Red Hat**: Explore how enterprise support, training, and services can accelerate your sovereignty journey while maintaining full technical control.
