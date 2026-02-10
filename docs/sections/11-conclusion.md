@@ -1,5 +1,9 @@
 # Conclusion: The Path to Digital Sovereignty
 
+[← AI Platform](10-ai-platform.md) | [Table of Contents](../OUTLINE.md)
+
+---
+
 ## Executive Summary
 
 Digital sovereignty is not a single product or technology—it's an architectural approach enabled by enterprise-grade open source software. For Canadian government departments, agencies, and crown corporations, this approach delivers both regulatory compliance and strategic independence. Organizations that embrace this path gain freedom from vendor lock-in, maintain control over their data and infrastructure under Canadian jurisdiction, and position themselves for long-term innovation while serving citizens securely. Red Hat's unique combination of upstream leadership and enterprise hardening provides the complete platform needed for this journey—whether starting on public cloud with enhanced security or operating entirely on Canadian sovereign infrastructure.

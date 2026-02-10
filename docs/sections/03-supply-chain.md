@@ -1,5 +1,9 @@
 # Securing the Software Supply Chain
 
+[← Base Images](02-base-images.md) | [Table of Contents](../OUTLINE.md) | [Next: Kubernetes Platform →](04-kubernetes-platform.md)
+
+---
+
 ## Executive Summary
 
 Software supply chain attacks have emerged as one of the most effective threat vectors for compromising systems at scale. SolarWinds demonstrated how a single compromised build system could affect 18,000 organizations, while Log4Shell showed how a vulnerability in a ubiquitous dependency could create global exposure overnight. Traditional security focused on perimeter defense; modern threats exploit the trust relationships in software dependencies and build pipelines.
@@ -628,3 +632,7 @@ Sigstore has achieved widespread adoption beyond its original contributors. GitH
 - [NIST Secure Software Development Framework (SSDF)](https://csrc.nist.gov/Projects/ssdf)
 - [Executive Order 14028 on Cybersecurity](https://www.whitehouse.gov/briefing-room/presidential-actions/2021/05/12/executive-order-on-improving-the-nations-cybersecurity/)
 - [Red Hat Trusted Software Supply Chain](https://www.redhat.com/en/solutions/trusted-software-supply-chain)
+
+---
+
+**Next:** [4. Cloud Independence: Enterprise Kubernetes →](04-kubernetes-platform.md)

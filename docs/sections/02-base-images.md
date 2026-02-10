@@ -1,5 +1,9 @@
 # Foundation: Trusted Base Images
 
+[← Introduction](01-introduction.md) | [Table of Contents](../OUTLINE.md) | [Next: Supply Chain →](03-supply-chain.md)
+
+---
+
 ## Executive Summary
 
 The foundation of any containerized application is its base image. Poor choices here create security vulnerabilities, licensing complications, and portability challenges. Red Hat Universal Base Images (UBI) and Project Hummingbird provide freely redistributable, enterprise-grade base images that enable true cloud independence while maintaining the highest security standards.
@@ -210,3 +214,7 @@ The broader impact extends to standardization: by providing freely available ent
 - [OCI Image Format Specification](https://github.com/opencontainers/image-spec)
 - [NIST Application Container Security Guide](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf)
 - [Red Hat Container Security Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/building_running_and_managing_containers/index)
+
+---
+
+**Next:** [3. Securing the Software Supply Chain →](03-supply-chain.md)

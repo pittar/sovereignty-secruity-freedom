@@ -1,5 +1,9 @@
 # Zero Trust Workload Identity
 
+[← Confidential Containers](08-confidential-containers.md) | [Table of Contents](../OUTLINE.md) | [Next: AI Platform →](10-ai-platform.md)
+
+---
+
 ## Executive Summary
 
 Secrets are the weakest link in modern security. API keys leaked in GitHub commits, database passwords shared across teams, long-lived tokens with excessive permissions—every secret represents an attack surface. Organizations manage thousands of credentials across hundreds of services, relying on manual rotation schedules rarely followed and access controls frequently misconfigured. When secrets leak (not if, but when), detecting and recovering from compromise is expensive and often incomplete. Traditional secret management tools mitigate symptoms but don't solve the fundamental problem: secrets are shareable, copyable, and stealable.
@@ -756,3 +760,7 @@ The hybrid architecture enabled regulatory compliance (customer PII stays on-pre
 - [CNCF SPIFFE/SPIRE](https://www.cncf.io/projects/spiffe/)
 - [Zero Trust Architecture (NIST SP 800-207)](https://csrc.nist.gov/publications/detail/sp/800-207/final)
 - [Red Hat Zero Trust Workload Identity Manager](https://www.redhat.com/en/technologies/cloud-computing/openshift/zero-trust)
+
+---
+
+**Next:** [10. The AI-Enabled Platform →](10-ai-platform.md)

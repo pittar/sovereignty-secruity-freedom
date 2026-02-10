@@ -1,5 +1,9 @@
 # Cloud Independence: Enterprise Kubernetes
 
+[← Supply Chain](03-supply-chain.md) | [Table of Contents](../OUTLINE.md) | [Next: CI/CD →](05-cicd.md)
+
+---
+
 ## Executive Summary
 
 Cloud providers offer powerful managed services, but using them creates dependencies that restrict portability and inflate switching costs. For Canadian government organizations seeking digital sovereignty, infrastructure abstraction is essential—a consistent platform that works identically across AWS, Azure, Google Cloud, and on-premises Canadian data centers. Kubernetes provides this abstraction through its declarative API model, but vanilla Kubernetes lacks critical enterprise features for production operations.
@@ -333,3 +337,7 @@ DR testing validates recovery procedures and measures Recovery Time Objectives (
 - [Kubernetes Operators](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/)
 - [OperatorHub.io](https://operatorhub.io/)
 - [Red Hat Advanced Cluster Management](https://www.redhat.com/en/technologies/management/advanced-cluster-management)
+
+---
+
+**Next:** [5. CI/CD: The Enabler of Cloud Agnostic Development →](05-cicd.md)

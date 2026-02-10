@@ -1,5 +1,9 @@
 # Executive Overview
 
+[Table of Contents](../OUTLINE.md) | [Next: Introduction →](01-introduction.md)
+
+---
+
 ## Digital Sovereignty Through Enterprise-Grade Open Source
 
 > **For Executive Leadership and Decision Makers**
@@ -92,3 +96,7 @@ This paper explores the complete journey from foundational container images thro
 **Build incrementally**: Add supply chain security, cloud-native CI/CD, and platform engineering capabilities as your team's practices mature.
 
 **Engage with Red Hat**: Explore how enterprise support, training, and services can accelerate your sovereignty journey while maintaining full technical control.
+
+---
+
+**Next:** [1. Introduction: The Digital Sovereignty Imperative →](01-introduction.md)
