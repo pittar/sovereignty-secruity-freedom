@@ -130,6 +130,415 @@ Organizations can deploy private Sigstore infrastructure using the Sigstore Scaf
 
 ---
 
+## Air-Gapped and On-Premises Supply Chain Security
+
+### Why Air-Gapped Supply Chain Security Matters
+
+Air-gapped environments—systems completely isolated from external networks—are mandated for classified government systems, defense contractors, critical infrastructure (power grids, water treatment), financial trading floors, and research facilities with intellectual property protection. These environments cannot connect to public Sigstore infrastructure (Fulcio, Rekor), external container registries, or internet-based vulnerability databases. Yet supply chain security remains critical: compromised artifacts in air-gapped environments are often more damaging due to the sensitive nature of systems and difficulty of incident response in isolated networks.
+
+On-premises supply chain infrastructure provides sovereignty even without air-gap requirements: organizations maintain complete control over signing keys, transparency logs, and artifact registries without dependency on external services. This aligns with digital sovereignty principles—security infrastructure operates within organizational boundaries, subject to internal governance rather than external service providers.
+
+**Air-Gap and On-Prem Requirements:**
+- **Artifact Signing**: Sign container images without external Sigstore access
+- **Verification**: Validate signatures using internal trust roots
+- **Transparency**: Maintain immutable audit logs for compliance
+- **SBOM Management**: Generate and verify SBOMs in disconnected environments
+- **Vulnerability Scanning**: Scan images against internal CVE databases
+- **Registry Operations**: Mirror and manage container images internally
+- **Key Management**: Secure storage and rotation of signing keys
+
+### On-Premises Sigstore Infrastructure
+
+Organizations deploy private Sigstore infrastructure using the Sigstore Scaffolding project, which provides Helm charts and deployment automation for running Fulcio, Rekor, and Certificate Transparency (CT) logs in disconnected environments. This architecture replicates public Sigstore functionality within organizational boundaries, enabling keyless signing with organizational identity providers (LDAP, Active Directory, Keycloak) and maintaining transparency logs for internal audit.
+
+**On-Premises Sigstore Components:**
+
+```yaml
+# Example: On-Premises Sigstore Architecture
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sigstore
+---
+# Fulcio - Internal Certificate Authority
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fulcio
+  namespace: sigstore
+spec:
+  replicas: 3  # HA deployment
+  template:
+    spec:
+      containers:
+        - name: fulcio
+          image: registry.internal.corp/sigstore/fulcio:v1.4.0
+          args:
+            - serve
+            - --port=8080
+            - --grpc-port=5554
+            - --ca=fileca
+            - --fileca-key=/var/run/fulcio-secrets/key.pem
+            - --fileca-cert=/var/run/fulcio-secrets/cert.pem
+            - --ct-log-url=http://ctlog.sigstore.svc.cluster.local:6962
+            # OIDC configuration for enterprise IDP
+            - --oidc-issuer=https://keycloak.internal.corp/auth/realms/sigstore
+            - --oidc-client-id=fulcio
+          volumeMounts:
+            - name: fulcio-secrets
+              mountPath: /var/run/fulcio-secrets
+              readOnly: true
+      volumes:
+        - name: fulcio-secrets
+          secret:
+            secretName: fulcio-ca-keys  # Organizational root CA keys
+---
+# Rekor - Transparency Log
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rekor-server
+  namespace: sigstore
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - name: rekor
+          image: registry.internal.corp/sigstore/rekor-server:v1.3.0
+          args:
+            - serve
+            - --trillian_log_server.address=trillian-log.sigstore.svc.cluster.local:8090
+            - --redis_server.address=redis.sigstore.svc.cluster.local:6379
+            - --rekor_server.address=0.0.0.0:3000
+          ports:
+            - containerPort: 3000
+              name: http
+---
+# Trillian - Merkle Tree Backend for Rekor
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trillian-log
+  namespace: sigstore
+spec:
+  template:
+    spec:
+      containers:
+        - name: trillian
+          image: registry.internal.corp/sigstore/trillian-log-server:v1.5.0
+          args:
+            - --storage_system=mysql
+            - --mysql_uri=trillian:password@tcp(mysql.sigstore.svc.cluster.local:3306)/trillian
+```
+
+**Integration with Organizational PKI:**
+
+On-premises Fulcio can chain to organizational root certificate authorities, enabling verification by existing enterprise systems without distributing new trust roots. This integration allows:
+
+- **Certificate Validation**: Fulcio-issued certificates validated by existing enterprise PKI infrastructure
+- **Hardware Security Modules (HSM)**: Fulcio private keys stored in HSMs (PKCS#11) for FIPS 140-2 compliance
+- **Policy Integration**: Tie certificate issuance to organizational identity policies (multi-factor authentication, role-based access)
+- **Audit Integration**: Integrate Rekor logs with enterprise SIEM systems
+
+### Air-Gapped Artifact Signing Workflows
+
+In completely disconnected environments, organizations use key-based signing with locally-managed keys rather than keyless signing (which requires OIDC connectivity). This approach trades key management overhead for air-gap compatibility.
+
+**Air-Gapped Signing Pattern:**
+
+```bash
+# On connected environment (development/CI):
+# Build and sign artifacts, export signatures
+
+# 1. Build container image
+podman build -t myapp:v1.0 .
+
+# 2. Sign image with organizational key
+cosign sign --key /secure/signing-key.pem \
+  --tlog-upload=false \  # No external Rekor upload in air-gap prep
+  registry.connected.corp/myapp:v1.0
+
+# 3. Export signature bundle
+cosign save --signature-only registry.connected.corp/myapp:v1.0 > myapp-v1.0.sig
+
+# 4. Export image
+podman save registry.connected.corp/myapp:v1.0 -o myapp-v1.0.tar
+
+# 5. Generate SBOM
+syft registry.connected.corp/myapp:v1.0 -o spdx-json > myapp-v1.0-sbom.json
+
+# 6. Create cryptographic manifest for integrity verification
+sha256sum myapp-v1.0.tar myapp-v1.0.sig myapp-v1.0-sbom.json > manifest.sha256
+
+# 7. Sign manifest with organizational GPG key
+gpg --armor --sign manifest.sha256
+
+# Transfer to air-gapped environment:
+# - myapp-v1.0.tar (container image)
+# - myapp-v1.0.sig (cosign signature)
+# - myapp-v1.0-sbom.json (SBOM)
+# - manifest.sha256.asc (signed integrity manifest)
+
+# On air-gapped environment:
+# 1. Verify transfer integrity
+gpg --verify manifest.sha256.asc
+sha256sum -c manifest.sha256
+
+# 2. Load image into air-gapped registry
+podman load -i myapp-v1.0.tar
+podman tag localhost/myapp:v1.0 registry.airgap.corp/myapp:v1.0
+podman push registry.airgap.corp/myapp:v1.0
+
+# 3. Upload signature to air-gapped registry
+cosign attach signature --signature myapp-v1.0.sig registry.airgap.corp/myapp:v1.0
+
+# 4. Attach SBOM
+cosign attach sbom --sbom myapp-v1.0-sbom.json registry.airgap.corp/myapp:v1.0
+
+# 5. Record in on-prem Rekor instance
+cosign upload blob \
+  --rekor-url https://rekor.airgap.corp \
+  --f myapp-v1.0.sig
+
+# 6. Verify signature in air-gapped environment
+cosign verify --key /secure/verification-key.pub \
+  --rekor-url https://rekor.airgap.corp \
+  registry.airgap.corp/myapp:v1.0
+```
+
+### Image Mirroring for Air-Gapped Environments
+
+Organizations mirror external container images (UBI, OpenShift, third-party dependencies) into air-gapped registries using controlled transfer processes. This ensures software supply chain security extends to externally-sourced artifacts.
+
+**Mirroring Workflow with Verification:**
+
+```bash
+# On connected environment with internet access:
+
+# 1. Mirror Red Hat container images with signature verification
+oc adm catalog mirror \
+  registry.redhat.io/redhat/redhat-operator-index:v4.15 \
+  file://offline-catalog \
+  --manifests-only
+
+# 2. Download mirrored images
+oc image mirror \
+  -f offline-catalog/mapping.txt \
+  file://offline-images
+
+# 3. Verify all signatures before transfer
+for image in $(cat offline-catalog/mapping.txt | awk '{print $1}'); do
+  cosign verify --key /secure/redhat-public-key.pub "$image" || exit 1
+done
+
+# 4. Generate transfer manifest with checksums
+find offline-images -type f -exec sha256sum {} \; > transfer-manifest.sha256
+
+# 5. Sign transfer manifest
+gpg --armor --sign transfer-manifest.sha256
+
+# Transfer via secure removable media:
+# - offline-images/ (container image blobs)
+# - offline-catalog/ (metadata)
+# - transfer-manifest.sha256.asc (signed checksums)
+
+# On air-gapped environment:
+
+# 1. Verify transfer integrity
+gpg --verify transfer-manifest.sha256.asc
+sha256sum -c transfer-manifest.sha256
+
+# 2. Mirror to air-gapped registry
+oc image mirror \
+  --from-dir=offline-images \
+  file://offline-images \
+  registry.airgap.corp/mirror
+
+# 3. Verify signatures in air-gapped registry
+for image in $(cat offline-catalog/mapping.txt | awk '{print $2}'); do
+  cosign verify --key /secure/redhat-public-key.pub \
+    "registry.airgap.corp/mirror/$image"
+done
+```
+
+### Vulnerability Database Management in Air-Gap
+
+Air-gapped vulnerability scanning requires maintaining internal CVE databases synchronized from external sources during periodic security updates.
+
+**Air-Gap Vulnerability Management:**
+
+```bash
+# On connected environment (periodic sync - e.g., weekly):
+
+# 1. Download latest CVE databases
+trivy image --download-db-only --db-repository trivy-db.airgap.corp
+
+# 2. Export Trivy database
+trivy image --cache-dir /tmp/trivy-cache \
+  --download-db-only
+
+# 3. Package database for transfer
+tar czf trivy-db-$(date +%Y%m%d).tar.gz -C /tmp/trivy-cache .
+
+# 4. Generate checksum and sign
+sha256sum trivy-db-$(date +%Y%m%d).tar.gz > trivy-db-$(date +%Y%m%d).tar.gz.sha256
+gpg --armor --sign trivy-db-$(date +%Y%m%d).tar.gz.sha256
+
+# Transfer to air-gapped environment
+
+# On air-gapped environment:
+
+# 1. Verify database integrity
+gpg --verify trivy-db-$(date +%Y%m%d).tar.gz.sha256.asc
+sha256sum -c trivy-db-$(date +%Y%m%d).tar.gz.sha256
+
+# 2. Extract to internal Trivy cache
+tar xzf trivy-db-$(date +%Y%m%d).tar.gz -C /var/lib/trivy/cache
+
+# 3. Configure Trivy to use local database
+trivy image --skip-db-update \
+  --offline-scan \
+  registry.airgap.corp/myapp:v1.0
+```
+
+### Policy Enforcement in On-Prem and Air-Gap
+
+Kubernetes admission controllers enforce supply chain policies using internal Sigstore infrastructure and verification keys.
+
+**Air-Gap Policy Configuration:**
+
+```yaml
+# Sigstore Policy Controller configuration for air-gapped cluster
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-policy-controller
+  namespace: cosign-system
+data:
+  # Use on-prem Fulcio and Rekor
+  fulcio-url: "https://fulcio.airgap.corp"
+  rekor-url: "https://rekor.airgap.corp"
+  ctlog-url: "https://ctlog.airgap.corp"
+---
+# ClusterImagePolicy requiring internal signatures
+apiVersion: policy.sigstore.dev/v1beta1
+kind: ClusterImagePolicy
+metadata:
+  name: require-internal-signatures
+spec:
+  images:
+    - glob: "registry.airgap.corp/**"
+  authorities:
+    - name: internal-sigstore
+      keyless:
+        url: https://fulcio.airgap.corp
+        identities:
+          # Require signatures from organizational identities
+          - issuer: "https://keycloak.airgap.corp/auth/realms/sigstore"
+            subject: ".*@corp\\.com$"  # Organizational email domain
+    - name: redhat-signatures
+      key:
+        # Verify Red Hat signatures using public key
+        data: |
+          -----BEGIN PUBLIC KEY-----
+          [Red Hat public key]
+          -----END PUBLIC KEY-----
+  policy:
+    type: cue
+    data: |
+      // Require both signature and SBOM attestation
+      predicateType: "https://spdx.dev/Document"
+```
+
+### On-Premises Supply Chain Operations
+
+Daily operations in on-premises/air-gapped supply chain infrastructure require automation for sustainability.
+
+**Operational Patterns:**
+
+1. **Automated Image Builds**: Tekton pipelines in on-prem OpenShift with Chains for automatic signing
+2. **Scheduled Mirroring**: CronJobs synchronizing external images during security update windows
+3. **Compliance Reporting**: Automated SBOM aggregation and vulnerability reporting for audit
+4. **Key Rotation**: Periodic rotation of signing keys with HSM integration
+5. **Capacity Planning**: Rekor log growth management, registry storage monitoring
+6. **Disaster Recovery**: Backup procedures for Rekor transparency logs, registry data
+
+**Example: Automated On-Prem Build with Signing**
+
+```yaml
+# Tekton Pipeline with Chains for automatic signing in on-prem cluster
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: onprem-secure-build
+  namespace: ci-cd
+  annotations:
+    # Chains configuration for automatic signing
+    chains.tekton.dev/signed: "true"
+spec:
+  params:
+    - name: git-url
+    - name: image-name
+  tasks:
+    - name: clone
+      taskRef:
+        name: git-clone
+      params:
+        - name: url
+          value: $(params.git-url)
+
+    - name: build
+      taskRef:
+        name: buildah
+      runAfter: [clone]
+      params:
+        - name: IMAGE
+          value: registry.airgap.corp/$(params.image-name)
+
+    - name: scan
+      taskRef:
+        name: trivy-scan
+      runAfter: [build]
+      params:
+        - name: IMAGE
+          value: registry.airgap.corp/$(params.image-name)
+        # Use air-gapped Trivy database
+        - name: TRIVY_OFFLINE_SCAN
+          value: "true"
+
+    - name: generate-sbom
+      taskRef:
+        name: syft
+      runAfter: [build]
+      params:
+        - name: IMAGE
+          value: registry.airgap.corp/$(params.image-name)
+
+  # Tekton Chains automatically:
+  # 1. Signs the TaskRun with organizational key
+  # 2. Generates SLSA provenance
+  # 3. Uploads to on-prem Rekor instance
+  # 4. Attaches signature to image in registry
+---
+# Chains configuration for on-prem Sigstore
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chains-config
+  namespace: tekton-chains
+data:
+  artifacts.taskrun.format: "in-toto"
+  artifacts.taskrun.storage: "oci"
+  artifacts.oci.storage: "oci"
+  transparency.enabled: "true"
+  transparency.url: "https://rekor.airgap.corp"
+  # Use organizational signing key
+  signers.kms.auth.address: "hashivault://vault.airgap.corp:8200"
+```
+
+---
+
 ## Compliance and Attestation
 
 ### SLSA Framework
