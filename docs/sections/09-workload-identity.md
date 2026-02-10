@@ -328,10 +328,12 @@ Service meshes like Istio traditionally use their own certificate authorities fo
 SPIFFE federation enables workload identity across separate trust domains—different Kubernetes clusters, cloud providers, or organizational boundaries. A service in AWS cluster can authenticate services in Azure cluster using SPIFFE, without requiring shared certificate authorities or merged identity systems. Each SPIRE deployment maintains independent trust root while establishing federation relationships with peers. This enables hybrid cloud architectures where services span infrastructure, merger integration where acquired companies maintain separate identity systems during transition, and partnership scenarios where organizations collaborate without merging security infrastructure. Federation preserves sovereignty—organizations control their identity infrastructure while enabling secure cross-boundary communication.
 
 **Federation Use Cases:**
-- Services spanning multiple Kubernetes clusters
-- Hybrid cloud deployments
+- Services spanning multiple Kubernetes clusters (on-premises and cloud)
+- Hybrid cloud deployments with on-premises data centers
+- Multi-region on-premises deployments
+- Air-gapped environments with periodic trust bundle synchronization
 - Cross-organization collaboration
-- Disaster recovery and failover
+- Disaster recovery and failover across on-prem and cloud
 
 ### Trust Bundle Exchange
 
@@ -358,6 +360,280 @@ JWT SVIDs enable HTTP API authentication without bearer tokens or API keys. Serv
 ### Cloud Provider Access
 
 SPIFFE integration with cloud IAM enables workloads to access cloud resources without long-lived credentials. AWS OIDC identity provider integration allows SPIFFE JWTs to assume IAM roles—workloads present JWT SVIDs, AWS validates them against SPIRE JWKS endpoint, and issues temporary AWS credentials. Azure Workload Identity and GCP Workload Identity Federation provide similar capabilities. This eliminates static cloud credentials in workloads. Instead, workloads prove identity through SPIFFE (attested locally), exchange for cloud credentials (scoped to minimum required permissions), and access cloud resources. Credentials refresh automatically as JWT SVIDs rotate. Cloud access becomes attribute of workload identity rather than manually-managed secrets.
+
+---
+
+## On-Premises and Air-Gapped Deployments
+
+### Why On-Premises SPIFFE Matters
+
+Digital sovereignty demands the ability to operate workload identity infrastructure entirely within organizational control—no dependency on cloud provider IAM systems, no reliance on external certificate authorities, no requirement to route traffic through vendor endpoints. On-premises SPIRE deployments enable organizations to maintain cryptographic root of trust within their own data centers, meet regulatory requirements for data residency and operational independence, and operate in disconnected or air-gapped environments where cloud connectivity is prohibited. Whether driven by compliance (financial services, government), security posture (defense, critical infrastructure), or strategic independence (avoiding vendor lock-in), on-premises SPIFFE provides consistent workload identity without cloud dependencies.
+
+**Key Sovereignty Benefits:**
+- **Complete Control**: Organization owns the root of trust and certificate authority
+- **No External Dependencies**: Identity infrastructure operates without internet connectivity
+- **Regulatory Compliance**: Data and cryptographic operations stay within geographical boundaries
+- **Operational Independence**: Identity system continues functioning during cloud outages or network partitions
+
+### On-Premises Architecture Patterns
+
+SPIRE deploys identically across cloud and on-premises Kubernetes distributions. OpenShift on bare metal, VMware, or on-prem cloud platforms (OpenStack) runs SPIRE Server and Agents with same operational model as cloud deployments. Key differences emerge in infrastructure dependencies: on-prem deployments often use organizational PKI for SPIRE Server upstream CA trust, integrate with LDAP/Active Directory for operator authentication, and leverage hardware security modules (HSMs) for private key protection. High availability configurations require shared storage (NFS, Ceph, Portworx) for SPIRE Server database persistence and load balancers (HAProxy, F5) for multi-replica access.
+
+**On-Premises Deployment Considerations:**
+
+1. **Storage**: SPIRE Server requires persistent storage for registration database
+   - Shared storage solutions: NFS, Ceph RBD, Portworx, enterprise storage arrays
+   - Database backend options: PostgreSQL, MySQL (replicated for HA)
+
+2. **Certificate Authority Integration**: SPIRE can chain trust to organizational root CA
+   - Upload organization root/intermediate certificates to SPIRE trust bundle
+   - SPIRE acts as subordinate CA within existing PKI hierarchy
+   - Enables validation by existing enterprise systems
+
+3. **Hardware Security Modules (HSMs)**: Protect SPIRE Server CA private key
+   - PKCS#11 interface support (Thales, Utimaco, SoftHSM for testing)
+   - FIPS 140-2 Level 3 compliance for regulated industries
+   - Key ceremony procedures for CA initialization
+
+4. **Load Balancing**: Multi-replica SPIRE Server requires load balancing
+   - L4 load balancers: HAProxy, F5, Cisco, on-prem OpenShift routing
+   - Health check endpoints: `/live` and `/ready` for replica monitoring
+
+```yaml
+# Example: On-Premises SPIRE Server with external database
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spire-server
+  namespace: spire
+spec:
+  replicas: 3  # High availability for on-prem production
+  selector:
+    matchLabels:
+      app: spire-server
+  template:
+    metadata:
+      labels:
+        app: spire-server
+    spec:
+      serviceAccountName: spire-server
+      # Node affinity for control plane nodes
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
+      containers:
+        - name: spire-server
+          image: ghcr.io/spiffe/spire-server:1.9.0
+          args:
+            - -config
+            - /run/spire/config/server.conf
+          ports:
+            - containerPort: 8081  # gRPC for agents
+              name: grpc
+            - containerPort: 8443  # Federation and OIDC
+              name: https
+          volumeMounts:
+            - name: spire-config
+              mountPath: /run/spire/config
+            - name: spire-ca-cert
+              mountPath: /run/spire/ca  # Organizational root CA
+          env:
+            # External PostgreSQL connection for on-prem HA
+            - name: SPIRE_SERVER_DATABASE_TYPE
+              value: postgres
+            - name: SPIRE_SERVER_DATABASE_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: spire-server-db
+                  key: connection-string
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+      volumes:
+        - name: spire-config
+          configMap:
+            name: spire-server
+        - name: spire-ca-cert
+          secret:
+            secretName: organization-root-ca  # Enterprise PKI integration
+```
+
+### Air-Gapped Environments
+
+Air-gapped environments prohibit internet connectivity for security or regulatory reasons: classified government systems, financial trading floors, industrial control systems, research labs with intellectual property protection. SPIFFE operates effectively in these environments—all identity operations are local, requiring no external communication. Challenges arise in operational workflows: container image distribution, software updates, and trust bundle synchronization across security boundaries. Organizations implement secured transfer procedures: container images burned to removable media and verified through hash comparison, SPIRE trust bundles exported and transferred through approved channels, software updates qualified and transferred in scheduled maintenance windows.
+
+**Air-Gap Operational Patterns:**
+
+1. **Image Distribution**
+   - Mirror SPIRE container images to on-prem registry
+   - Transfer via secure removable media with cryptographic verification
+   - Internal registry: Red Hat Quay, Harbor, Sonatype Nexus
+
+2. **Trust Bundle Management**
+   - Export trust bundles from SPIRE Server to files
+   - Transfer through approved security boundary (one-way data diode, manual media transfer)
+   - Import trust bundles into federated SPIRE deployments
+   - Automate within security policy (cron jobs, scheduled transfers)
+
+3. **Software Updates**
+   - Qualify SPIRE updates in connected test environment
+   - Transfer qualified images and manifests to air-gapped environment
+   - Deploy during maintenance windows with change control procedures
+
+```yaml
+# Example: Exporting trust bundle for air-gapped transfer
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: spire-trust-bundle-export
+  namespace: spire
+spec:
+  # Daily export of trust bundle for manual transfer
+  schedule: "0 2 * * *"  # 2 AM daily
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: spire-bundle-exporter
+          containers:
+            - name: bundle-exporter
+              image: ghcr.io/spiffe/spire-server:1.9.0
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  # Export trust bundle to file
+                  /opt/spire/bin/spire-server bundle show \
+                    -socketPath /run/spire/sockets/server.sock \
+                    -format spiffe > /export/trust-bundle-$(date +%Y%m%d).json
+
+                  # Sign export for integrity verification
+                  sha256sum /export/trust-bundle-$(date +%Y%m%d).json \
+                    > /export/trust-bundle-$(date +%Y%m%d).json.sha256
+              volumeMounts:
+                - name: spire-server-socket
+                  mountPath: /run/spire/sockets
+                - name: bundle-export
+                  mountPath: /export
+          volumes:
+            - name: spire-server-socket
+              hostPath:
+                path: /run/spire/sockets
+                type: Directory
+            - name: bundle-export
+              persistentVolumeClaim:
+                claimName: bundle-export-pvc  # Mounted to transfer location
+          restartPolicy: OnFailure
+```
+
+### Hybrid Identity: Spanning On-Prem and Cloud
+
+Most enterprises operate hybrid infrastructure: on-premises data centers hosting core systems, public cloud for elastic workloads, edge locations for latency-sensitive processing. SPIFFE federation enables workload identity across these boundaries—services in on-prem OpenShift authenticate workloads in AWS EKS, applications in Azure AKS verify identities from edge Kubernetes clusters. This capability is critical for migration scenarios (gradually moving workloads cloud-ward while maintaining on-prem integration), disaster recovery (failover from on-prem to cloud with identity continuity), and distributed architectures (data processing in cloud, data storage on-prem for compliance).
+
+**Hybrid Federation Architecture:**
+
+```
+┌─────────────────────────────────────────┐
+│   On-Premises Data Center (Production)  │
+│                                          │
+│  ┌─────────────────────────────────┐    │
+│  │   SPIRE Server (Primary)        │    │
+│  │   Trust Domain: prod.corp.com   │    │
+│  │   - Customer database services  │    │
+│  │   - Core business logic         │    │
+│  │   - Legacy system integrations  │    │
+│  └─────────────────────────────────┘    │
+│                                          │
+└──────────────┬───────────────────────────┘
+               │ Federation
+               │ (Trust Bundle Exchange)
+               │
+        ┌──────┴──────┬────────────────┐
+        │             │                │
+        ▼             ▼                ▼
+┌──────────────┐ ┌────────────┐ ┌────────────┐
+│ AWS EKS      │ │ Azure AKS  │ │ GCP GKE    │
+│ SPIRE Server │ │ SPIRE Svr  │ │ SPIRE Svr  │
+│ Trust Domain:│ │ Trust:     │ │ Trust:     │
+│ aws.corp.com │ │ az.co.com  │ │ gcp.co.com │
+│ - Analytics  │ │ - ML/AI    │ │ - Test env │
+│ - Batch jobs │ │ - Scaling  │ │ - Dev work │
+└──────────────┘ └────────────┘ └────────────┘
+```
+
+**Federation Configuration Example:**
+
+```yaml
+# On-Premises SPIRE Server federation config
+# File: /etc/spire/server.conf
+server {
+  bind_address = "0.0.0.0"
+  bind_port = "8081"
+  trust_domain = "prod.corp.com"
+  data_dir = "/var/lib/spire/data"
+
+  # Federation with cloud SPIRE deployments
+  federation {
+    bundle_endpoint {
+      address = "0.0.0.0"
+      port = 8443
+      # TLS configuration for external access
+      tls {
+        cert_file = "/run/spire/certs/federation-cert.pem"
+        key_file = "/run/spire/certs/federation-key.pem"
+        ca_file = "/run/spire/certs/ca.pem"
+      }
+    }
+
+    # Federate with AWS environment
+    federates_with "aws.corp.com" {
+      bundle_endpoint_url = "https://spire-aws.corp.com:8443"
+      bundle_endpoint_profile "https_spiffe" {
+        endpoint_spiffe_id = "spiffe://aws.corp.com/spire/server"
+      }
+    }
+
+    # Federate with Azure environment
+    federates_with "azure.corp.com" {
+      bundle_endpoint_url = "https://spire-azure.corp.com:8443"
+      bundle_endpoint_profile "https_spiffe" {
+        endpoint_spiffe_id = "spiffe://azure.corp.com/spire/server"
+      }
+    }
+  }
+}
+```
+
+**Hybrid Use Case: Database Access from Cloud**
+
+Common pattern: sensitive data remains on-premises for compliance, but analytics workloads run in cloud for GPU/compute elasticity. Analytics services in AWS need authenticated access to on-prem PostgreSQL database.
+
+1. **On-Prem**: SPIRE Server issues SVIDs to PostgreSQL, configured to require X.509 client certificates
+2. **AWS**: SPIRE Server federates with on-prem, issues SVIDs to analytics pods with SPIFFE ID including trust domain
+3. **Analytics Pod**: Retrieves SVID, connects to on-prem PostgreSQL over VPN/DirectConnect
+4. **PostgreSQL**: Validates SVID against federated trust bundle, grants access based on SPIFFE ID
+
+No secrets cross the security boundary—only cryptographic identities verifiable through federation.
+
+### Edge and Disconnected Operations
+
+Edge computing environments often operate with intermittent connectivity: retail stores, manufacturing facilities, vessels, remote sites. SPIRE supports these scenarios through trust bundle caching—agents maintain local copy of trust bundles, enabling workload identity operations during network outages. When connectivity restores, agents synchronize updated bundles. SVID issuance continues during disconnections because agents cache attestation state and can issue SVIDs independently until agent-server sync is required (typically several hours to days depending on configuration). This resilience makes SPIFFE suitable for edge deployments where constant cloud connectivity cannot be guaranteed.
+
+**Edge Deployment Pattern:**
+- SPIRE Server in regional data center or cloud
+- SPIRE Agents at edge locations with local caching
+- Workloads receive SVIDs from local agents (no server connectivity required for short-term)
+- Periodic synchronization when connectivity available
+- Complete autonomy for hours/days during network partitions
 
 ---
 
@@ -409,9 +685,17 @@ Migrating from secret-based to identity-based authentication requires phased app
 
 ---
 
-## Real-World Example: Zero Trust Microservices
+## Real-World Example: Zero Trust Microservices Across Hybrid Infrastructure
 
-A SaaS company with 50 microservices faced escalating secret management overhead: 100+ secrets across environments, quarterly rotation cycles often skipped due to complexity, and three secret leakage incidents in 18 months (GitHub commits, log exposure, compromised developer laptop). Security team mandated zero trust architecture with cryptographic workload identity, eliminating static secrets. Platform team evaluated proprietary solutions but chose SPIFFE/SPIRE for sovereignty—open standards working across their multi-cloud deployment (AWS development, GCP production, on-premises disaster recovery).
+A global financial services company with 50 microservices faced escalating secret management overhead: 100+ secrets across environments, quarterly rotation cycles often skipped due to complexity, and three secret leakage incidents in 18 months (GitHub commits, log exposure, compromised developer laptop). Security team mandated zero trust architecture with cryptographic workload identity, eliminating static secrets. Platform team evaluated proprietary cloud IAM solutions but chose SPIFFE/SPIRE for sovereignty—open standards working across their hybrid deployment (AWS development environments, GCP production for elastic scaling, on-premises data centers for core banking systems and customer data).
+
+**Infrastructure Distribution:**
+- **On-Premises Primary Data Center**: Core banking applications, customer database (compliance requirement), transaction processing, SPIRE Server primary instance
+- **AWS (Development/Staging)**: Development clusters, CI/CD pipelines, federated SPIRE Server
+- **GCP (Production Elastic)**: Public-facing APIs, analytics services, federated SPIRE Server
+- **On-Premises DR Site**: Disaster recovery environment, federated SPIRE Server
+
+The hybrid architecture enabled regulatory compliance (customer PII stays on-prem in EU data center) while leveraging cloud elasticity for variable workloads. SPIFFE federation connected all environments—services in GCP authenticated to on-prem databases using X.509 SVIDs verified through federated trust bundles, no static credentials crossing security boundaries.
 
 **Before:**
 - 50 microservices
@@ -421,17 +705,21 @@ A SaaS company with 50 microservices faced escalating secret management overhead
 - Limited audit trail
 
 **After:**
-- SPIRE deployed on OpenShift
-- Automatic SVID issuance and rotation
-- mTLS for all service-to-service communication
-- Zero static secrets
-- Complete audit trail of all authentication
+- SPIRE deployed on OpenShift across all environments (on-prem and cloud)
+- Federation configured between on-prem primary and cloud SPIRE instances
+- Automatic SVID issuance and rotation across hybrid infrastructure
+- mTLS for all service-to-service communication (including cross-environment)
+- Zero static secrets (eliminated database passwords, API keys, cloud credentials)
+- Complete audit trail of all authentication with SPIFFE ID granularity
+- On-prem SPIRE integrated with organizational PKI and HSM
 
 **Results:**
-- Secret-related incidents: 100% reduction
-- Credential rotation: Automatic (hourly)
-- Compliance audit time: 60% reduction
-- Developer cognitive load: Significantly reduced
+- Secret-related incidents: 100% reduction (zero leaks in 24 months post-deployment)
+- Credential rotation: Automatic (hourly) without manual intervention
+- Compliance audit time: 60% reduction (cryptographic identity audit trails)
+- Cross-environment authentication: Seamless (cloud → on-prem without secrets)
+- Developer cognitive load: Significantly reduced (no secret distribution/rotation)
+- Regulatory compliance: Maintained (data residency + cryptographic access controls)
 
 ---
 
