@@ -78,7 +78,7 @@ Red Hat's platform provides a natural migration path from public cloud back to o
 
 ## What This Paper Covers
 
-This paper explores the complete journey from foundational container images through to AI-enabled platform engineering, demonstrating how organizations can achieve true digital sovereignty while maintaining enterprise-grade security and operational excellence. Each section addresses deployment across public cloud, on-premises data centers, hybrid architectures, and air-gapped environments—ensuring sovereignty regardless of infrastructure location.
+This paper explores the complete journey from foundational container images through to enterprise-grade AI/ML platforms, demonstrating how organizations can achieve true digital sovereignty while maintaining enterprise-grade security and operational excellence. Each section addresses deployment across public cloud, on-premises data centers, hybrid architectures, and air-gapped environments—ensuring sovereignty regardless of infrastructure location.
 
 **Reading paths:**
 - **Executives**: Read this overview and each section's executive summary (20 minutes)

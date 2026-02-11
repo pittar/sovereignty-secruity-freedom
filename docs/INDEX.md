@@ -12,7 +12,7 @@
 8. [Platform Engineering with Backstage](sections/07-platform-engineering.md)
 9. [Advanced Security: Confidential Containers](sections/08-confidential-containers.md)
 10. [Zero Trust Workload Identity](sections/09-workload-identity.md)
-11. [The AI-Enabled Platform](sections/10-ai-platform.md)
+11. [The AI/ML Platform: Enterprise AI with Digital Sovereignty](sections/10-ai-platform.md)
 12. [Conclusion: The Path to Digital Sovereignty](sections/11-conclusion.md)
 
 ## Read by Topic
@@ -34,7 +34,7 @@
 - [Workload Identity (SPIFFE/SPIRE)](sections/09-workload-identity.md)
 
 ### AI and ML
-- [AI-Enabled Platform (GenAI, MLOps)](sections/10-ai-platform.md)
+- [AI/ML Platform (RHEL AI, OpenShift AI, Sovereign MLOps)](sections/10-ai-platform.md)
 
 ### Strategic Context
 - [Introduction and Why It Matters](sections/01-introduction.md)
@@ -73,7 +73,7 @@ Read all sections in full, with special focus on:
 - [CI/CD](sections/05-cicd.md)
 
 ### For Data Scientists and ML Engineers
-- [AI-Enabled Platform](sections/10-ai-platform.md)
+- [AI/ML Platform](sections/10-ai-platform.md)
 - [Confidential Containers](sections/08-confidential-containers.md)
 - [Developer Experience](sections/06-developer-experience.md)
 
