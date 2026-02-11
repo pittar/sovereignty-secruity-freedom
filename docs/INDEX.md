@@ -13,7 +13,8 @@
 9. [Advanced Security: Confidential Containers](sections/08-confidential-containers.md)
 10. [Zero Trust Workload Identity](sections/09-workload-identity.md)
 11. [The AI/ML Platform: Enterprise AI with Digital Sovereignty](sections/10-ai-platform.md)
-12. [Conclusion: The Path to Digital Sovereignty](sections/11-conclusion.md)
+12. [Post-Quantum Cryptography: Future-Proofing Digital Sovereignty](sections/12-post-quantum-cryptography.md)
+13. [Conclusion: The Path to Digital Sovereignty](sections/13-conclusion.md)
 
 ## Read by Topic
 
@@ -32,6 +33,7 @@
 ### Advanced Security
 - [Confidential Containers](sections/08-confidential-containers.md)
 - [Workload Identity (SPIFFE/SPIRE)](sections/09-workload-identity.md)
+- [Post-Quantum Cryptography](sections/12-post-quantum-cryptography.md)
 
 ### AI and ML
 - [AI/ML Platform (RHEL AI, OpenShift AI, Sovereign MLOps)](sections/10-ai-platform.md)
@@ -59,6 +61,7 @@ Read all sections in full, with special focus on:
 - [Supply Chain Security](sections/03-supply-chain.md)
 - [Confidential Containers](sections/08-confidential-containers.md)
 - [Workload Identity](sections/09-workload-identity.md)
+- [Post-Quantum Cryptography](sections/12-post-quantum-cryptography.md)
 - [Base Images](sections/02-base-images.md)
 
 ### For Platform Engineers

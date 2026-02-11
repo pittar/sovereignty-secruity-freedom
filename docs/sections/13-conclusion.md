@@ -1,6 +1,6 @@
 # Conclusion: The Path to Digital Sovereignty
 
-[← AI Platform](10-ai-platform.md) | [Table of Contents](../OUTLINE.md)
+[← Post-Quantum Cryptography](12-post-quantum-cryptography.md) | [Table of Contents](../OUTLINE.md)
 
 ---
 

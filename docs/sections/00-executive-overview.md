@@ -71,6 +71,7 @@ Red Hat's platform provides a natural migration path from public cloud back to o
 - **Regulatory Compliance**: Meet TBS guidelines, PIPEDA, provincial privacy laws, and security categorization requirements through cryptographic guarantees
 - **Cost Optimization**: True multi-cloud and on-premises flexibility enables cloud cost arbitrage and predictable CapEx economics for long-term infrastructure planning
 - **Air-Gap Capability**: Operate in disconnected environments for classified, protected, and sensitive government workloads
+- **Quantum-Resistant Security**: RHEL 10.1's post-quantum cryptography enabled by default protects long-lived government data from future quantum computing threats
 - **Innovation Velocity**: Leverage global open source innovation while maintaining Canadian operational control
 - **Talent Attraction**: Industry-standard, transferable skills reduce dependency on specialized vendor training
 
@@ -78,7 +79,7 @@ Red Hat's platform provides a natural migration path from public cloud back to o
 
 ## What This Paper Covers
 
-This paper explores the complete journey from foundational container images through to enterprise-grade AI/ML platforms, demonstrating how organizations can achieve true digital sovereignty while maintaining enterprise-grade security and operational excellence. Each section addresses deployment across public cloud, on-premises data centers, hybrid architectures, and air-gapped environments—ensuring sovereignty regardless of infrastructure location.
+This paper explores the complete journey from foundational container images through to enterprise-grade AI/ML platforms and post-quantum cryptography, demonstrating how organizations can achieve true digital sovereignty while maintaining enterprise-grade security and operational excellence. Each section addresses deployment across public cloud, on-premises data centers, hybrid architectures, and air-gapped environments—ensuring sovereignty regardless of infrastructure location and protecting data not just today, but through the quantum computing transition and beyond.
 
 **Reading paths:**
 - **Executives**: Read this overview and each section's executive summary (20 minutes)

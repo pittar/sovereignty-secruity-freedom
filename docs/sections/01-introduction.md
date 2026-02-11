@@ -127,9 +127,10 @@ This paper will guide you through the complete stack needed for digital sovereig
 - From developer productivity to platform engineering
 - From supply chain security to zero trust identity
 - From traditional workloads to sovereign AI/ML platforms
+- From current cryptography to quantum-resistant post-quantum cryptography
 - From cloud-native multi-cloud to on-premises sovereignty
 
-All anchored in the power of enterprise-grade open source, deployable wherever your requirements demand.
+All anchored in the power of enterprise-grade open source, deployable wherever your requirements demand, and protected not just today but through the quantum computing transition and beyond.
 
 ---
 

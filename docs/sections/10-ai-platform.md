@@ -420,4 +420,4 @@ Red Hat invests significantly in open source AI/ML infrastructure projects, ensu
 
 ---
 
-**Next:** [11. Conclusion: The Path to Digital Sovereignty →](11-conclusion.md)
+**Next:** [12. Post-Quantum Cryptography: Future-Proofing Digital Sovereignty →](12-post-quantum-cryptography.md)

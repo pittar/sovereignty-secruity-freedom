@@ -101,7 +101,18 @@ High-level summary for executives and decision-makers covering the strategic imp
 - Responsible AI and model governance on sovereign infrastructure
 - Running AI workloads securely with confidential containers
 
-### [11. Conclusion: The Path to Digital Sovereignty](sections/11-conclusion.md)
+### [12. Post-Quantum Cryptography: Future-Proofing Digital Sovereignty](sections/12-post-quantum-cryptography.md)
+**Executive Summary:** Protecting data from quantum computing threats
+**Technical Deep Dive:**
+- The quantum computing threat and "harvest now, decrypt later" attacks
+- NIST post-quantum cryptography standards (ML-KEM, ML-DSA, SLH-DSA)
+- RHEL 10.1: First major Linux distribution with PQC enabled by default
+- Hybrid cryptography for transition and compatibility
+- Red Hat's quantum-resistant package signing
+- Canadian government PQC adoption strategies and timelines
+- Migration patterns for federal departments and agencies
+
+### [13. Conclusion: The Path to Digital Sovereignty](sections/13-conclusion.md)
 **Executive Summary:** Bringing it all together
 **Key Takeaways:**
 - The strategic value of enterprise-grade open source
