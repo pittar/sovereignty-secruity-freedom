@@ -196,6 +196,111 @@ After every code example:
 ```        # Bad
 ```
 
+### Extracting Examples to Separate Files
+
+For complex, production-ready code examples that would clutter the main section content, extract them to dedicated files in the `docs/examples/` directory.
+
+**When to extract examples:**
+- Code examples longer than 50 lines
+- Complete, production-ready configurations
+- Examples with multiple components (deployment + service + configmap)
+- Examples requiring extensive explanation
+- Code that readers would copy-paste directly
+
+**Directory structure:**
+```
+docs/
+├── examples/
+│   ├── 02-base-images/
+│   │   └── dockerfile-ubi-python.md
+│   ├── 03-supply-chain/
+│   │   ├── cosign-signing.md
+│   │   └── sbom-generation.md
+│   ├── 10-ai-platform/
+│   │   ├── rhel-ai-instructlab.md
+│   │   ├── jupyter-notebook-deployment.md
+│   │   └── kserve-model-deployment.md
+│   └── README.md
+└── sections/
+    └── 10-ai-platform.md
+```
+
+**Example file structure:**
+
+Each example file should follow this template:
+
+```markdown
+# [Example Title]
+
+## Overview
+
+[Brief description of what this example demonstrates]
+
+## [Main Code Section]
+
+[The actual code example with comments]
+
+## Key Elements
+
+[Explanation of important parts of the code]
+- **Feature 1**: Description
+- **Feature 2**: Description
+
+## Production Considerations
+
+[Additional configurations or best practices for production use]
+
+1. **Consideration 1:**
+   [Code snippet or explanation]
+
+2. **Consideration 2:**
+   [Code snippet or explanation]
+
+## When to Use This Pattern
+
+[Bullet list of scenarios where this pattern applies]
+
+## Performance [or other relevant section]
+
+[Additional context specific to the example]
+
+## Related Examples
+
+[Links to related example files]
+```
+
+**Linking to examples from main sections:**
+
+Use this format after a brief inline code snippet or description:
+
+```markdown
+**→ See the complete example:** [Title](../examples/SECTION-NUMBER-NAME/example-file.md) for [what the reader will find: complete configuration, production considerations, advanced scenarios, etc.].
+```
+
+**Examples of good links:**
+
+```markdown
+**→ See the complete example:** [Cosign: Basic Container Image Signing and Verification](../examples/03-supply-chain/cosign-signing.md) for key-based signing, keyless signing, and advanced workflows.
+
+**→ See the complete example:** [Jupyter Notebook: AI Development Environment on OpenShift AI](../examples/10-ai-platform/jupyter-notebook-deployment.md) for GPU-accelerated development environment, data access patterns, complete fraud detection model development workflow, and production considerations including resource quotas and idle notebook culling.
+```
+
+**Benefits of this approach:**
+- Keeps main section readable and focused on concepts
+- Provides production-ready, copy-pasteable examples
+- Allows detailed explanations without cluttering the narrative
+- Examples can be updated independently
+- Readers can bookmark and reference specific examples
+- Each example becomes a standalone resource
+
+**Guidelines:**
+- Create one example file per distinct configuration or workflow
+- Use descriptive filenames (e.g., `kserve-model-deployment.md`, not `example1.md`)
+- Include full working code, not pseudocode or snippets
+- Add comments explaining every non-obvious line
+- Test examples before committing (or note if they're illustrative)
+- Cross-reference related examples at the end of each file
+
 ---
 
 ## Linking and References

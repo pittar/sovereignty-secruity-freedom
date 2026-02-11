@@ -137,26 +137,7 @@ Red Hat AI delivers enterprise-grade AI/ML infrastructure built on open source f
 - Rapid prototyping and development on developer workstations
 - Legacy system integration where containerization isn't feasible
 
-```bash
-# Example: Running an LLM on RHEL AI with InstructLab
-# Install RHEL AI packages
-sudo dnf install rhel-ai instructlab
-
-# Initialize InstructLab for model customization
-ilab init --model granite-7b-lab
-
-# Serve the model for inference
-ilab serve --model granite-7b-lab --port 8000
-
-# Query the model via API
-curl -X POST http://localhost:8000/v1/completions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "granite-7b-lab",
-    "prompt": "Analyze the following transaction for fraud indicators:",
-    "max_tokens": 256
-  }'
-```
+**→ See the complete example:** [RHEL AI: Running LLMs with InstructLab](../examples/10-ai-platform/rhel-ai-instructlab.md) for installation, model customization, GPU acceleration, and production deployment considerations including air-gap scenarios.
 
 ### Red Hat AI Inference Server
 
@@ -170,60 +151,11 @@ The **Red Hat AI Inference Server**, based on the open source vLLM project, prov
 
 3. **Any Model**: Serve models in multiple formats (Hugging Face, GGUF, safetensors) and frameworks (PyTorch, TensorFlow). Support for both open source models (Llama, Mistral, Granite) and proprietary custom models.
 
-```yaml
-# Example: Deploying AI Inference Server on OpenShift
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: vllm-inference-server
-  namespace: ai-inference
-spec:
-  replicas: 3  # Scale based on load
-  template:
-    spec:
-      containers:
-        - name: vllm
-          image: registry.redhat.io/rhai/vllm-inference-server:latest
-          args:
-            - --model
-            - /models/granite-13b-chat  # Red Hat Granite model
-            - --served-model-name
-            - granite-chat
-            - --tensor-parallel-size
-            - "2"  # Use 2 GPUs per replica
-          env:
-            - name: VLLM_ATTENTION_BACKEND
-              value: "FLASHINFER"  # Optimized attention implementation
-          resources:
-            limits:
-              nvidia.com/gpu: "2"
-              memory: 48Gi
-          volumeMounts:
-            - name: model-storage
-              mountPath: /models
-      volumes:
-        - name: model-storage
-          persistentVolumeClaim:
-            claimName: model-registry-pvc
----
-# OpenAI-compatible service for application access
-apiVersion: v1
-kind: Service
-metadata:
-  name: ai-inference-api
-  namespace: ai-inference
-spec:
-  selector:
-    app: vllm-inference-server
-  ports:
-    - port: 8000
-      name: http
-  type: LoadBalancer
-```
-
 **Hardware Investment Optimization:**
 
 Organizations with diverse GPU hardware across different data centers and cloud regions use a single inference stack. A model validated on NVIDIA L4 GPUs in AWS can deploy identically on AMD Instinct GPUs on-premises, maximizing hardware utilization without maintaining multiple inference frameworks.
+
+**→ See the complete example:** [AI Inference Server: vLLM Deployment on OpenShift](../examples/10-ai-platform/ai-inference-server-deployment.md) for scalable LLM serving with GPU acceleration, auto-scaling configuration, multi-model serving, and performance optimization strategies.
 
 ### Red Hat OpenShift AI
 
@@ -328,275 +260,25 @@ This section demonstrates a complete AI workflow using Red Hat AI, from initial 
 
 Data scientists use Jupyter notebooks in OpenShift AI, with GPU access for experimentation.
 
-```yaml
-# Jupyter notebook deployment configuration
-apiVersion: kubeflow.org/v1
-kind: Notebook
-metadata:
-  name: fraud-detection-dev
-  namespace: ml-development
-spec:
-  template:
-    spec:
-      containers:
-        - name: notebook
-          # UBI-based data science image
-          image: registry.redhat.io/openshift-ai/pytorch-notebook:latest
-          resources:
-            requests:
-              memory: 16Gi
-              cpu: 4
-              nvidia.com/gpu: 1  # Single GPU for development
-            limits:
-              memory: 16Gi
-              nvidia.com/gpu: 1
-          volumeMounts:
-            - name: workspace
-              mountPath: /home/jovyan
-            - name: training-data
-              mountPath: /data
-              readOnly: true  # Development uses read-only access to production data
-          env:
-            - name: JUPYTER_ENABLE_LAB
-              value: "yes"
-      volumes:
-        - name: workspace
-          persistentVolumeClaim:
-            claimName: data-scientist-workspace-pvc
-        - name: training-data
-          persistentVolumeClaim:
-            claimName: fraud-training-data-pvc  # On-prem storage with sensitive data
-```
-
-**Development Workflow:**
-
-```python
-# Jupyter notebook: fraud_detection_development.ipynb
-
-import pandas as pd
-import torch
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-
-# Load training data from on-prem storage
-# Data never leaves organizational boundaries
-transactions = pd.read_parquet('/data/transactions/2024/*.parquet')
-
-# Feature engineering
-features = [
-    'transaction_amount',
-    'merchant_category',
-    'time_since_last_transaction',
-    'location_deviation',
-    'device_fingerprint_match'
-]
-
-X = transactions[features]
-y = transactions['is_fraud']
-
-# Train/test split
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, stratify=y, random_state=42
-)
-
-# Model development (PyTorch neural network)
-class FraudDetectionModel(torch.nn.Module):
-    def __init__(self, input_dim):
-        super().__init__()
-        self.layers = torch.nn.Sequential(
-            torch.nn.Linear(input_dim, 128),
-            torch.nn.ReLU(),
-            torch.nn.Dropout(0.3),
-            torch.nn.Linear(128, 64),
-            torch.nn.ReLU(),
-            torch.nn.Dropout(0.3),
-            torch.nn.Linear(64, 1),
-            torch.nn.Sigmoid()
-        )
-
-    def forward(self, x):
-        return self.layers(x)
-
-# Train on GPU
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-model = FraudDetectionModel(len(features)).to(device)
-
-# Training loop (simplified)
-optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-criterion = torch.nn.BCELoss()
-
-# ... training code ...
-
-# Save model for pipeline deployment
-torch.save(model.state_dict(), '/home/jovyan/models/fraud_model_v1.pt')
-```
+**→ See the complete example:** [Jupyter Notebook: AI Development Environment on OpenShift AI](../examples/10-ai-platform/jupyter-notebook-deployment.md) for GPU-accelerated development environment, data access patterns, complete fraud detection model development workflow, and production considerations including resource quotas and idle notebook culling.
 
 ### Phase 2: Automated Training Pipeline
 
 Once the model architecture is validated, data scientists define a Kubeflow Pipeline for reproducible training with hyperparameter tuning.
 
-```python
-# kubeflow_pipeline.py - Define training pipeline as code
-
-from kfp import dsl
-from kfp.dsl import Output, Model, Dataset, Metrics, Input
-
-@dsl.component(
-    base_image='registry.redhat.io/openshift-ai/pytorch-notebook:latest',
-    packages_to_install=['scikit-learn==1.3.2', 'torch==2.1.0']
-)
-def load_and_preprocess_data(
-    data_path: str,
-    processed_data: Output[Dataset]
-) -> None:
-    """Load transaction data and perform feature engineering."""
-    import pandas as pd
-    from sklearn.preprocessing import StandardScaler
-    import pickle
-
-    # Load from on-prem storage
-    transactions = pd.read_parquet(f'{data_path}/*.parquet')
-
-    # Feature engineering logic
-    # (implementation details omitted for brevity)
-
-    # Save processed data
-    transactions.to_parquet(processed_data.path)
-
-
-@dsl.component(
-    base_image='registry.redhat.io/openshift-ai/pytorch-notebook:latest',
-    packages_to_install=['torch==2.1.0', 'scikit-learn==1.3.2']
-)
-def train_model(
-    processed_data: Input[Dataset],
-    learning_rate: float,
-    batch_size: int,
-    epochs: int,
-    model_output: Output[Model],
-    metrics_output: Output[Metrics]
-) -> None:
-    """Train fraud detection model with specified hyperparameters."""
-    import torch
-    import pandas as pd
-    from sklearn.model_selection import train_test_split
-    from sklearn.metrics import precision_recall_fscore_support, roc_auc_score
-
-    # Load processed data
-    data = pd.read_parquet(processed_data.path)
-    X = data.drop('is_fraud', axis=1)
-    y = data['is_fraud']
-
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2)
-
-    # Model training (using GPU)
-    device = torch.device('cuda')
-    # (training implementation omitted for brevity)
-
-    # Log metrics for experiment tracking
-    metrics_output.log_metric('auc_roc', 0.95)
-    metrics_output.log_metric('precision', 0.92)
-    metrics_output.log_metric('recall', 0.89)
-    metrics_output.log_metric('f1_score', 0.90)
-
-    # Save model (implementation omitted)
-
-
-@dsl.pipeline(
-    name='Fraud Detection Training Pipeline',
-    description='End-to-end pipeline for training fraud detection model'
-)
-def fraud_detection_pipeline(
-    data_path: str = '/data/transactions/2024',
-    learning_rate: float = 0.001,
-    batch_size: int = 256,
-    epochs: int = 50
-):
-    """Training pipeline with configurable hyperparameters."""
-
-    # Step 1: Data preprocessing
-    preprocess_task = load_and_preprocess_data(data_path=data_path)
-
-    # Step 2: Model training (runs on GPU node)
-    train_task = train_model(
-        processed_data=preprocess_task.outputs['processed_data'],
-        learning_rate=learning_rate,
-        batch_size=batch_size,
-        epochs=epochs
-    )
-    train_task.set_gpu_limit(1)  # Request GPU for training
-    train_task.set_memory_limit('32Gi')
-```
+**→ See the complete example:** [Kubeflow Pipeline: Automated ML Training Workflow](../examples/10-ai-platform/kubeflow-pipeline-definition.md) for complete pipeline definition with data preprocessing, GPU-accelerated training, quality gates, MLflow integration, hyperparameter tuning, scheduled retraining, and data drift detection.
 
 ### Phase 3: Model Deployment with KServe
 
 Deploy the trained model to production using KServe for scalable inference serving.
 
-```yaml
-# fraud-detection-inferenceservice.yaml
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
-metadata:
-  name: fraud-detection
-  namespace: ml-production
-spec:
-  predictor:
-    model:
-      modelFormat:
-        name: pytorch
-      storageUri: "pvc://model-storage/fraud-detection/v2"
-      runtime: kserve-torchserve
-    minReplicas: 5
-    maxReplicas: 20
-    resources:
-      requests:
-        memory: 8Gi
-        nvidia.com/gpu: 1
-      limits:
-        nvidia.com/gpu: 1
-```
+**→ See the complete example:** [KServe: Production Model Deployment](../examples/10-ai-platform/kserve-model-deployment.md) for complete InferenceService configuration, GitOps deployment with ArgoCD, auto-scaling setup, canary deployments, multi-model serving, monitoring with Prometheus, and performance optimization strategies.
 
 ### Phase 4: Production Inference with SPIFFE Authentication
 
-Applications call the fraud detection model via authenticated mTLS.
+Applications call the fraud detection model via authenticated mTLS using SPIFFE workload identities for zero-trust security.
 
-```python
-# fraud_detection_client.py - Application calling model inference
-
-import requests
-from pyspiffe.workloadapi import WorkloadApiClient
-from pyspiffe.svid.x509_svid import X509Svid
-
-# Get SPIFFE identity for this application
-with WorkloadApiClient() as client:
-    svid: X509Svid = client.fetch_x509_svid()
-
-    # Create mTLS session
-    session = requests.Session()
-    session.cert = (svid.cert_chain_path, svid.private_key_path)
-    session.verify = svid.trust_bundle_path
-
-    # Call model inference endpoint
-    transaction_data = {
-        "transaction_amount": 1250.00,
-        "merchant_category": "electronics",
-        "time_since_last_transaction": 45,
-        "location_deviation": 850,  # km from usual location
-        "device_fingerprint_match": False
-    }
-
-    response = session.post(
-        'https://fraud-detection.ml-production.svc.cluster.local/v1/models/fraud-detection:predict',
-        json={"instances": [transaction_data]},
-        timeout=0.100  # 100ms timeout
-    )
-
-    prediction = response.json()
-    fraud_probability = prediction['predictions'][0]['fraud_score']
-
-    if fraud_probability > 0.75:
-        print(f"High fraud risk: {fraud_probability:.2%}")
-```
+**→ See complete client implementation in:** [KServe: Production Model Deployment](../examples/10-ai-platform/kserve-model-deployment.md#client-application-inference-with-spiffe-authentication) for SPIFFE-authenticated inference client with error handling, timeout management, and risk classification logic.
 
 ---
 
@@ -658,32 +340,7 @@ On-premises deployment provides complete data control, meeting regulatory requir
 
 **Air-Gapped Deployment Patterns:**
 
-```bash
-# On connected environment: Prepare model for air-gap transfer
-
-# 1. Export trained model as container image
-podman save registry.example.com/models/benefit-screening:v3 \
-  -o benefit-screening-v3.tar
-
-# 2. Generate cryptographic hash
-sha256sum benefit-screening-v3.tar > benefit-screening-v3.tar.sha256
-
-# 3. Sign with organizational GPG key
-gpg --local-user airgap-signing@example.gc.ca \
-    --armor --sign benefit-screening-v3.tar.sha256
-
-# On air-gapped environment: Verify and load
-
-# 1. Verify GPG signature
-gpg --verify benefit-screening-v3.tar.sha256.asc
-
-# 2. Verify file integrity
-sha256sum -c benefit-screening-v3.tar.sha256
-
-# 3. Load into air-gapped registry
-podman load -i benefit-screening-v3.tar
-podman push airgap-registry.ssc.gc.ca/models/benefit-screening:v3
-```
+**→ See the complete example:** [Air-Gapped Model Transfer: Secure Model Deployment in Disconnected Environments](../examples/10-ai-platform/airgap-model-transfer.md) for complete export/import workflows with cryptographic verification, model cards, SBOM generation, encrypted transfer procedures, and InferenceService deployment in air-gapped government environments.
 
 ---
 
