@@ -55,10 +55,13 @@ Cloud-native development shifts the development environment from developer lapto
 
 Cloud-native development environments can run anywhere Kubernetes runs—AWS, Azure, on-premises, edge locations. Organizations aren't locked into GitHub Codespaces (requires GitHub), Gitpod Cloud (SaaS only), or AWS Cloud9 (AWS-specific). Eclipse Che and OpenShift Dev Spaces are self-hosted—deploy in your own infrastructure, retain full control over source code and credentials, meet data residency requirements. The devfile standard ensures portability—environments defined for Dev Spaces work in other devfile-compatible tools. This independence enables organizations to choose infrastructure based on sovereignty requirements, not development tooling constraints.
 
-- **Location Independence**: Develop from anywhere
-- **Centralized Security**: Policies enforced at platform level
-- **No Local Secrets**: Credentials managed centrally
-- **Portable Definitions**: Environment as code
+**Hybrid development infrastructure** enables powerful sovereignty patterns. Canadian government departments often maintain OpenShift Dev Spaces in Shared Services Canada data centers for production development (ensuring source code and credentials never leave Canadian jurisdiction), while also running Dev Spaces in public cloud for contractor onboarding, training environments, or development on non-sensitive projects. The same devfile definitions work across both environments—developers access appropriate infrastructure based on project classification without learning different tools. Developers working remotely connect to Canadian government infrastructure through secure VPN, accessing development workspaces that run entirely within departmental boundaries while maintaining modern cloud-native development experience. When applications move from cloud development to on-premises production, developers transition to on-premises Dev Spaces instances without workflow changes—same IDE, same environment definitions, same operational model. This flexibility prevents development tooling from constraining deployment decisions.
+
+- **Location Independence**: Develop from anywhere, infrastructure stays sovereign
+- **Centralized Security**: Policies enforced at platform level across cloud and on-prem
+- **No Local Secrets**: Credentials managed centrally, never touch developer machines
+- **Portable Definitions**: Environment as code works identically across infrastructures
+- **Hybrid Development**: Cloud for speed, on-prem for sovereignty, same developer experience
 
 ---
 

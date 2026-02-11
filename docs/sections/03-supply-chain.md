@@ -32,6 +32,8 @@ Modern applications average 200+ dependencies when including transitive dependen
 
 **Executive Order 14028** (May 2021) mandates that software sold to US federal agencies must include Software Bills of Materials (SBOM) and follow secure software development practices. **EU Cyber Resilience Act** imposes similar requirements for products sold in European markets. **NIST Secure Software Development Framework (SSDF)** provides implementation guidance, while the **SLSA (Supply-chain Levels for Software Artifacts)** framework defines maturity levels for supply chain security practices.
 
+**Canadian government organizations** face similar supply chain security imperatives. The Canadian Centre for Cyber Security (CCCS) provides guidance on software supply chain risk management, emphasizing the need for verifiable software provenance and transparency. Treasury Board Secretariat (TBS) security categorization for Protected B and above workloads requires documented software composition and vulnerability management—requirements that SBOMs and cryptographic signing directly address. Federal procurement increasingly requires suppliers to demonstrate supply chain security practices. Open source supply chain security tools like Sigstore align with these requirements while avoiding vendor lock-in: Canadian departments can verify artifact signatures, generate compliance reports, and audit software provenance using freely available tools without dependence on proprietary security platforms that could introduce new sovereignty risks.
+
 ---
 
 ## Open Source Standards for Supply Chain Security
@@ -564,6 +566,8 @@ Build provenance attestations document how artifacts were built—source reposit
 ### Compliance Mappings
 
 Sigstore addresses multiple NIST SSDF requirements: cryptographic verification (PS.1), provenance tracking (PS.3), and automated vulnerability detection (PW.8). FedRAMP continuous monitoring requirements benefit from Rekor's auditability, while SBOM mandates in Executive Order 14028 are satisfied through Syft integration. The transparency and verifiability of Sigstore align with zero-trust principles required in modern security frameworks.
+
+**For Canadian organizations**, Sigstore's transparency log model supports TBS audit requirements and Office of the Auditor General reviews. When departments deploy applications, auditors can query Rekor to verify when artifacts were signed, by whom, and under what attestation conditions—creating cryptographic audit trails that satisfy government accountability standards. CCCS guidance on supply chain security emphasizes "trust but verify" principles; Sigstore's open transparency logs enable verification without requiring trust in vendor-controlled infrastructure. Because Sigstore is open source and can be deployed on-premises (as demonstrated in the air-gapped deployment sections), Canadian departments maintain complete control over their supply chain security infrastructure while leveraging industry-standard tooling. This approach balances security rigor with sovereignty—meeting compliance requirements without creating dependencies on foreign security services.
 
 **→ See the complete example:** [Tekton Secure Pipeline](../examples/03-supply-chain/tekton-secure-pipeline.md) for end-to-end pipeline with automated signing, SBOM generation, and vulnerability scanning.
 

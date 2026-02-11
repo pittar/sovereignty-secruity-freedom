@@ -90,6 +90,8 @@ AWS CodeBuild, Azure Pipelines, and GCP Cloud Build integrate tightly with their
 
 Tekton pipelines defined as YAML manifests in Git move seamlessly across clusters. The same pipeline definition running on AWS EKS works identically on Azure AKS, GCP GKE, or on-premises OpenShift. Authentication uses Kubernetes ServiceAccounts and Secrets—consistent across infrastructure. Artifact storage uses any OCI-compliant registry. Deployment targets any Kubernetes cluster. This portability enables genuine multi-cloud CI/CD.
 
+**This portability is critical for hybrid cloud strategies common in government and regulated industries.** Canadian federal departments often develop and test applications on public cloud infrastructure for rapid iteration (leveraging cloud elasticity and managed services during development), then deploy production workloads to Shared Services Canada data centers or departmental on-premises infrastructure to meet Protected B data residency requirements. Tekton enables this pattern: the same pipeline validates code in AWS development cluster, builds container images using identical base images (UBI), runs security scans, and produces signed artifacts—these artifacts deploy identically to on-premises production through GitOps, without pipeline modifications. Development velocity benefits from cloud resources while production sovereignty is maintained through on-premises deployment, all using one set of pipeline definitions stored in Git. When policy or cost considerations change, workloads shift between cloud and on-premises without CI/CD rewrites.
+
 ```yaml
 # Example: Complete pipeline with multiple stages
 apiVersion: tekton.dev/v1beta1
@@ -154,6 +156,8 @@ spec:
 ### Multi-Cloud Deployment Strategies
 
 Pipelines can deploy artifacts to multiple clouds simultaneously or conditionally based on environment. Use when conditions in Tekton to target specific clusters—deploy to AWS for US traffic, Azure for European traffic, on-premises for sensitive workloads. Credentials for each cluster are stored as Kubernetes Secrets, pipelines reference them without hardcoded cloud-specific configurations. This pattern enables blue-green deployments across clouds, geographic distribution, and disaster recovery strategies.
+
+**Hybrid deployment strategies** extend this multi-cloud model to include on-premises and edge infrastructure as first-class deployment targets. Organizations implement progressive deployment patterns: development environments in public cloud (AWS, Azure) for cost and elasticity, staging environments in on-premises infrastructure mirroring production, and production workloads distributed based on data sensitivity and regulatory requirements. A typical Canadian government deployment pattern uses Tekton pipelines to: build and test in cloud development cluster, promote validated artifacts to on-premises staging in SSC data centers for integration testing, deploy to on-premises production for citizen-facing services handling Protected B data, and optionally deploy less-sensitive components to cloud for geographic distribution and elastic scaling. The pipeline logic remains consistent—only target cluster credentials change. GitOps with ArgoCD manages promotion across environments, with Git commits triggering deployments to cloud, on-premises, or hybrid configurations from a single source of truth.
 
 ---
 
