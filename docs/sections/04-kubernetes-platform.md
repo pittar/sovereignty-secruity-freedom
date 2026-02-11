@@ -271,6 +271,8 @@ Example architecture diagram:
 - Data sovereignty compliance
 ```
 
+**→ See the complete example:** [Multi-Cloud OpenShift Deployment](../examples/04-kubernetes-platform/multi-cloud-deployment.md) for cluster configurations across AWS, Azure, and on-premises, with GitOps deployment and storage abstraction.
+
 ---
 
 ## Operator Pattern and Automation
@@ -286,6 +288,8 @@ OpenShift's OperatorHub provides certified operators for databases (PostgreSQL, 
 ### Building Custom Operators
 
 Organizations build custom operators using Operator SDK, which scaffolds operator projects in Go, Ansible, or Helm. Custom operators codify institutional knowledge—automating deployments according to organizational standards, integrating with internal systems, and implementing company-specific operational procedures. Operators become portable automation that moves with applications across clusters and clouds, maintaining consistent operations regardless of infrastructure.
+
+**→ See the complete example:** [Custom Operator: Deploying and Managing Complex Applications](../examples/04-kubernetes-platform/operator-custom-deployment.md) for deploying PostgreSQL clusters with operators, including HA, backups, and failover automation.
 
 ---
 

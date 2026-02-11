@@ -319,6 +319,8 @@ func main() {
 }
 ```
 
+**→ See the complete example:** [SPIRE Deployment: Zero Trust Workload Identity](../examples/09-workload-identity/spire-deployment.md) for complete SPIRE deployment on Kubernetes, workload registration, and service-to-service mutual TLS authentication with code examples.
+
 ### Service Mesh Integration
 
 Service meshes like Istio traditionally use their own certificate authorities for workload identity. SPIRE provides an alternative: use SPIFFE as the universal identity system with service mesh leveraging SPIRE-issued credentials. Istio's SDS (Secret Discovery Service) integration with SPIRE enables Envoy proxies to retrieve X.509 SVIDs through the Workload API. Authorization policies use SPIFFE IDs in format `spiffe://trust-domain/ns/namespace/sa/service-account`, enabling consistent policy across service mesh and non-mesh workloads. This integration unifies identity—services communicate through service mesh or directly, SPIFFE identity remains consistent. Federation extends across meshes, enabling cross-cluster service communication with verifiable identity.

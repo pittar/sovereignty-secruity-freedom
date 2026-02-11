@@ -67,6 +67,8 @@ cosign sign --key cosign.key registry.example.com/myapp:v1.0
 cosign verify --key cosign.pub registry.example.com/myapp:v1.0
 ```
 
+**→ See the complete example:** [Cosign: Basic Container Image Signing and Verification](../examples/03-supply-chain/cosign-signing.md) for key-based signing, keyless signing, and advanced workflows.
+
 ### Keyless Signing with Fulcio
 
 Fulcio acts as a certificate authority that issues short-lived certificates (valid for minutes) based on OIDC identity tokens. When a developer signs an artifact, they authenticate with their identity provider (GitHub, Google, etc.), Fulcio issues a certificate bound to that identity, the artifact gets signed, and the certificate is recorded in Rekor. Because certificates expire quickly, stolen certificates have limited utility. The signing event remains permanently verifiable through Rekor's transparency log.
@@ -99,6 +101,8 @@ syft registry.example.com/myapp:v1.0 -o spdx-json > sbom.json
 # Attach SBOM to image
 cosign attach sbom --sbom sbom.json registry.example.com/myapp:v1.0
 ```
+
+**→ See the complete example:** [SBOM Generation with Syft and Cosign](../examples/03-supply-chain/sbom-generation.md) for SPDX and CycloneDX formats, automated generation, and verification workflows.
 
 ---
 
@@ -236,6 +240,8 @@ spec:
             - --mysql_uri=trillian:password@tcp(mysql.sigstore.svc.cluster.local:3306)/trillian
 ```
 
+**→ See the complete example:** [On-Premises Sigstore Deployment](../examples/03-supply-chain/onprem-sigstore-deployment.md) for complete deployment with Fulcio, Rekor, and Trillian, including HA configuration and enterprise integration.
+
 **Integration with Organizational PKI:**
 
 On-premises Fulcio can chain to organizational root certificate authorities, enabling verification by existing enterprise systems without distributing new trust roots. This integration allows:
@@ -310,6 +316,8 @@ cosign verify --key /secure/verification-key.pub \
   --rekor-url https://rekor.airgap.corp \
   registry.airgap.corp/myapp:v1.0
 ```
+
+**→ See the complete example:** [Air-Gapped Signing Workflow](../examples/03-supply-chain/airgap-signing-workflow.md) for complete workflows including image transfer, signature verification, and policy enforcement in disconnected environments.
 
 ### Image Mirroring for Air-Gapped Environments
 
@@ -556,6 +564,8 @@ Build provenance attestations document how artifacts were built—source reposit
 ### Compliance Mappings
 
 Sigstore addresses multiple NIST SSDF requirements: cryptographic verification (PS.1), provenance tracking (PS.3), and automated vulnerability detection (PW.8). FedRAMP continuous monitoring requirements benefit from Rekor's auditability, while SBOM mandates in Executive Order 14028 are satisfied through Syft integration. The transparency and verifiability of Sigstore align with zero-trust principles required in modern security frameworks.
+
+**→ See the complete example:** [Tekton Secure Pipeline](../examples/03-supply-chain/tekton-secure-pipeline.md) for end-to-end pipeline with automated signing, SBOM generation, and vulnerability scanning.
 
 ---
 

@@ -149,6 +149,8 @@ spec:
           value: $(params.image-name)
 ```
 
+**→ See the complete example:** [Tekton: Secure Build Pipeline with Image Signing and SBOM Generation](../examples/05-cicd/tekton-secure-build-pipeline.md) for complete pipeline with security scanning, image signing, provenance attestation, and event triggers.
+
 ### Multi-Cloud Deployment Strategies
 
 Pipelines can deploy artifacts to multiple clouds simultaneously or conditionally based on environment. Use when conditions in Tekton to target specific clusters—deploy to AWS for US traffic, Azure for European traffic, on-premises for sensitive workloads. Credentials for each cluster are stored as Kubernetes Secrets, pipelines reference them without hardcoded cloud-specific configurations. This pattern enables blue-green deployments across clouds, geographic distribution, and disaster recovery strategies.
@@ -203,6 +205,8 @@ spec:
 ```
 
 This Application manifest tells ArgoCD to monitor the Git repository, sync manifests from kubernetes/production path to the production namespace, and automatically prune resources removed from Git while self-healing resources modified in-cluster. Changes committed to Git trigger automated deployments—no manual kubectl apply required. ArgoCD detects drift when cluster state diverges from Git and corrects it automatically.
+
+**→ See the complete example:** [ArgoCD: GitOps Continuous Deployment](../examples/05-cicd/argocd-gitops-deployment.md) for multi-environment and multi-cluster deployments, progressive delivery with Argo Rollouts, and automated notifications.
 
 ---
 

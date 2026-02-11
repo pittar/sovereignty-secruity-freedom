@@ -151,6 +151,8 @@ commands:
 
 This devfile defines a Python development environment with PostgreSQL database. The `components` section specifies two containers—Python runtime and PostgreSQL—with resource limits and environment variables. The `commands` section defines common tasks (install dependencies, run app, run tests) that developers execute through IDE commands or CLI. The volume component provides persistent storage for Python virtual environments. When a developer starts this workspace, Dev Spaces provisions both containers, mounts source code, and presents a ready-to-code environment with database connectivity.
 
+**→ See the complete example:** [Devfile: Python Web Application Development Environment](../examples/06-developer-experience/devfile-python-webapp.md) for comprehensive development environment with multi-container setup, integrated security scanning, and development commands.
+
 ### Devfile Registry
 
 Organizations create internal devfile registries—catalogs of approved development stacks for different project types. Platform teams maintain devfiles for Python microservices, Java Spring Boot apps, Node.js frontends, and other organizational standards. Developers starting new projects select from the registry rather than creating devfiles from scratch. This approach enforces best practices: required security scanning tools, approved base images, mandated linting configurations, and organizational coding standards embedded in environment definitions. Updates to registry devfiles propagate to projects using them, enabling centralized environment management.

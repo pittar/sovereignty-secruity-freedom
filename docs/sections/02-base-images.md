@@ -170,6 +170,8 @@ CMD ["python3", "main.py"]
 
 This example demonstrates best practices: `microdnf clean all` reduces image size, the layering sequence optimizes build caching (system packages → dependencies → code), and `registry.access.redhat.com` requires no authentication. The `:latest` tag works for development; production should pin to specific versions (`ubi9/ubi-minimal:9.3-1361`), specify non-root users (`USER 1001`), and use multi-stage builds. Consider Hummingbird for stateless applications.
 
+**→ See the complete example:** [Dockerfile: Python Application with UBI Minimal](../examples/02-base-images/dockerfile-ubi-python.md) for production-ready configurations, multi-stage builds, and best practices.
+
 ---
 
 ## The Upstream Connection

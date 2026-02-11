@@ -205,6 +205,8 @@ skopeo copy \
 
 The Key Broker Service (KBS) implements policy-based secret release tied to attestation verification. Secrets are encrypted and stored in the KBS. When a TEE requests a secret, it presents an attestation report. The KBS verifies the report's cryptographic signature, checks that measurements match expected values (correct kernel, unmodified binaries, required security features enabled), and evaluates policies (only specific images can access certain secrets, minimum TEE version requirements, geographic restrictions). If all checks pass, the KBS encrypts the secret with the TEE's public key and returns it—only that specific TEE can decrypt it. This zero-trust model eliminates "privileged access" to secrets—even KBS administrators cannot retrieve plaintext secrets or bypass attestation requirements.
 
+**→ See the complete example:** [Confidential Containers: Encrypted Workload Deployment](../examples/08-confidential-containers/encrypted-workload-deployment.md) for complete deployment with TEE protection, encrypted images, KBS configuration, and attestation-based secret management.
+
 ---
 
 ## Use Cases for Confidential Containers
