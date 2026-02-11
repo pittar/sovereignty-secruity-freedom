@@ -1,4 +1,4 @@
-# The AI-Enabled Platform
+# The AI/ML Platform: Enterprise AI with Digital Sovereignty
 
 [← Workload Identity](09-workload-identity.md) | [Table of Contents](../OUTLINE.md) | [Next: Conclusion →](11-conclusion.md)
 
@@ -6,1021 +6,760 @@
 
 ## Executive Summary
 
-AI transforms platform engineering at two levels: augmenting human developers through code generation and intelligent assistance, and enabling secure deployment of AI/ML workloads as business applications. GenAI in developer tools (copilots, documentation generators, intelligent search) accelerates development but raises data privacy concerns when integrated with external AI services. Running organizational AI models (fraud detection, recommendation systems, large language models) on sensitive data demands infrastructure protecting both training data and model intellectual property. The sovereignty challenge: organizations need AI capabilities without sending proprietary code, customer data, or model weights to external AI providers.
+Artificial intelligence and machine learning transform business capabilities—from fraud detection and personalized recommendations to predictive maintenance and intelligent automation. However, traditional AI deployment creates severe digital sovereignty risks: training data uploaded to cloud AI services exposes proprietary information and customer PII, model inference through external APIs leaks sensitive queries and intellectual property, and vendor-specific AI platforms create lock-in while preventing workload portability. Organizations deploying AI face a fundamental tension—innovation demands powerful AI capabilities, while sovereignty requires retaining complete control over data, models, and infrastructure.
 
-Traditional AI deployment exposes sensitive data to cloud AI services: training data uploaded for model building, inference requests sent to external APIs, model weights stored in vendor infrastructure. Regulatory frameworks (GDPR, HIPAA, financial services regulations) increasingly prohibit this data exposure, while competitive concerns demand protecting proprietary algorithms. Self-hosted AI infrastructure provides sovereignty—models run on organizational infrastructure, data never leaves boundaries—but requires significant technical capability: GPU management, model serving infrastructure, MLOps pipelines, and integration with existing platforms.
+Regulatory frameworks increasingly mandate AI sovereignty. The European Union's AI Act classifies AI systems by risk level and imposes strict requirements for high-risk applications. Canada's Directive on Automated Decision-Making (DADM), the world's first AI-specific legally binding instrument, requires government departments to ensure transparency, accountability, and data sovereignty for automated decision systems. Data residency requirements (GDPR, Canadian privacy law, financial services regulations) prohibit sending training data and inference requests to external jurisdictions. Beyond compliance, competitive dynamics demand protecting proprietary AI models—organizations invest millions training custom models that represent strategic intellectual property.
 
-The complete Red Hat platform—UBI base images, supply chain security, OpenShift, CI/CD, Dev Spaces, confidential containers, workload identity—extends to AI workloads. OpenShift AI provides enterprise MLOps (Jupyter notebooks, Kubeflow Pipelines, KServe model serving) integrated with platform security. Confidential containers enable training and inference on sensitive data with cryptographic guarantees. InstructLab delivers open source GenAI capabilities running entirely on organizational infrastructure. This approach enables AI innovation while maintaining digital sovereignty: self-hosted infrastructure, open source tooling, no dependency on proprietary AI platforms.
-
----
-
-## AI in the Platform Engineering Context
-
-### The AI-Augmented Developer Experience
-
-AI assistance integrates at natural friction points in developer workflows: when writing code, searching documentation, troubleshooting failures, or optimizing infrastructure. Rather than forcing developers to context-switch to separate AI tools, platform integration surfaces AI capabilities within existing interfaces—Dev Spaces editor suggestions, Developer Hub intelligent search, pipeline optimization recommendations. The key is privacy-preserving integration: AI models run within organizational infrastructure using retrieval-augmented generation (RAG) over internal documentation and code, avoiding external AI API calls that leak proprietary information.
-
-**AI Integration Points:**
-1. **Code Generation and Assistance**: Context-aware suggestions in Dev Spaces
-2. **Documentation Generation**: Automated API docs and runbooks in Backstage
-3. **Intelligent Search**: Natural language queries in Developer Hub
-4. **Troubleshooting Assistance**: AI-powered incident response
-5. **Pipeline Optimization**: ML-driven build and deployment recommendations
-6. **Resource Prediction**: AI forecasting for capacity planning
-
-### GenAI vs. Predictive AI
-
-Platform engineering leverages both generative and predictive AI capabilities serving distinct purposes. Generative AI (large language models, code generation) creates new content based on patterns learned from training data—useful for accelerating repetitive tasks like boilerplate code, documentation, and configuration generation. Predictive AI (traditional machine learning) forecasts future states based on historical patterns—valuable for capacity planning, failure prediction, and resource optimization. Both capabilities benefit from self-hosted deployment: GenAI models avoid sending code to external APIs, predictive models train on operational data that shouldn't leave infrastructure.
-
-- **Generative AI**: Creating new content (code, documentation, configurations)
-- **Predictive AI**: Forecasting and optimization (scaling, failures, performance)
-- **AI/ML Workloads**: Running customer AI applications securely
+Red Hat AI delivers enterprise-grade AI/ML infrastructure built entirely on open source foundations, enabling the complete AI lifecycle from development through production deployment across any environment. The platform spans three integrated offerings: **Red Hat Enterprise Linux AI (RHEL AI)** for running AI models directly on RHEL systems with optimized performance, **Red Hat AI Inference Server** based on vLLM providing portable inference across any cloud, any accelerator, and any model format, and **Red Hat OpenShift AI** offering comprehensive MLOps platform capabilities for building, training, serving, and monitoring both predictive and generative AI models. This architecture enables true digital sovereignty—organizations run AI workloads on-premises, in air-gapped environments, or across multiple clouds, moving workloads freely without vendor lock-in while maximizing hardware investments through unified tooling.
 
 ---
 
-## AI-Assisted Development in Red Hat Developer Hub
+## The AI/ML Infrastructure Challenge
 
-### Code Generation from Templates
+### Why AI Requires Specialized Platform Infrastructure
 
-AI-enhanced templates in Developer Hub enable natural language service generation. Developers describe requirements in plain English ("Create a REST API for managing customer orders with PostgreSQL persistence"), AI generates appropriate project structure, boilerplate code, database schemas, and API definitions. The template system combines AI generation with organizational standards—generated code includes required security scanning, approved dependencies, and compliance configurations. This approach accelerates development while maintaining governance: AI suggests implementation, templates enforce standards.
+Traditional application development workflows don't translate directly to AI/ML workloads. Software development produces deterministic code—given identical inputs, the same code produces identical outputs. AI model development introduces fundamental differences: models are statistical artifacts learned from data rather than explicitly programmed logic, model quality depends critically on training data characteristics and volume, and model performance degrades over time as real-world data distributions shift (requiring continuous retraining). Infrastructure requirements differ dramatically—training deep learning models demands GPU acceleration (100-1000x faster than CPU-only training), model serving requires specialized inference servers optimized for batching and caching, and experiment tracking needs versioning not just for code but for data, hyperparameters, and model artifacts.
 
-```yaml
-# Example: AI-enhanced template
-apiVersion: scaffolder.backstage.io/v1beta3
-kind: Template
-metadata:
-  name: ai-assisted-microservice
-  title: AI-Assisted Microservice Generator
-spec:
-  parameters:
-    - title: Service Requirements
-      properties:
-        description:
-          title: Natural Language Description
-          type: string
-          description: "Describe your service in plain English"
-          ui:widget: textarea
-          ui:help: "AI will generate appropriate code structure"
+The AI/ML lifecycle encompasses distinct phases each with unique infrastructure needs:
 
-  steps:
-    - id: ai-generate
-      name: AI Code Generation
-      action: ai:generate-code
-      input:
-        description: ${{ parameters.description }}
-        framework: spring-boot
-        language: java
+**1. Development and Experimentation**
+- Interactive environments (Jupyter notebooks) for data exploration
+- GPU-accelerated compute for rapid iteration
+- Access to training datasets and feature stores
+- Version control for notebooks, code, and experiments
 
-    - id: fetch-template
-      name: Apply Generated Structure
-      action: fetch:template
-      input:
-        values:
-          generatedCode: ${{ steps.ai-generate.output.code }}
-```
+**2. Data Preparation and Engineering**
+- Scalable data processing for large datasets (ETL/ELT pipelines)
+- Feature engineering and transformation
+- Data validation and quality checking
+- Privacy-preserving data handling (anonymization, encryption)
 
-[Explanation of AI-enhanced scaffolding]
+**3. Model Training**
+- Distributed training across multiple GPUs and nodes
+- Hyperparameter tuning and AutoML
+- Experiment tracking (metrics, parameters, artifacts)
+- Checkpoint management for long-running training jobs
 
-### Intelligent Documentation
+**4. Model Evaluation and Validation**
+- Model testing against holdout datasets
+- Bias and fairness evaluation
+- Performance benchmarking (accuracy, latency, throughput)
+- Model explainability and interpretability
 
-[AI-generated TechDocs and API documentation]
+**5. Model Deployment and Serving**
+- Containerized model serving with auto-scaling
+- A/B testing and canary deployments
+- Multi-model serving and routing
+- GPU sharing and optimization for inference
 
-**Capabilities:**
-- Automatic README generation from code
-- API documentation from endpoints
-- Runbook generation from operational patterns
-- Documentation quality suggestions
+**6. Monitoring and Operations**
+- Model performance tracking (accuracy, drift)
+- Infrastructure metrics (latency, throughput, resource utilization)
+- Retraining triggers and automation
+- Audit logging and compliance reporting
 
-### Smart Search and Discovery
+Traditional cloud AI services (AWS SageMaker, Azure ML, Google Vertex AI) provide these capabilities but at the cost of sovereignty—training data uploaded to cloud providers, model inference through proprietary APIs, vendor-specific tooling creating lock-in, and no option for on-premises or air-gapped deployment.
 
-[Natural language search across catalog and documentation]
+### The Digital Sovereignty Imperative for AI
 
-```
-Developer Query: "How do I add authentication to a Spring Boot service?"
+AI workloads amplify sovereignty concerns beyond traditional applications:
 
-AI Response:
-- Links to authentication template
-- Relevant documentation sections
-- Example services using auth
-- Required dependencies and configuration
-```
+**Data Exposure Risks:**
+- **Training Data**: Models learn from sensitive data (customer transactions, medical records, proprietary business information). Uploading training datasets to cloud AI services exposes this data to external infrastructure, third-party access, and potential jurisdictional legal claims.
+- **Inference Queries**: Every prediction request reveals information—fraud detection queries expose transaction patterns, medical diagnosis requests contain patient data, recommendation system queries reveal customer behavior. External AI APIs log these requests, creating comprehensive data exposure.
+- **Model Weights**: Trained models represent millions or billions of dollars in R&D investment. Model weights encode patterns from proprietary data and represent competitive intellectual property. Cloud-hosted models risk extraction, copying, or competitive intelligence gathering.
+
+**Regulatory Compliance Requirements:**
+- **GDPR (Europe)**: Requires data minimization, purpose limitation, and data subject rights. Processing PII through external AI services violates these principles without complex legal frameworks.
+- **Canadian Privacy Law**: The Personal Information Protection and Electronic Documents Act (PIPEDA) and provincial privacy laws restrict cross-border data transfers. Government departments using AI must comply with the Directive on Automated Decision-Making requiring transparency and data sovereignty.
+- **Financial Services**: Banking regulations (PCI-DSS, regional banking laws) prohibit sending transaction data to external processors without specific agreements. AI fraud detection using cloud services creates regulatory violations.
+- **Healthcare**: HIPAA (US), PHIPA (Canada), and equivalent health privacy laws mandate strict controls on patient data. Medical AI models trained or served through cloud platforms risk compliance failures.
+
+**Vendor Lock-in and Strategic Risk:**
+- Proprietary AI platforms use vendor-specific APIs, formats, and tooling
+- Models trained with platform-specific features can't easily migrate
+- Pricing changes, service discontinuations, or geopolitical events create business continuity risk
+- Lack of portability prevents multi-cloud strategies and negotiating leverage
+
+### Government AI Policy: The Canadian Example
+
+Canada leads globally in AI governance, providing a model for government AI sovereignty requirements. The **Directive on Automated Decision-Making (DADM)**, launched in 2019, established the world's first AI-specific legally binding instrument. The directive applies to all Canadian federal government departments and agencies using automated systems to make or assist in administrative decisions affecting external clients.
+
+**DADM Key Requirements:**
+
+1. **Algorithmic Impact Assessment (AIA)**: Departments must conduct risk assessments before deploying automated decision systems, evaluating impact on rights, health, well-being, economic interests, and environmental sustainability.
+
+2. **Transparency and Explainability**: Meaningful explanation of automated decisions must be available to affected individuals. For high-impact systems, detailed documentation of training data, model logic, and decision factors is required.
+
+3. **Human-in-the-Loop**: Recourse mechanisms allowing humans to review automated decisions and request human intervention for high-impact systems.
+
+4. **Data Quality and Bias Testing**: Regular testing for bias and fairness issues, with documentation of mitigation strategies.
+
+5. **Data Sovereignty**: While not explicitly stated, the directive's requirements for transparency, auditability, and recourse implicitly demand infrastructure control. External cloud AI services make compliance difficult—how can departments explain decisions made by opaque external APIs? How can they audit training data when it's processed in foreign jurisdictions?
+
+The **AI Strategy for the Federal Public Service 2025-2027**, published by the Office of the Chief Information Officer, reinforces these themes. The strategy prioritizes:
+- Responsible AI development and deployment
+- Data governance and sovereignty
+- Open source and interoperable AI systems
+- Skills development for AI literacy
+
+Government procurement considerations increasingly favor solutions meeting data sovereignty requirements. Departments evaluating Software-as-a-Service (SaaS) AI platforms must verify compliance with security, privacy, and **data sovereignty requirements**. Geopolitical concerns (particularly around U.S. access to Canadian data through mechanisms like CLOUD Act) intensify the need for on-premises or Canadian-hosted AI infrastructure.
+
+**Digital Sovereignty Requirements for Government AI:**
+- Training data must remain within Canadian jurisdiction
+- Model inference cannot leak sensitive government or citizen data to foreign services
+- AI systems must be auditable and explainable (incompatible with black-box cloud APIs)
+- Continuity of operations requires infrastructure independence from foreign vendors
+- Open source foundations enable transparency and avoid vendor lock-in
+
+These requirements apply beyond government. Financial services, healthcare, critical infrastructure, and any organization handling sensitive data faces similar sovereignty imperatives for AI deployment.
 
 ---
 
-## Predictive Platform Capabilities
+## Red Hat AI: The Sovereign AI/ML Platform
 
-### Intelligent Scaling and Resource Management
+Red Hat AI delivers enterprise-grade AI/ML infrastructure built on open source foundations, enabling digital sovereignty through portable, vendor-independent tooling that runs anywhere—on-premises, in air-gapped environments, or across any cloud provider. The platform integrates three core offerings covering the full AI lifecycle:
 
-[Using ML to predict resource needs]
+### Red Hat Enterprise Linux AI (RHEL AI)
 
-**Predictive Autoscaling:**
-- Historical usage patterns
-- Time-of-day and seasonal trends
-- Event-driven scaling predictions
-- Cost optimization recommendations
+**RHEL AI** enables running AI models directly on Red Hat Enterprise Linux systems with optimized performance and enterprise support. Built on InstructLab, an open source project for large language model development and customization, RHEL AI provides tools for model serving, fine-tuning, and inference on RHEL infrastructure.
 
-### Failure Prediction and Prevention
-
-[AI detecting patterns that precede outages]
+**Key Capabilities:**
+- **Model Serving on RHEL**: Deploy AI models (especially large language models) directly on RHEL servers without requiring Kubernetes or container orchestration
+- **InstructLab Integration**: Use InstructLab's alignment tuning and skill development to customize models with enterprise-specific knowledge
+- **Hardware Optimization**: Support for GPU acceleration (NVIDIA, AMD) with optimized RHEL drivers and libraries
+- **Enterprise Support**: Red Hat subscription support for AI workloads on RHEL with security updates and lifecycle management
+- **Air-Gap Capable**: Fully functional in disconnected environments without internet access
 
 **Use Cases:**
-- Anomaly detection in metrics
-- Log pattern analysis for error prediction
-- Dependency failure correlation
-- Proactive alerting before incidents
+- Edge AI deployment on RHEL systems at remote locations
+- Single-server AI applications without orchestration complexity
+- Rapid prototyping and development on developer workstations
+- Legacy system integration where containerization isn't feasible
 
-### Pipeline Intelligence
-
-[ML-driven CI/CD optimization]
-
-**Optimizations:**
-- Test prioritization based on change analysis
-- Build cache recommendations
-- Flaky test detection
-- Deployment risk assessment
-
----
-
-## Running AI/ML Workloads Securely
-
-### The AI Data Privacy Challenge
-
-[Why traditional AI deployment exposes sensitive data]
-
-**Challenges:**
-- Training data often contains PII or proprietary information
-- Model inference processes sensitive user data
-- Model weights themselves may be confidential
-- Regulatory requirements (GDPR, HIPAA, financial services)
-
-### Confidential AI with Confidential Containers
-
-[Running AI workloads in TEEs]
-
-**Protected AI Scenarios:**
-
-1. **Confidential Model Training**
-   ```yaml
-   # Example: Confidential AI training pod
-   apiVersion: v1
-   kind: Pod
-   metadata:
-     name: confidential-training
-     annotations:
-       io.katacontainers.config.runtime.cc: "true"
-   spec:
-     runtimeClassName: kata-cc
-     containers:
-       - name: pytorch-training
-         image: registry.example.com/encrypted-pytorch:latest
-         resources:
-           limits:
-             nvidia.com/gpu: 1
-         env:
-           - name: ATTESTATION_URL
-             value: "https://kbs.example.com"
-         volumeMounts:
-           - name: encrypted-dataset
-             mountPath: /data
-     volumes:
-       - name: encrypted-dataset
-         secret:
-           secretName: training-data
-   ```
-
-2. **Confidential Inference**
-   - User data never exposed to infrastructure
-   - Model protected from extraction
-   - Cryptographic proof of privacy
-
-3. **Federated Learning**
-   - Multiple parties collaborate on model training
-   - Data never leaves individual TEEs
-   - Gradient sharing without data exposure
-
-### GPU Support in Confidential Containers
-
-[Emerging support for confidential GPU computing]
-
-**Technologies:**
-- NVIDIA Confidential Computing
-- AMD SEV-SNP with GPU passthrough
-- Intel GPU with TDX integration
-
----
-
-## AI Model Governance and MLOps
-
-### Model Registry and Versioning
-
-[Tracking AI models like software artifacts]
-
-**Model Lifecycle:**
-- Version control for models
-- SBOM for models (data, dependencies)
-- Signing and verification
-- Provenance tracking
-
-### AI Supply Chain Security
-
-[Extending supply chain security to AI models]
-
-**Concerns:**
-- Model poisoning attacks
-- Adversarial training data
-- Backdoors in pre-trained models
-- Dependency vulnerabilities in ML frameworks
-
-**Mitigations:**
 ```bash
-# Sign ML model artifacts
-cosign sign registry.example.com/models/fraud-detection:v2
+# Example: Running an LLM on RHEL AI with InstructLab
+# Install RHEL AI packages
+sudo dnf install rhel-ai instructlab
 
-# Generate model card and SBOM
-generate-model-card \
-  --model fraud-detection:v2 \
-  --training-data "transactions-2024-q1" \
-  --framework "pytorch==2.0.1" \
-  --output model-card.json
+# Initialize InstructLab for model customization
+ilab init --model granite-7b-lab
 
-# Attach metadata to model
-cosign attach attestation \
-  --attestation model-card.json \
-  registry.example.com/models/fraud-detection:v2
+# Serve the model for inference
+ilab serve --model granite-7b-lab --port 8000
+
+# Query the model via API
+curl -X POST http://localhost:8000/v1/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "granite-7b-lab",
+    "prompt": "Analyze the following transaction for fraud indicators:",
+    "max_tokens": 256
+  }'
 ```
 
-### Responsible AI and Ethics
+### Red Hat AI Inference Server
 
-[Governance for AI deployment]
+The **Red Hat AI Inference Server**, based on the open source vLLM project, provides high-performance, portable model inference across any environment. vLLM's PagedAttention algorithm and continuous batching deliver industry-leading throughput for large language model serving, while OpenAI-compatible API support ensures application portability.
 
-**Considerations:**
-- Bias detection and mitigation
-- Explainability and transparency
-- Privacy-preserving AI
-- Regulatory compliance (EU AI Act, etc.)
+**"Any Cloud, Any Accelerator, Any Model" Philosophy:**
 
----
+1. **Any Cloud**: Deploy identical inference infrastructure on AWS, Azure, Google Cloud, IBM Cloud, or on-premises OpenShift. Applications use the same API endpoints regardless of underlying infrastructure, enabling seamless workload migration.
 
-## OpenShift AI (formerly OpenDataHub)
+2. **Any Accelerator**: Support for diverse GPU hardware including NVIDIA (A100, H100, L4, L40S), AMD Instinct, and Intel Data Center GPUs. Organizations choose hardware based on cost, availability, and performance needs without rewriting inference code.
 
-### Enterprise AI/ML Platform
+3. **Any Model**: Serve models in multiple formats (Hugging Face, GGUF, safetensors) and frameworks (PyTorch, TensorFlow). Support for both open source models (Llama, Mistral, Granite) and proprietary custom models.
 
-[Introduction to Red Hat's AI platform]
-
-**OpenShift AI Components:**
-
-1. **Jupyter Notebooks**: Interactive development
-2. **Model Serving**: Deploy models at scale (KServe, ModelMesh)
-3. **Pipeline Orchestration**: Kubeflow Pipelines
-4. **Distributed Training**: Ray, Horovod integration
-5. **Model Monitoring**: Drift detection, performance tracking
-
-### Integration with Platform Stack
-
-[How OpenShift AI leverages the sovereignty stack]
-
-**Leveraging Platform Features:**
-- **UBI base images**: For consistent model containers
-- **Supply chain security**: Signed model artifacts
-- **GitOps**: Declarative model deployment
-- **Confidential containers**: Secure AI workloads
-- **SPIFFE/SPIRE**: Service identity for model servers
-- **Developer Hub**: Model catalog and discovery
-
----
-
-## Technical Deep Dive: End-to-End AI Workflow
-
-### Complete ML Pipeline on Sovereign Infrastructure
-
-[Detailed walkthrough of AI development to deployment]
-
-**Workflow Stages:**
-
-1. **Data Preparation in Dev Spaces**
-   ```yaml
-   # Devfile for data science environment
-   schemaVersion: 2.2.0
-   metadata:
-     name: ml-workspace
-   components:
-     - name: jupyter
-       container:
-         image: registry.access.redhat.com/ubi9/python-39:latest
-         command: ['jupyter', 'lab']
-         env:
-           - name: JUPYTER_ENABLE_LAB
-             value: 'yes'
-   ```
-
-2. **Model Training with Kubeflow Pipelines**
-   ```python
-   # Example: Kubeflow pipeline component
-   from kfp import dsl
-
-   @dsl.component(
-       base_image='registry.access.redhat.com/ubi9/python-39',
-       packages_to_install=['scikit-learn==1.3.0']
-   )
-   def train_model(
-       dataset_path: str,
-       model_output: Output[Model]
-   ):
-       import pickle
-       from sklearn.ensemble import RandomForestClassifier
-       # Training logic here
-       ...
-   ```
-
-3. **Model Registration and Signing**
-   ```bash
-   # Tag and sign model
-   podman tag localhost/fraud-model:latest \
-     registry.example.com/models/fraud-model:v1
-
-   podman push registry.example.com/models/fraud-model:v1
-
-   cosign sign registry.example.com/models/fraud-model:v1
-   ```
-
-4. **Model Deployment with KServe**
-   ```yaml
-   apiVersion: serving.kserve.io/v1beta1
-   kind: InferenceService
-   metadata:
-     name: fraud-detection
-   spec:
-     predictor:
-       model:
-         modelFormat:
-           name: sklearn
-         storageUri: 's3://models/fraud-detection/v1'
-         runtime: kserve-sklearnserver
-       minReplicas: 2
-       maxReplicas: 10
-   ```
-
-5. **GitOps Deployment via ArgoCD**
-   ```yaml
-   # ArgoCD Application for model deployment
-   apiVersion: argoproj.io/v1alpha1
-   kind: Application
-   metadata:
-     name: fraud-detection-model
-   spec:
-     source:
-       repoURL: https://github.com/example/ml-models
-       path: production/fraud-detection
-     destination:
-       server: https://kubernetes.default.svc
-       namespace: ml-serving
-     syncPolicy:
-       automated:
-         prune: true
-   ```
-
-6. **Monitoring and Observability**
-   - Prometheus metrics for inference latency
-   - Model drift detection
-   - Performance degradation alerts
-   - A/B testing and canary deployments
-
----
-
-## GenAI and Large Language Models (LLMs)
-
-### Self-Hosted LLMs for Digital Sovereignty
-
-[Running LLMs on your own infrastructure]
-
-**Why Self-Host:**
-- Data never sent to external APIs
-- Regulatory compliance
-- Cost control at scale
-- Model customization and fine-tuning
-- IP protection
-
-### Deploying LLMs on OpenShift
-
-[Technical approach to running large models]
-
-**Infrastructure Requirements:**
-- GPU nodes (NVIDIA A100, H100, L40S) - cloud or on-premises bare metal
-- High-memory instances (256GB+ RAM for large models)
-- Fast storage (NVMe SSE for model weights and datasets)
-- High-bandwidth networking (InfiniBand, RoCE for multi-GPU and distributed training)
-- Scalable deployment across cloud, on-premises, and hybrid configurations
-
-**Example: vLLM Deployment**
 ```yaml
+# Example: Deploying AI Inference Server on OpenShift
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: llm-server
+  name: vllm-inference-server
+  namespace: ai-inference
 spec:
-  replicas: 2
+  replicas: 3  # Scale based on load
   template:
     spec:
       containers:
         - name: vllm
-          image: registry.example.com/vllm:latest
+          image: registry.redhat.io/rhai/vllm-inference-server:latest
           args:
             - --model
-            - /models/llama-2-70b
+            - /models/granite-13b-chat  # Red Hat Granite model
+            - --served-model-name
+            - granite-chat
             - --tensor-parallel-size
-            - "4"
+            - "2"  # Use 2 GPUs per replica
+          env:
+            - name: VLLM_ATTENTION_BACKEND
+              value: "FLASHINFER"  # Optimized attention implementation
           resources:
             limits:
-              nvidia.com/gpu: 4
+              nvidia.com/gpu: "2"
+              memory: 48Gi
           volumeMounts:
             - name: model-storage
               mountPath: /models
+      volumes:
+        - name: model-storage
+          persistentVolumeClaim:
+            claimName: model-registry-pvc
+---
+# OpenAI-compatible service for application access
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-inference-api
+  namespace: ai-inference
+spec:
+  selector:
+    app: vllm-inference-server
+  ports:
+    - port: 8000
+      name: http
+  type: LoadBalancer
 ```
+
+**Hardware Investment Optimization:**
+
+Organizations with diverse GPU hardware across different data centers and cloud regions use a single inference stack. A model validated on NVIDIA L4 GPUs in AWS can deploy identically on AMD Instinct GPUs on-premises, maximizing hardware utilization without maintaining multiple inference frameworks.
+
+### Red Hat OpenShift AI
+
+**Red Hat OpenShift AI** provides a comprehensive MLOps platform for the complete AI/ML lifecycle, integrating development, training, deployment, and monitoring capabilities on the OpenShift Kubernetes platform. Built on the upstream Kubeflow project and extended with enterprise features, OpenShift AI enables data scientists and ML engineers to build and deploy models at scale while IT operations maintain security, governance, and infrastructure control.
+
+**Platform Architecture:**
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    Red Hat OpenShift AI                         │
+│                   (Kubernetes-Native MLOps)                     │
+├─────────────────────────────────────────────────────────────────┤
+│  Model Development       │  Model Training   │  Model Serving   │
+│  - Jupyter Notebooks     │  - Distributed    │  - KServe        │
+│  - VS Code Integration   │  - GPU Scheduling │  - ModelMesh     │
+│  - Python Environments   │  - Pipelines      │  - Auto-scaling  │
+├──────────────────────────┴───────────────────┴──────────────────┤
+│                   Model Operations & Governance                  │
+│  - Model Registry  │  Model Monitoring  │  Experiment Tracking │
+│  - Version Control │  Drift Detection   │  Metadata Management │
+├─────────────────────────────────────────────────────────────────┤
+│              Red Hat OpenShift (Kubernetes Platform)            │
+│  - Multi-cloud / On-prem / Air-gapped deployment               │
+│  - GPU Operator (NVIDIA, AMD, Intel)                           │
+│  - Storage (OpenShift Data Foundation / Ceph)                  │
+│  - Security (SPIFFE/SPIRE, RBAC, Network Policies)            │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Core Capabilities:**
+
+1. **Interactive Development Environments**
+   - Jupyter notebooks with GPU acceleration
+   - Pre-configured data science environments (Python, R, Julia)
+   - Integration with VS Code for IDE-based workflows
+   - Shared workspaces for team collaboration
+
+2. **Pipeline Orchestration (Kubeflow Pipelines)**
+   - Define ML workflows as code (Python SDK)
+   - Automated training pipelines with hyperparameter tuning
+   - Reproducible experiments with versioned artifacts
+   - Integration with Git for pipeline version control
+
+3. **Distributed Training**
+   - Multi-GPU training with frameworks (PyTorch, TensorFlow, Ray)
+   - Distributed data processing (Spark integration)
+   - Automatic GPU scheduling and allocation
+   - Checkpoint management for fault tolerance
+
+4. **Model Serving (KServe)**
+   - Deploy models as scalable REST/gRPC endpoints
+   - Multi-framework support (TensorFlow, PyTorch, ONNX, scikit-learn)
+   - Canary deployments and A/B testing
+   - GPU inference optimization
+
+5. **Model Monitoring and Observability**
+   - Real-time performance metrics (latency, throughput, accuracy)
+   - Data drift detection
+   - Model bias and fairness monitoring
+   - Integration with Prometheus and Grafana
+
+**Deployment Flexibility: The Sovereignty Advantage**
+
+OpenShift AI runs identically across environments, enabling true workload portability:
+
+- **Public Cloud**: Deploy on AWS, Azure, Google Cloud with managed OpenShift
+- **On-Premises**: Run in corporate data centers on bare metal or virtualized infrastructure
+- **Hybrid**: Develop in cloud, train on-prem on sensitive data, serve models in edge locations
+- **Air-Gapped**: Complete MLOps in disconnected environments (government, defense, financial trading)
+- **Edge**: Lightweight deployments at remote sites with central management
+
+This flexibility addresses digital sovereignty requirements directly:
+- Develop models in a public cloud sandbox using synthetic data
+- Move the validated pipeline to on-premises infrastructure for training on real customer data
+- Deploy the trained model back to multi-cloud for global inference serving
+- Retain the ability to migrate workloads based on regulatory changes, cost optimization, or vendor negotiations
+
+**Integration with Platform Stack:**
+
+OpenShift AI leverages the complete Red Hat platform ecosystem described in previous sections:
+
+- **UBI Base Images**: All OpenShift AI containers built on UBI for consistency and security
+- **Supply Chain Security**: Model artifacts signed with Sigstore, SBOM generation for model dependencies
+- **GitOps**: ArgoCD deployment of models and pipelines with version control
+- **Confidential Containers**: Train models on sensitive data with cryptographic guarantees (see Use Case below)
+- **SPIFFE/SPIRE**: mTLS authentication for model serving endpoints
+- **Developer Hub**: Catalog of models, datasets, and ML pipelines with self-service access
 
 ---
 
-## On-Premises AI Infrastructure
+## Technical Deep Dive: End-to-End AI/ML Lifecycle
 
-### Why On-Premises AI Matters for Sovereignty
+This section demonstrates a complete AI workflow using Red Hat AI, from initial development through production deployment, emphasizing sovereignty through infrastructure control.
 
-Running AI workloads on-premises provides ultimate control over sensitive data, proprietary models, and computational resources. Regulatory frameworks (GDPR, HIPAA, financial services data protection) increasingly mandate that training data and model outputs remain within geographical boundaries—cloud AI services cannot meet these requirements when data sovereignty is non-negotiable. Competitive advantages from proprietary AI models demand protecting model weights and architectures as intellectual property—uploading models to cloud AI platforms risks exposure. Cost considerations at scale favor on-premises deployment: training large language models repeatedly or running high-volume inference workloads incurs massive cloud GPU expenses, while on-premises infrastructure amortizes costs over years of operation.
+**Scenario**: A financial services firm building a fraud detection model for credit card transactions. Requirements include:
+- Training data contains PII and must remain on-premises (GDPR, PCI-DSS compliance)
+- Model must be explainable for regulatory audit (Canadian DADM, EU AI Act)
+- Production inference must support 10,000 TPS with <100ms latency
+- Capability to move workloads between on-prem and cloud based on capacity needs
 
-**Sovereignty Benefits of On-Prem AI:**
-- **Data Residency**: Training data never leaves organizational boundaries
-- **Model IP Protection**: Proprietary models stay within controlled infrastructure
-- **Regulatory Compliance**: Meet jurisdictional data sovereignty requirements
-- **Cost Predictability**: Capital expense model vs. variable cloud costs
-- **Performance Control**: Dedicated hardware without noisy neighbor effects
-- **Air-Gap Capability**: AI operations in disconnected environments
+### Phase 1: Development Environment Setup
 
-### On-Premises GPU Infrastructure
-
-AI workload performance depends fundamentally on GPU acceleration—training deep learning models or serving large language models without GPUs is impractical. On-premises GPU infrastructure requires careful planning for compute density, power delivery, cooling, and networking. Modern AI GPUs (NVIDIA H100, A100, L40S) consume 300-700W each—an 8-GPU server requires 4-6kW power delivery and equivalent cooling capacity. Data center preparation includes electrical infrastructure upgrades (high-density PDUs, adequate circuit capacity), cooling system enhancements (liquid cooling for highest density deployments), and network fabric upgrades (100Gb+ Ethernet or InfiniBand for GPU-to-GPU communication in distributed training).
-
-**GPU Infrastructure Considerations:**
-
-1. **GPU Selection by Use Case**
-   - **Training (Large Models)**: NVIDIA H100, A100 80GB - maximum memory and compute
-   - **Training (Medium Models)**: NVIDIA A100 40GB, L40S - cost-effective for moderate scale
-   - **Inference (High Throughput)**: NVIDIA L4, L40S - optimized for serving
-   - **Inference (Edge/Cost-Sensitive)**: NVIDIA T4, AMD Instinct - lower power consumption
-
-2. **Server Architecture**
-   - **Dense Training**: 8-GPU servers with NVLink/NVSwitch interconnect
-   - **Inference Serving**: 4-GPU servers with PCIe, higher server count for scale
-   - **Hybrid**: Modular approach with both training and inference nodes
-   - **Bare Metal vs. Virtualization**: Bare metal preferred for maximum performance, GPU partitioning (MIG) for multi-tenancy
-
-3. **Power and Cooling**
-   - **Power Planning**: 4-6kW per 8-GPU server, plus networking and storage
-   - **Cooling**: Air cooling for L40S/L4, liquid cooling recommended for H100 high density
-   - **Efficiency**: Power Usage Effectiveness (PUE) critical for operational costs
-   - **Infrastructure**: UPS capacity, backup generators for production AI services
-
-4. **Networking**
-   - **GPU Interconnect**: NVLink within server, InfiniBand or RoCE between servers
-   - **Bandwidth Requirements**: 100-400Gb/s for distributed training workloads
-   - **Network Fabric**: Leaf-spine architecture, low latency switching
-   - **Storage Network**: Separate 100Gb network for high-speed data access
+Data scientists use Jupyter notebooks in OpenShift AI, with GPU access for experimentation.
 
 ```yaml
-# Example: On-Premises GPU Node Configuration
-apiVersion: v1
-kind: Node
-metadata:
-  name: ai-gpu-node-01
-  labels:
-    node-role.kubernetes.io/gpu-worker: ""
-    gpu-type: nvidia-h100
-    gpu-count: "8"
-    gpu-memory: "640GB"  # 8x 80GB H100
-    topology: nvlink-nvswitch  # Full GPU interconnect
-    workload-type: training
-spec:
-  # Node provisioned with 8x NVIDIA H100 GPUs
-  capacity:
-    nvidia.com/gpu: "8"
-    memory: "2Ti"  # High memory for large model training
-    cpu: "224"  # Dual AMD EPYC 9654 (96-core each)
-  allocatable:
-    nvidia.com/gpu: "8"
-    memory: "2000Gi"
-    cpu: "220"
-```
-
-### On-Premises Storage for AI Workloads
-
-AI workloads demand massive storage capacity and high throughput: training datasets reach terabytes (ImageNet: 150GB, Common Crawl: 250TB), trained model checkpoints consume gigabytes (LLAMA-2 70B: 140GB), and inference serving requires fast model loading. On-premises storage architecture balances capacity (object storage for datasets and archives), performance (NVMe for active training data and model serving), and cost (tiered storage with automatic data lifecycle management). Distributed storage systems (Ceph, Red Hat OpenShift Data Foundation) provide Kubernetes-native storage with performance scaling as infrastructure grows.
-
-**Storage Architecture Patterns:**
-
-1. **Hot Storage - Active Training**
-   - **Technology**: NVMe SSD, local or distributed (Ceph RBD with NVMe OSDs)
-   - **Capacity**: 10-50TB per node, 100TB+ cluster-wide
-   - **Performance**: 10+ GB/s throughput for data loading during training
-   - **Use Case**: Active datasets, model checkpoints, intermediate results
-
-2. **Warm Storage - Model Registry**
-   - **Technology**: SSD-based object storage (Ceph RGW, MinIO)
-   - **Capacity**: 100TB-1PB
-   - **Performance**: 1-5 GB/s throughput for model loading
-   - **Use Case**: Trained models, versioned model artifacts, inference model cache
-
-3. **Cold Storage - Dataset Archives**
-   - **Technology**: HDD-based object storage, tape libraries for compliance
-   - **Capacity**: 1PB+
-   - **Performance**: Sequential access, 100+ MB/s
-   - **Use Case**: Historical datasets, training data archives, backup models
-
-```yaml
-# Example: Storage configuration for on-premises AI training
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: training-dataset-pvc
-  namespace: ai-training
-spec:
-  storageClassName: nvme-high-performance  # NVMe storage class
-  accessModes:
-    - ReadWriteMany  # Multiple training pods accessing simultaneously
-  resources:
-    requests:
-      storage: 5Ti  # Large dataset for model training
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: model-checkpoints-pvc
-  namespace: ai-training
-spec:
-  storageClassName: ssd-standard  # Standard SSD for checkpoints
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Ti  # Model checkpoint storage
-```
-
-### Distributed Training Across On-Prem and Cloud
-
-Hybrid AI infrastructure enables elastic scaling: core training infrastructure on-premises for consistent workloads, cloud GPU bursting for peak demands or experimentation. This pattern provides sovereignty for sensitive data (training data stays on-prem, only gradient updates cross boundaries) while leveraging cloud elasticity. Distributed training frameworks (Horovod, PyTorch Distributed) support this architecture—training orchestration in on-prem OpenShift, worker nodes span on-prem GPUs and cloud instances, model checkpointing to shared object storage accessible from both environments.
-
-**Hybrid Training Architecture:**
-
-```
-┌──────────────────────────────────────────────────┐
-│   On-Premises Data Center (Primary Training)    │
-│                                                  │
-│  ┌────────────────────────────────────────────┐ │
-│  │  OpenShift AI - Training Control Plane    │ │
-│  │  - Kubeflow Pipeline Orchestrator         │ │
-│  │  - Model Registry (MinIO/Ceph)            │ │
-│  │  - Training Dataset Storage               │ │
-│  └────────────────────────────────────────────┘ │
-│                                                  │
-│  ┌────────────────────────────────────────────┐ │
-│  │  GPU Worker Nodes (Persistent)            │ │
-│  │  - 8x H100 servers (64 GPUs total)        │ │
-│  │  - NVLink + InfiniBand interconnect       │ │
-│  │  - Local NVMe cache for datasets          │ │
-│  └────────────────────────────────────────────┘ │
-│                                                  │
-└──────────────┬───────────────────────────────────┘
-               │ Hybrid Training Orchestration
-               │ (Encrypted WAN, federated identity)
-               │
-        ┌──────┴──────────────────────┐
-        │                             │
-        ▼                             ▼
-┌─────────────────┐          ┌─────────────────┐
-│ AWS GPU Workers │          │ GCP GPU Workers │
-│ - Elastic scale │          │ - Spot instances│
-│ - A100 instances│          │ - Experiments   │
-│ - Burst workload│          │ - HP tuning     │
-└─────────────────┘          └─────────────────┘
-```
-
-**Hybrid Training Configuration:**
-
-```yaml
-# Kubeflow Training Job spanning on-prem + cloud
+# Jupyter notebook deployment configuration
 apiVersion: kubeflow.org/v1
-kind: PyTorchJob
+kind: Notebook
 metadata:
-  name: distributed-training-hybrid
-  namespace: ai-training
+  name: fraud-detection-dev
+  namespace: ml-development
 spec:
-  pytorchReplicaSpecs:
-    # Master node always on-prem (data locality)
-    Master:
-      replicas: 1
-      template:
-        metadata:
-          annotations:
-            cluster.open-cluster-management.io/placement: "onprem-primary"
-        spec:
-          containers:
-            - name: pytorch
-              image: registry.example.com/pytorch-training:latest
-              resources:
-                limits:
-                  nvidia.com/gpu: 1
-              volumeMounts:
-                - name: training-data
-                  mountPath: /data  # On-prem high-speed storage
-          volumes:
+  template:
+    spec:
+      containers:
+        - name: notebook
+          # UBI-based data science image
+          image: registry.redhat.io/openshift-ai/pytorch-notebook:latest
+          resources:
+            requests:
+              memory: 16Gi
+              cpu: 4
+              nvidia.com/gpu: 1  # Single GPU for development
+            limits:
+              memory: 16Gi
+              nvidia.com/gpu: 1
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jovyan
             - name: training-data
-              persistentVolumeClaim:
-                claimName: training-dataset-pvc
-
-    # Worker nodes distributed across clusters
-    Worker:
-      replicas: 12  # 8 on-prem + 4 cloud
-      template:
-        spec:
-          # Placement determined by GPU availability
-          affinity:
-            nodeAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-                - weight: 100
-                  preference:
-                    matchExpressions:
-                      - key: location
-                        operator: In
-                        values:
-                          - onprem  # Prefer on-prem workers
-                - weight: 50
-                  preference:
-                    matchExpressions:
-                      - key: location
-                        operator: In
-                        values:
-                          - cloud-aws  # Cloud burst capacity
-          containers:
-            - name: pytorch
-              image: registry.example.com/pytorch-training:latest
-              env:
-                - name: NCCL_SOCKET_IFNAME
-                  value: eth0  # Network interface for distributed training
-                - name: NCCL_IB_DISABLE
-                  value: "0"  # Enable InfiniBand on on-prem nodes
-              resources:
-                limits:
-                  nvidia.com/gpu: 1
+              mountPath: /data
+              readOnly: true  # Development uses read-only access to production data
+          env:
+            - name: JUPYTER_ENABLE_LAB
+              value: "yes"
+      volumes:
+        - name: workspace
+          persistentVolumeClaim:
+            claimName: data-scientist-workspace-pvc
+        - name: training-data
+          persistentVolumeClaim:
+            claimName: fraud-training-data-pvc  # On-prem storage with sensitive data
 ```
 
-### Air-Gapped AI Deployment
+**Development Workflow:**
 
-Classified government systems, defense contractors, financial trading environments, and research labs with IP protection often require completely air-gapped AI infrastructure. These environments cannot connect to external model repositories, cloud API endpoints, or internet-based model serving. On-premises AI infrastructure enables this sovereignty requirement: model training, inference serving, and MLOps entirely within air-gapped boundaries. Operational challenges include model transfer (large model files moved via secure removable media), software updates (qualified AI framework updates transferred in maintenance windows), and model validation (offline verification of model quality and safety).
+```python
+# Jupyter notebook: fraud_detection_development.ipynb
 
-**Air-Gap Operational Patterns:**
+import pandas as pd
+import torch
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
-1. **Model Transfer Procedures**
-   ```bash
-   # On connected environment: Export model with cryptographic verification
+# Load training data from on-prem storage
+# Data never leaves organizational boundaries
+transactions = pd.read_parquet('/data/transactions/2024/*.parquet')
 
-   # Export trained model from development cluster
-   podman save registry.example.com/models/fraud-detection:v5 \
-     -o fraud-detection-v5.tar
+# Feature engineering
+features = [
+    'transaction_amount',
+    'merchant_category',
+    'time_since_last_transaction',
+    'location_deviation',
+    'device_fingerprint_match'
+]
 
-   # Generate cryptographic hash for integrity verification
-   sha256sum fraud-detection-v5.tar > fraud-detection-v5.tar.sha256
+X = transactions[features]
+y = transactions['is_fraud']
 
-   # Sign the hash with organizational key
-   gpg --sign --armor fraud-detection-v5.tar.sha256
+# Train/test split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, stratify=y, random_state=42
+)
 
-   # Transfer: fraud-detection-v5.tar + .sha256.asc
-   # via approved secure removable media
+# Model development (PyTorch neural network)
+class FraudDetectionModel(torch.nn.Module):
+    def __init__(self, input_dim):
+        super().__init__()
+        self.layers = torch.nn.Sequential(
+            torch.nn.Linear(input_dim, 128),
+            torch.nn.ReLU(),
+            torch.nn.Dropout(0.3),
+            torch.nn.Linear(128, 64),
+            torch.nn.ReLU(),
+            torch.nn.Dropout(0.3),
+            torch.nn.Linear(64, 1),
+            torch.nn.Sigmoid()
+        )
 
-   # On air-gapped environment: Verify and load
+    def forward(self, x):
+        return self.layers(x)
 
-   # Verify cryptographic signature
-   gpg --verify fraud-detection-v5.tar.sha256.asc
+# Train on GPU
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model = FraudDetectionModel(len(features)).to(device)
 
-   # Verify file integrity
-   sha256sum -c fraud-detection-v5.tar.sha256
+# Training loop (simplified)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+criterion = torch.nn.BCELoss()
 
-   # Load into air-gapped registry
-   podman load -i fraud-detection-v5.tar
-   podman tag localhost/fraud-detection:v5 \
-     airgap-registry.internal.corp/models/fraud-detection:v5
-   podman push airgap-registry.internal.corp/models/fraud-detection:v5
-   ```
+# ... training code ...
 
-2. **Internal Model Registry**
-   - **Registry**: Red Hat Quay, Harbor deployed on-prem
-   - **Storage**: High-capacity SSD/HDD for model versions
-   - **Access Control**: Integration with organizational LDAP/AD
-   - **Mirroring**: One-way sync from connected to air-gapped environments
+# Save model for pipeline deployment
+torch.save(model.state_dict(), '/home/jovyan/models/fraud_model_v1.pt')
+```
 
-3. **Framework and Dependency Management**
-   - **Python Packages**: Internal PyPI mirror with ML frameworks (PyTorch, TensorFlow, scikit-learn)
-   - **Container Images**: Mirrored UBI base images, ML runtime images
-   - **Model Weights**: Pre-trained model archives (LLAMA, BERT, etc.) transferred and verified
-   - **Update Cadence**: Quarterly or event-driven security updates
+### Phase 2: Automated Training Pipeline
+
+Once the model architecture is validated, data scientists define a Kubeflow Pipeline for reproducible training with hyperparameter tuning.
+
+```python
+# kubeflow_pipeline.py - Define training pipeline as code
+
+from kfp import dsl
+from kfp.dsl import Output, Model, Dataset, Metrics, Input
+
+@dsl.component(
+    base_image='registry.redhat.io/openshift-ai/pytorch-notebook:latest',
+    packages_to_install=['scikit-learn==1.3.2', 'torch==2.1.0']
+)
+def load_and_preprocess_data(
+    data_path: str,
+    processed_data: Output[Dataset]
+) -> None:
+    """Load transaction data and perform feature engineering."""
+    import pandas as pd
+    from sklearn.preprocessing import StandardScaler
+    import pickle
+
+    # Load from on-prem storage
+    transactions = pd.read_parquet(f'{data_path}/*.parquet')
+
+    # Feature engineering logic
+    # (implementation details omitted for brevity)
+
+    # Save processed data
+    transactions.to_parquet(processed_data.path)
+
+
+@dsl.component(
+    base_image='registry.redhat.io/openshift-ai/pytorch-notebook:latest',
+    packages_to_install=['torch==2.1.0', 'scikit-learn==1.3.2']
+)
+def train_model(
+    processed_data: Input[Dataset],
+    learning_rate: float,
+    batch_size: int,
+    epochs: int,
+    model_output: Output[Model],
+    metrics_output: Output[Metrics]
+) -> None:
+    """Train fraud detection model with specified hyperparameters."""
+    import torch
+    import pandas as pd
+    from sklearn.model_selection import train_test_split
+    from sklearn.metrics import precision_recall_fscore_support, roc_auc_score
+
+    # Load processed data
+    data = pd.read_parquet(processed_data.path)
+    X = data.drop('is_fraud', axis=1)
+    y = data['is_fraud']
+
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2)
+
+    # Model training (using GPU)
+    device = torch.device('cuda')
+    # (training implementation omitted for brevity)
+
+    # Log metrics for experiment tracking
+    metrics_output.log_metric('auc_roc', 0.95)
+    metrics_output.log_metric('precision', 0.92)
+    metrics_output.log_metric('recall', 0.89)
+    metrics_output.log_metric('f1_score', 0.90)
+
+    # Save model (implementation omitted)
+
+
+@dsl.pipeline(
+    name='Fraud Detection Training Pipeline',
+    description='End-to-end pipeline for training fraud detection model'
+)
+def fraud_detection_pipeline(
+    data_path: str = '/data/transactions/2024',
+    learning_rate: float = 0.001,
+    batch_size: int = 256,
+    epochs: int = 50
+):
+    """Training pipeline with configurable hyperparameters."""
+
+    # Step 1: Data preprocessing
+    preprocess_task = load_and_preprocess_data(data_path=data_path)
+
+    # Step 2: Model training (runs on GPU node)
+    train_task = train_model(
+        processed_data=preprocess_task.outputs['processed_data'],
+        learning_rate=learning_rate,
+        batch_size=batch_size,
+        epochs=epochs
+    )
+    train_task.set_gpu_limit(1)  # Request GPU for training
+    train_task.set_memory_limit('32Gi')
+```
+
+### Phase 3: Model Deployment with KServe
+
+Deploy the trained model to production using KServe for scalable inference serving.
 
 ```yaml
-# Air-gapped model serving configuration
+# fraud-detection-inferenceservice.yaml
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
-  name: fraud-detection-airgap
-  namespace: ml-serving
+  name: fraud-detection
+  namespace: ml-production
 spec:
   predictor:
     model:
       modelFormat:
         name: pytorch
-      # Model served from air-gapped internal registry
-      storageUri: "pvc://airgap-model-storage/fraud-detection/v5"
+      storageUri: "pvc://model-storage/fraud-detection/v2"
       runtime: kserve-torchserve
-      runtimeVersion: "0.8.2"  # Qualified version in air-gapped environment
-    minReplicas: 3
-    maxReplicas: 3  # Fixed scaling in air-gapped (no external autoscaling metrics)
+    minReplicas: 5
+    maxReplicas: 20
     resources:
       requests:
+        memory: 8Gi
         nvidia.com/gpu: 1
-        memory: 16Gi
       limits:
         nvidia.com/gpu: 1
-        memory: 16Gi
 ```
 
-### Edge AI with On-Premises Coordination
+### Phase 4: Production Inference with SPIFFE Authentication
 
-Edge AI deployments (retail analytics, manufacturing quality control, autonomous systems, smart buildings) require local inference with coordination through on-premises infrastructure. This architecture provides low-latency inference at edge locations while maintaining model management, monitoring, and updates from central on-prem data centers. OpenShift deployment at edge locations runs lightweight inference workloads, periodic synchronization with on-prem model registry provides updated models, and aggregated telemetry flows to on-prem for model performance monitoring and retraining triggers.
+Applications call the fraud detection model via authenticated mTLS.
 
-**Edge AI Architecture Pattern:**
+```python
+# fraud_detection_client.py - Application calling model inference
 
-```
-┌──────────────────────────────────────────────────┐
-│  On-Premises Data Center (AI Control Plane)     │
-│                                                  │
-│  ┌────────────────────────────────────────────┐ │
-│  │  Model Training Infrastructure             │ │
-│  │  - GPU cluster for model development      │ │
-│  │  - Training data storage and processing   │ │
-│  └────────────────────────────────────────────┘ │
-│                                                  │
-│  ┌────────────────────────────────────────────┐ │
-│  │  Model Registry and Distribution           │ │
-│  │  - Versioned model storage                 │ │
-│  │  - Model validation and approval workflow  │ │
-│  └────────────────────────────────────────────┘ │
-│                                                  │
-│  ┌────────────────────────────────────────────┐ │
-│  │  Edge Management                           │ │
-│  │  - Red Hat Advanced Cluster Management    │ │
-│  │  - Model deployment orchestration          │ │
-│  │  - Edge fleet monitoring                   │ │
-│  └────────────────────────────────────────────┘ │
-│                                                  │
-└──────────────┬───────────────────────────────────┘
-               │ Model Distribution & Telemetry
-               │ (Periodic sync, bandwidth-efficient)
-               │
-        ┌──────┴──────┬──────────────┬──────────────┐
-        │             │              │              │
-        ▼             ▼              ▼              ▼
-┌──────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
-│ Edge Site 1  │ │ Edge Site 2 │ │ Edge Site 3 │ │ Edge Site N │
-│ (Retail)     │ │ (Factory)   │ │ (Warehouse) │ │ (Remote)    │
-│              │ │             │ │             │ │             │
-│ - Local GPU  │ │ - GPU/VPU   │ │ - CPU infer │ │ - Low power │
-│ - Real-time  │ │ - Vision AI │ │ - Logistics │ │ - Satellite │
-│   inference  │ │ - QA models │ │   optimize  │ │   link sync │
-└──────────────┘ └─────────────┘ └─────────────┘ └─────────────┘
-```
+import requests
+from pyspiffe.workloadapi import WorkloadApiClient
+from pyspiffe.svid.x509_svid import X509Svid
 
-**Edge Model Deployment Example:**
+# Get SPIFFE identity for this application
+with WorkloadApiClient() as client:
+    svid: X509Svid = client.fetch_x509_svid()
 
-```yaml
-# Advanced Cluster Management policy for edge AI model distribution
-apiVersion: policy.open-cluster-management.io/v1
-kind: Policy
-metadata:
-  name: deploy-retail-analytics-model
-  namespace: edge-policies
-spec:
-  remediationAction: enforce
-  disabled: false
-  policy-templates:
-    - objectDefinition:
-        apiVersion: policy.open-cluster-management.io/v1
-        kind: ConfigurationPolicy
-        metadata:
-          name: retail-model-deployment
-        spec:
-          severity: high
-          object-templates:
-            - complianceType: musthave
-              objectDefinition:
-                apiVersion: serving.kserve.io/v1beta1
-                kind: InferenceService
-                metadata:
-                  name: retail-analytics
-                  namespace: edge-inference
-                spec:
-                  predictor:
-                    model:
-                      modelFormat:
-                        name: tensorflow
-                      # Model synced from central on-prem registry
-                      storageUri: "pvc://edge-model-cache/retail-analytics/v3"
-                      runtime: kserve-tfserving
-                    resources:
-                      requests:
-                        nvidia.com/gpu: 1  # Edge GPU (T4 or L4)
-                        memory: 8Gi
-  # Placement: Deploy to retail edge clusters only
-  placement:
-    placementRuleName: retail-edge-clusters
+    # Create mTLS session
+    session = requests.Session()
+    session.cert = (svid.cert_chain_path, svid.private_key_path)
+    session.verify = svid.trust_bundle_path
+
+    # Call model inference endpoint
+    transaction_data = {
+        "transaction_amount": 1250.00,
+        "merchant_category": "electronics",
+        "time_since_last_transaction": 45,
+        "location_deviation": 850,  # km from usual location
+        "device_fingerprint_match": False
+    }
+
+    response = session.post(
+        'https://fraud-detection.ml-production.svc.cluster.local/v1/models/fraud-detection:predict',
+        json={"instances": [transaction_data]},
+        timeout=0.100  # 100ms timeout
+    )
+
+    prediction = response.json()
+    fraud_probability = prediction['predictions'][0]['fraud_score']
+
+    if fraud_probability > 0.75:
+        print(f"High fraud risk: {fraud_probability:.2%}")
 ```
 
 ---
 
-### RAG (Retrieval-Augmented Generation) Architecture
+## Real-World Use Case: Canadian Government Department AI Deployment
 
-[Combining LLMs with private knowledge bases]
+**Organization**: Canadian federal department processing benefit applications (hypothetical example illustrating DADM compliance)
 
-**Components:**
-- Vector database (Milvus, pgvector)
-- Embedding models
-- LLM inference server
-- Document processing pipeline
+**Challenge**: The department receives 500,000+ benefit applications annually. Manual review by caseworkers takes 4-6 weeks per application, creating backlogs and delayed services for citizens. An automated decision system could triage applications—flagging high-risk cases for human review while fast-tracking straightforward approvals. However, this falls squarely under the Directive on Automated Decision-Making (DADM) as a high-impact automated system affecting citizens' economic interests.
 
-### Confidential GenAI
+**Sovereignty Requirements**:
 
-[Running LLMs in confidential containers]
+1. **Data Residency**: Application data contains Canadian citizen PII (social insurance numbers, financial information, health details). Data cannot leave Canadian jurisdiction under PIPEDA and Treasury Board policies.
 
-**Privacy-Preserving LLM Inference:**
-- User prompts encrypted end-to-end
-- Model weights protected in TEE
-- Responses generated in secure enclave
-- Zero trust for sensitive queries
+2. **Transparency and Explainability**: DADM requires meaningful explanations for automated decisions. The AI system must provide human-readable rationale for why an application was flagged or approved.
+
+3. **Auditability**: Office of the Auditor General must be able to inspect training data, model logic, and decision records. External cloud AI services make this impractical.
+
+4. **Bias Testing**: Regular evaluation for demographic bias required. The department needs access to model internals and training data to conduct fairness audits.
+
+**Solution Architecture: OpenShift AI in Shared Services Canada Data Centers**
+
+The department deploys OpenShift AI entirely within Shared Services Canada (SSC) government data centers located in Canadian territory.
+
+**Infrastructure**:
+- **Primary Site**: SSC Data Center (Ottawa region)
+  - 16x NVIDIA L40S GPUs for model training
+  - 32x NVIDIA L4 GPUs for inference serving
+  - 200TB Ceph storage for training data and model registry
+  - OpenShift 4.15 on RHEL 9.4, air-gapped configuration
+
+**Implementation**:
+
+1. **Development**: Data scientists develop models in Jupyter environments with GPU acceleration
+2. **Training**: Kubeflow Pipelines with confidential containers protecting PII during processing
+3. **Explainability**: SHAP integration provides feature importance for each decision
+4. **Serving**: KServe deployment with SPIFFE authentication
+5. **Bias Monitoring**: Automated fairness evaluation across protected characteristics
+
+**DADM Compliance Achieved**:
+
+✅ **Algorithmic Impact Assessment**: Completed using OpenShift AI model cards
+✅ **Transparency**: SHAP explainability provides decision rationale
+✅ **Human-in-the-Loop**: Model provides recommendations; caseworkers make final decisions
+✅ **Data Sovereignty**: 100% Canadian infrastructure, zero foreign data exposure
+
+**Benefits Realized**:
+- Processing time reduced from 4-6 weeks to 1-2 weeks for fast-track cases
+- 40% reduction in caseworker hours for routine applications
+- Full DADM compliance with auditable trail
+- Zero dependency on foreign AI services
 
 ---
 
-## Real-World Use Case: Sovereign AI Platform
+## On-Premises and Air-Gapped AI Deployment
 
-**Organization:** European financial services firm with global operations
-**Challenge:** Fraud detection AI models required training on sensitive customer transaction data (PII, financial details) subject to GDPR. Previous architecture used cloud AI services (AWS SageMaker), creating regulatory risk and preventing model innovation on most sensitive datasets. Legal mandated 100% data residency within EU borders. Cost of cloud GPU training exceeded $200K/month with growing usage.
+### Why On-Premises AI Matters for Sovereignty
 
-**Requirements:**
-- **Regulatory**: GDPR compliance - training data never leaves EU data centers
-- **Security**: Cryptographic guarantees for sensitive data processing
-- **Performance**: Real-time fraud detection (<50ms inference latency)
-- **Scale**: 10M+ daily transactions, continuous model retraining
-- **Hybrid**: On-prem primary compute, cloud for development/testing
-- **Sovereignty**: Complete control over models and infrastructure
+On-premises deployment provides complete data control, meeting regulatory requirements that cloud AI services cannot satisfy. OpenShift AI deploys identically on-premises as in cloud environments, providing full MLOps capabilities within organizational data centers.
 
-**Infrastructure Deployment:**
+**Air-Gapped Deployment Patterns:**
 
-1. **On-Premises Primary Data Center (Frankfurt)**
-   - **Compute**: 64x NVIDIA H100 GPUs (8x 8-GPU servers) for model training
-   - **Inference**: 32x NVIDIA L4 GPUs (16x 2-GPU servers) for low-latency serving
-   - **Storage**: 500TB NVMe (Ceph RBD) for active datasets, 2PB object storage (Ceph RGW) for archives
-   - **Network**: 400Gb InfiniBand for GPU interconnect, 100Gb Ethernet for storage
-   - **Platform**: OpenShift 4.15 on RHEL 9.4, bare metal deployment
-   - **Power**: 450kW capacity (200kW for GPU compute), liquid cooling infrastructure
+```bash
+# On connected environment: Prepare model for air-gap transfer
 
-2. **On-Premises DR Site (Amsterdam)**
-   - **Compute**: 32x NVIDIA A100 GPUs for training failover
-   - **Inference**: 16x NVIDIA L4 GPUs for production serving redundancy
-   - **Storage**: Full replication of model registry and datasets
-   - **Federation**: SPIRE trust domain federation with primary site
+# 1. Export trained model as container image
+podman save registry.example.com/models/benefit-screening:v3 \
+  -o benefit-screening-v3.tar
 
-3. **Cloud Development (AWS eu-central-1)**
-   - **Purpose**: Data science experimentation, model prototyping
-   - **Compute**: Elastic GPU instances (p4d.24xlarge) for burst workloads
-   - **Data**: Synthetic datasets only (no production PII)
-   - **Federation**: Federated OpenShift AI, models promoted to on-prem for production training
+# 2. Generate cryptographic hash
+sha256sum benefit-screening-v3.tar > benefit-screening-v3.tar.sha256
 
-**Architecture Implementation:**
+# 3. Sign with organizational GPG key
+gpg --local-user airgap-signing@example.gc.ca \
+    --armor --sign benefit-screening-v3.tar.sha256
 
-1. **Foundation**: OpenShift on RHEL with UBI containers
-   - GPU operator for NVIDIA device management
-   - OpenShift Data Foundation (Ceph) for distributed storage
-   - Node Feature Discovery for GPU topology awareness
+# On air-gapped environment: Verify and load
 
-2. **Development**: Dev Spaces for data scientists
-   - Jupyter environments with on-prem GPU access
-   - Pre-configured ML frameworks (PyTorch, TensorFlow, scikit-learn)
-   - Direct access to on-prem feature stores and training data
+# 1. Verify GPG signature
+gpg --verify benefit-screening-v3.tar.sha256.asc
 
-3. **Training**: Confidential containers with GPU support
-   - Transaction data encrypted at rest and in-flight
-   - Training in AMD SEV-SNP VMs with GPU passthrough
-   - Attestation before accessing sensitive datasets
-   - Model checkpoints encrypted and signed
+# 2. Verify file integrity
+sha256sum -c benefit-screening-v3.tar.sha256
 
-4. **MLOps**: Kubeflow Pipelines with supply chain security
-   - Automated training pipelines triggered by data drift detection
-   - Model signing with Sigstore (on-prem Fulcio/Rekor)
-   - Model SBOM generation including training data provenance
-   - GitOps deployment with ArgoCD
-
-5. **Serving**: KServe with SPIFFE authentication
-   - 16 inference servers (2 GPUs each) handling 10M+ daily transactions
-   - mTLS authentication using SPIFFE IDs
-   - Sub-50ms p99 inference latency
-   - Canary deployments for model updates
-
-6. **Platform**: Developer Hub for model catalog
-   - Centralized model registry with lineage tracking
-   - Self-service model deployment workflows
-   - Performance monitoring dashboards
-
-7. **Security**: End-to-end supply chain security
-   - All container images signed and verified
-   - Model artifacts signed with organizational PKI
-   - Compliance audit trail for all model operations
-
-**Migration Journey:**
-
-- **Month 1-2**: On-prem infrastructure buildout (GPU servers, networking, storage)
-- **Month 3**: OpenShift deployment and GPU operator configuration
-- **Month 4-5**: OpenShift AI deployment, Kubeflow pipeline migration
-- **Month 6**: First production models retrained on-prem with full dataset access
-- **Month 7-8**: Gradual cutover from cloud to on-prem inference serving
-- **Month 9**: Cloud infrastructure decommissioned, 100% on-prem operations
-
-**Benefits Realized:**
-
-- **Sovereignty**: 100% data residency maintained, zero GDPR violations
-- **Performance**: 5x faster model deployment (1 week → 1 day iteration cycles)
-- **Security**: Zero data breaches, cryptographic guarantees for sensitive processing
-- **Cost**: 60% reduction in AI infrastructure costs ($200K/mo cloud → $80K/mo amortized CapEx)
-- **Innovation**: Access to complete dataset (not just anonymized subset) improved model accuracy by 15%
-- **Compliance**: Audit time reduced 40% due to simplified data residency proof
-- **Strategic Independence**: No vendor lock-in to cloud AI services, full control over IP
+# 3. Load into air-gapped registry
+podman load -i benefit-screening-v3.tar
+podman push airgap-registry.ssc.gc.ca/models/benefit-screening:v3
+```
 
 ---
 
 ## The Upstream Connection
 
-### Red Hat's AI/ML Open Source Contributions
+### Red Hat's AI/ML Open Source Leadership
 
-Red Hat engineers contribute to Kubeflow (pipeline orchestration), KServe (model serving), Ray (distributed AI training), and Kubernetes SIG AI initiatives. Engineering investment includes ~15 engineers dedicated to AI/ML open source ecosystem development. Contributions focus on enterprise requirements: multi-tenancy, security integration, air-gapped deployment support, and GPU resource management.
+Red Hat invests significantly in open source AI/ML infrastructure projects, ensuring enterprise requirements shape community directions.
 
-### Community Leadership
+**Key Contributions:**
 
-Red Hat holds leadership positions in CNCF AI/ML working groups, driving standards for model packaging, serving interfaces, and GPU sharing. Participation in MLOps community initiatives ensures open source AI tooling addresses enterprise governance, compliance, and security requirements rather than only research use cases.
+- **Kubeflow**: Red Hat engineers maintain Kubeflow Pipelines components, focusing on multi-tenancy, RBAC integration, and air-gapped deployment support
+- **KServe**: Contributions to standardized model serving, multi-framework support, and GPU optimization
+- **InstructLab**: Red Hat launched InstructLab as open source project for LLM alignment and skill development
+- **Kubernetes AI/ML SIG**: Participation in standards for GPU sharing, scheduling, and resource management
 
----
-
-## Future: AI-Native Platform Engineering
-
-### Vision for AI-First Platforms
-
-[How AI will increasingly automate platform operations]
-
-**Emerging Capabilities:**
-- Fully autonomous incident response
-- Self-optimizing infrastructure
-- Predictive capacity planning
-- AI-generated security policies
-- Natural language platform management
-
-### Challenges and Considerations
-
-[Balancing AI automation with human oversight]
+**Engineering Investment**:
+- ~20 Red Hat engineers dedicated to AI/ML open source projects full-time
+- Focus on enterprise features: security, multi-tenancy, air-gap support
+- Upstream-first development philosophy
 
 ---
 
 ## Key Benefits Summary
 
-**For Developers:**
-- AI-assisted coding and troubleshooting
-- Faster service creation
-- Better documentation
+**For Data Scientists and ML Engineers**:
+- Familiar tools (Jupyter, Python, PyTorch/TensorFlow) with enterprise support
+- GPU acceleration without infrastructure management complexity
+- Reproducible experiments through pipeline orchestration
+- Self-service environments via Developer Hub integration
 
-**For Data Scientists:**
-- Secure environment for sensitive data
-- End-to-end MLOps platform
-- GPU acceleration
+**For IT Operations and Platform Teams**:
+- Unified platform for AI/ML alongside traditional applications
+- Consistent security, networking, and storage across workloads
+- Multi-tenancy with namespace isolation and RBAC
+- Monitoring and observability with standard tools
 
-**For Organizations:**
-- AI innovation without data exposure
-- Regulatory compliance
-- Cost-effective AI at scale
+**For Organizations**:
+- Avoid vendor lock-in through open source foundations
+- Maximize hardware investment across cloud, on-prem, and hybrid
+- Meet regulatory requirements (GDPR, DADM, industry regulations)
+- Protect intellectual property (models and training data)
+- Cost optimization through flexible deployment
 
-**For Digital Sovereignty:**
-- Self-hosted AI capabilities
-- No dependency on external AI APIs
-- Complete control over models and data
+**For Digital Sovereignty**:
+- **Data Sovereignty**: Training data and inference queries remain within organizational boundaries
+- **Infrastructure Independence**: Deploy on-premises, air-gapped, or in sovereign clouds
+- **Model IP Protection**: Proprietary models never exposed to external services
+- **Regulatory Compliance**: Meet data residency and transparency requirements
+- **Strategic Autonomy**: No dependency on foreign AI platforms
+- **Transparency**: Open source foundations enable audit and verification
 
 ---
 
 ## References and Further Reading
 
-- [OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai)
-- [Kubeflow](https://www.kubeflow.org/)
-- [KServe](https://kserve.github.io/)
-- [CNCF AI/ML Projects](https://landscape.cncf.io/guide#ai-ml)
-- [Confidential Computing Consortium](https://confidentialcomputing.io/)
-- [EU AI Act](https://artificialintelligenceact.eu/)
-- [MLOps Community](https://mlops.community/)
+### Canadian AI Policy
+- [Directive on Automated Decision-Making](https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=32592) - Treasury Board of Canada Secretariat
+- [Responsible use of artificial intelligence in government](https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/responsible-use-ai.html) - Government of Canada
+- [Canada's 2026 privacy priorities: data sovereignty, open banking and AI](https://www.osler.com/en/insights/reports/2025-legal-outlook/canadas-2026-privacy-priorities-data-sovereignty-open-banking-and-ai/) - Osler Legal Analysis
+
+### Red Hat AI Platform
+- [Red Hat AI](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/ai) - Red Hat Enterprise Linux AI
+- [Red Hat OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai) - Enterprise MLOps Platform
+- [InstructLab](https://instructlab.ai/) - Open source LLM alignment
+
+### Upstream AI/ML Projects
+- [Kubeflow](https://www.kubeflow.org/) - ML toolkit for Kubernetes
+- [KServe](https://kserve.github.io/) - Standardized model serving
+- [vLLM](https://github.com/vllm-project/vllm) - High-performance LLM inference
+- [MLflow](https://mlflow.org/) - ML lifecycle management
+
+### AI Governance
+- [EU AI Act](https://artificialintelligenceact.eu/) - European Union AI regulation
+- [OECD AI Principles](https://oecd.ai/en/ai-principles) - International AI governance
+- [Confidential Computing Consortium](https://confidentialcomputing.io/) - Hardware-based AI privacy
 
 ---
 
