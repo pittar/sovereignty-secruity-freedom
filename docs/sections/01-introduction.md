@@ -6,7 +6,7 @@
 
 ## Executive Summary
 
-Digital sovereignty—the ability to control your data, infrastructure, and technology decisions without external constraints—has evolved from a theoretical concern to a mandatory requirement for Canadian government organizations. Federal departments, provincial agencies, and crown corporations face mounting regulatory requirements, geopolitical risks affecting cloud service availability, and vendor lock-in that restricts operational flexibility and drives costs.
+Digital sovereignty—the ability to control your data, infrastructure, and technology decisions without external constraints—has evolved from a theoretical concern to a mandatory requirement for Canadian government organizations. Federal departments, agencies, and crown corporations face mounting regulatory requirements, geopolitical risks affecting cloud service availability, and vendor lock-in that restricts operational flexibility and drives costs.
 
 Cloud computing promised unlimited scale and agility, but proprietary platforms created new dependencies. Regulatory frameworks like GDPR, PIPEDA, and provincial privacy legislation mandate data sovereignty, while geopolitical tensions threaten access to services across borders. For Canadian public sector organizations, the Treasury Board Secretariat's Direction on Security Categorization and cloud adoption guidance require demonstrable control over sensitive government data—requirements that proprietary cloud platforms struggle to meet. The cost of switching cloud providers can reach millions of dollars, effectively trapping organizations in ecosystems that may not serve Canadian sovereignty interests.
 
