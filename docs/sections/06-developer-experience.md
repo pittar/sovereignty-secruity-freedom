@@ -18,7 +18,7 @@ Cloud-native development environments solve these problems by moving development
 
 ### "Works on My Machine" Syndrome
 
-Development teams lose countless hours to environment inconsistencies. Developer A uses Python 3.9, Developer B uses 3.11—tests pass locally but fail in CI. Database version mismatches cause schema migration failures. Missing environment variables break features that "worked fine yesterday." These issues multiply across teams and projects: what works on macOS breaks on Linux, local PostgreSQL behaves differently from production Aurora, npm dependency resolution varies by Node version. Organizations spend engineering time debugging environment issues instead of building features.
+Development teams lose countless hours to environment inconsistencies. Developer A uses Python 3.9, Developer B uses 3.11—tests pass locally but fail in CI. Database version mismatches cause schema migration failures. Missing environment variables break capabilities that "worked fine yesterday." These issues multiply across teams and projects: what works on macOS breaks on Linux, local PostgreSQL behaves differently from production Aurora, npm dependency resolution varies by Node version. Organizations spend engineering time debugging environment issues instead of building capabilities.
 
 **Common Issues:**
 - Dependency version conflicts
@@ -79,9 +79,9 @@ Eclipse Che is the upstream open source project providing Kubernetes-native clou
 
 ### OpenShift Dev Spaces: Enterprise-Grade Che
 
-OpenShift Dev Spaces packages Eclipse Che with enterprise features, Red Hat support, and OpenShift integration. Red Hat provides security hardening (FIPS compliance, vulnerability patching), air-gapped deployment support for disconnected environments, and pre-built developer stacks for common languages and frameworks. Integration with OpenShift authentication enables SSO with corporate identity providers. Red Hat's support organization provides SLAs for production Dev Spaces deployments, ensuring development infrastructure receives the same operational rigor as production systems.
+OpenShift Dev Spaces packages Eclipse Che with enterprise capabilities, Red Hat support, and OpenShift integration. Red Hat provides security hardening (FIPS compliance, vulnerability patching), air-gapped deployment support for disconnected environments, and pre-built developer stacks for common languages and frameworks. Integration with OpenShift authentication enables SSO with corporate identity providers. Red Hat's support organization provides SLAs for production Dev Spaces deployments, ensuring development infrastructure receives the same operational rigor as production systems.
 
-**Additional Features in Dev Spaces:**
+**Additional Capabilities in Dev Spaces:**
 - Integration with OpenShift authentication
 - Enterprise support and SLA
 - Security hardening and compliance
@@ -200,7 +200,7 @@ Dev Spaces generates audit logs for compliance and security monitoring: workspac
 
 ---
 
-## Developer Productivity Features
+## Developer Productivity Capabilities
 
 ### Instant Onboarding
 
@@ -219,7 +219,7 @@ Developers aren't forced into a single IDE experience. Dev Spaces supports multi
 
 ### Collaborative Development
 
-Dev Spaces workspaces support collaboration features: developers share workspace URLs for real-time pair programming, multiple developers connect to the same workspace for debugging sessions, and senior developers access junior developer workspaces for mentoring without requiring environment setup. Code review becomes interactive—reviewers start workspaces from pull request branches, test changes locally, and provide feedback without manual checkout and environment configuration.
+Dev Spaces workspaces support collaboration capabilities: developers share workspace URLs for real-time pair programming, multiple developers connect to the same workspace for debugging sessions, and senior developers access junior developer workspaces for mentoring without requiring environment setup. Code review becomes interactive—reviewers start workspaces from pull request branches, test changes locally, and provide feedback without manual checkout and environment configuration.
 
 ---
 

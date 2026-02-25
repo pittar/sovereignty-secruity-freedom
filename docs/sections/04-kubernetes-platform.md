@@ -6,7 +6,7 @@
 
 ## Executive Summary
 
-Cloud providers offer powerful managed services, but using them creates dependencies that restrict portability and inflate switching costs. For Canadian government organizations seeking digital sovereignty, infrastructure abstraction is essential—a consistent platform that works identically across AWS, Azure, Google Cloud, and on-premises Canadian data centers. Kubernetes provides this abstraction through its declarative API model, but vanilla Kubernetes lacks critical enterprise features for production operations.
+Cloud providers offer powerful managed services, but using them creates dependencies that restrict portability and inflate switching costs. For Canadian government organizations seeking digital sovereignty, infrastructure abstraction is essential—a consistent platform that works identically across AWS, Azure, Google Cloud, and on-premises Canadian data centers. Kubernetes provides this abstraction through its declarative API model, but vanilla Kubernetes lacks critical enterprise capabilities for production operations.
 
 Red Hat OpenShift delivers enterprise-grade Kubernetes with consistent operations across any infrastructure—from public clouds to on-premises government data centers—enabling Canadian organizations to achieve true cloud independence while maintaining a single operational model. **Critically for Canadian sovereignty, OpenShift provides a natural migration path: start on public cloud for rapid deployment and elastic scale, then repatriate to on-premises Canadian infrastructure when sovereignty or cost considerations dictate—with zero application changes.** This flexibility transforms cloud deployment from an irreversible commitment into a strategic choice.
 
@@ -118,7 +118,7 @@ OpenShift's Installer Provisioned Infrastructure (IPI) automates cluster deploym
 
 ### Infrastructure as Code
 
-OpenShift's declarative cluster configuration enables GitOps-based infrastructure management. Cluster manifests stored in Git define infrastructure topology, machine pools, networking configuration, and platform features. Changes committed to Git trigger automated cluster updates through operators. This approach treats infrastructure as versioned, auditable code—identical to application deployment practices. Organizations maintain cluster definitions across environments in Git repositories, enabling disaster recovery through cluster recreation from configuration.
+OpenShift's declarative cluster configuration enables GitOps-based infrastructure management. Cluster manifests stored in Git define infrastructure topology, machine pools, networking configuration, and platform capabilities. Changes committed to Git trigger automated cluster updates through operators. This approach treats infrastructure as versioned, auditable code—identical to application deployment practices. Organizations maintain cluster definitions across environments in Git repositories, enabling disaster recovery through cluster recreation from configuration.
 
 ```yaml
 # Example: OpenShift cluster configuration
@@ -221,11 +221,11 @@ OpenShift Service Mesh (based on Istio) extends service connectivity across clus
 
 ### Red Hat's Kubernetes Contributions
 
-Red Hat ranks consistently among top-3 corporate contributors to Kubernetes by commits and engineering headcount. Red Hat engineers serve as Kubernetes release team members, SIG (Special Interest Group) chairs, and steering committee participants. Red Hat contributed major features including CRI-O container runtime, OVN-Kubernetes networking, and operator framework patterns. The company maintains ~100+ engineers dedicated to upstream Kubernetes development, with contributions spanning core API server, kubelet, networking, storage, and security.
+Red Hat ranks consistently among top-3 corporate contributors to Kubernetes by commits and engineering headcount. Red Hat engineers serve as Kubernetes release team members, SIG (Special Interest Group) chairs, and steering committee participants. Red Hat contributed major capabilities including CRI-O container runtime, OVN-Kubernetes networking, and operator framework patterns. The company maintains ~100+ engineers dedicated to upstream Kubernetes development, with contributions spanning core API server, kubelet, networking, storage, and security.
 
 **Examples of Red Hat Engineering Impact:**
 - Kubernetes maintainers and steering committee members
-- Key features originated by Red Hat engineers
+- Key capabilities originated by Red Hat engineers
 - Testing infrastructure and CI/CD improvements
 - Security fixes and CVE responses
 
@@ -241,7 +241,7 @@ Beyond Kubernetes, Red Hat engineers lead development across critical CNCF proje
 
 Red Hat's security hardening process applies defense-in-depth across the stack. SELinux provides mandatory access control separating containers. CRI-O runs containers in minimal attack surface configuration. Network policies default to deny-all, requiring explicit allow rules. Secrets encryption at rest protects sensitive data. Pod Security Standards enforce baseline security requirements. The entire distribution undergoes FIPS 140-2 validation for cryptographic modules, STIGs (Security Technical Implementation Guides) hardening, and Common Criteria evaluation.
 
-**Security Features:**
+**Security Capabilities:**
 - SELinux enforcement
 - CIS Kubernetes Benchmark compliance
 - FIPS 140-2 validation

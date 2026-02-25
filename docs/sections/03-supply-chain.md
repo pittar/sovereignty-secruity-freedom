@@ -40,7 +40,7 @@ Modern applications average 200+ dependencies when including transitive dependen
 
 ### Why Open Standards Matter
 
-Proprietary supply chain security platforms create new dependencies and lock-in. Vendor-specific signing infrastructure, proprietary attestation formats, and closed verification tools tie organizations to specific platforms. If the vendor changes pricing, discontinues features, or becomes unavailable, the entire security infrastructure becomes a liability. Open standards ensure that security investments remain portable—artifacts signed with open tools can be verified anywhere, by anyone, using freely available software.
+Proprietary supply chain security platforms create new dependencies and lock-in. Vendor-specific signing infrastructure, proprietary attestation formats, and closed verification tools tie organizations to specific platforms. If the vendor changes pricing, discontinues capabilities, or becomes unavailable, the entire security infrastructure becomes a liability. Open standards ensure that security investments remain portable—artifacts signed with open tools can be verified anywhere, by anyone, using freely available software.
 
 ### The Sigstore Project
 
@@ -136,7 +136,7 @@ OpenShift includes built-in signature verification through machine config operat
 
 ### Enterprise Sigstore Services
 
-Organizations can deploy private Sigstore infrastructure using the Sigstore Scaffolding project, running Fulcio, Rekor, and certificate transparency infrastructure in their own clusters. This provides air-gapped deployments, custom root of trust, and integration with enterprise identity providers. Red Hat provides enterprise support for Sigstore infrastructure as part of OpenShift's trusted software supply chain features.
+Organizations can deploy private Sigstore infrastructure using the Sigstore Scaffolding project, running Fulcio, Rekor, and certificate transparency infrastructure in their own clusters. This provides air-gapped deployments, custom root of trust, and integration with enterprise identity providers. Red Hat provides enterprise support for Sigstore infrastructure as part of OpenShift's trusted software supply chain capabilities.
 
 ---
 

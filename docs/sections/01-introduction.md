@@ -85,7 +85,7 @@ Open source licenses grant rights that transcend national borders, corporate own
 
 ### Community-Driven Innovation
 
-Open source projects aggregate engineering talent globally, regardless of corporate affiliation. Kubernetes emerged from Google but evolved through contributions from engineers at Red Hat, Microsoft, VMware, and thousands of independent developers worldwide. This collaborative model accelerates innovation—features, security fixes, and architectural improvements come from distributed teams solving real problems. Organizations benefit from collective R&D investment far exceeding what any single vendor could fund, while maintaining freedom to fork, customize, or contribute back.
+Open source projects aggregate engineering talent globally, regardless of corporate affiliation. Kubernetes emerged from Google but evolved through contributions from engineers at Red Hat, Microsoft, VMware, and thousands of independent developers worldwide. This collaborative model accelerates innovation—capabilities, security fixes, and architectural improvements come from distributed teams solving real problems. Organizations benefit from collective R&D investment far exceeding what any single vendor could fund, while maintaining freedom to fork, customize, or contribute back.
 
 ### Transparency and Auditability
 
@@ -97,7 +97,7 @@ Open source code can be inspected, analyzed, and audited by anyone. Security vul
 
 ### The Production Gap
 
-Community open source projects prioritize innovation and cutting-edge features, often moving quickly and breaking compatibility in pursuit of better solutions. Kubernetes releases every three months, with features graduating from alpha to beta to stable across multiple versions. For experimentation and development, this pace drives progress. For production systems supporting critical business operations, it creates risk. Enterprises need predictable lifecycles, backwards compatibility guarantees, security patch SLAs, and certified configurations. The gap between upstream innovation and production requirements is where enterprise distributions provide value—taking community innovation and hardening it for mission-critical use with defined support windows and guaranteed update paths.
+Community open source projects prioritize innovation and cutting-edge capabilities, often moving quickly and breaking compatibility in pursuit of better solutions. Kubernetes releases every three months, with capabilities graduating from alpha to beta to stable across multiple versions. For experimentation and development, this pace drives progress. For production systems supporting critical business operations, it creates risk. Enterprises need predictable lifecycles, backwards compatibility guarantees, security patch SLAs, and certified configurations. The gap between upstream innovation and production requirements is where enterprise distributions provide value—taking community innovation and hardening it for mission-critical use with defined support windows and guaranteed update paths.
 
 ### What "Enterprise Grade" Really Means
 
@@ -108,7 +108,7 @@ Community open source projects prioritize innovation and cutting-edge features, 
 
 ### Red Hat's Upstream-First Model
 
-Red Hat's business model aligns financial incentives with upstream community health. Rather than forking projects and building proprietary features, Red Hat contributes improvements upstream where all users benefit. This approach builds trust with communities, ensures compatibility with upstream innovations, and prevents the fragmentation that weakens open source ecosystems. Red Hat employs thousands of engineers who spend their working hours improving open source projects—Linux kernel, Kubernetes, Ansible, Tekton, and hundreds more. These contributions aren't marketing; they're engineering investment that makes upstream projects enterprise-ready while maintaining community governance and open licensing.
+Red Hat's business model aligns financial incentives with upstream community health. Rather than forking projects and building proprietary capabilities, Red Hat contributes improvements upstream where all users benefit. This approach builds trust with communities, ensures compatibility with upstream innovations, and prevents the fragmentation that weakens open source ecosystems. Red Hat employs thousands of engineers who spend their working hours improving open source projects—Linux kernel, Kubernetes, Ansible, Tekton, and hundreds more. These contributions aren't marketing; they're engineering investment that makes upstream projects enterprise-ready while maintaining community governance and open licensing.
 
 **Examples of Red Hat's upstream contributions:**
 - **Linux kernel**: Consistently top-3 corporate contributor by commits and authorship, ~1,000 engineers working on kernel and related projects

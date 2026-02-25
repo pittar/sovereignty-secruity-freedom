@@ -80,7 +80,7 @@ Backstage is an open-source framework for building internal developer portals, o
 
 ### Backstage Architecture
 
-Backstage uses a plugin-based architecture where core functionality (catalog, templates, documentation) provides the foundation, and plugins extend capabilities for specific tools and use cases. The frontend is a React application, backend is Node.js with TypeScript, and the software catalog stores metadata in PostgreSQL or SQLite. Plugins can add UI components, backend APIs, and integrations with external systems. This modularity enables organizations to compose precisely the functionality they need—Kubernetes visibility, CI/CD integration, cloud resource management—without bloating the platform with unused features. The plugin ecosystem includes 100+ open-source plugins for common integrations and organizations develop custom plugins for proprietary systems.
+Backstage uses a plugin-based architecture where core functionality (catalog, templates, documentation) provides the foundation, and plugins extend capabilities for specific tools and use cases. The frontend is a React application, backend is Node.js with TypeScript, and the software catalog stores metadata in PostgreSQL or SQLite. Plugins can add UI components, backend APIs, and integrations with external systems. This modularity enables organizations to compose precisely the functionality they need—Kubernetes visibility, CI/CD integration, cloud resource management—without bloating the platform with unused capabilities. The plugin ecosystem includes 100+ open-source plugins for common integrations and organizations develop custom plugins for proprietary systems.
 
 **Core Components:**
 - **Software Catalog**: Service ownership and metadata
@@ -306,7 +306,7 @@ Red Hat integrates InstructLab-based AI capabilities into Developer Hub, leverag
 
 ### Responsible AI in the Enterprise
 
-AI features in Developer Hub respect enterprise data governance. AI models run within organizational infrastructure—no data leaves the environment for external AI services. Organizations control which data sources AI can access: public documentation might be fully accessible, while proprietary code or customer data remains restricted. Audit logs track AI interactions: what questions were asked, what responses were provided, which data sources were consulted. This transparency enables compliance verification and helps identify potential data leakage. AI suggestions clearly indicate uncertainty levels, and critical actions (deployments, infrastructure changes) require human approval regardless of AI confidence. The goal is augmentation, not automation of judgment.
+AI capabilities in Developer Hub respect enterprise data governance. AI models run within organizational infrastructure—no data leaves the environment for external AI services. Organizations control which data sources AI can access: public documentation might be fully accessible, while proprietary code or customer data remains restricted. Audit logs track AI interactions: what questions were asked, what responses were provided, which data sources were consulted. This transparency enables compliance verification and helps identify potential data leakage. AI suggestions clearly indicate uncertainty levels, and critical actions (deployments, infrastructure changes) require human approval regardless of AI confidence. The goal is augmentation, not automation of judgment.
 
 ---
 

@@ -225,7 +225,7 @@ spec:
 
 Red Hat Zero Trust Workload Identity Manager packages SPIRE with operator-based deployment on OpenShift, enterprise support, and platform integration. While upstream SPIRE requires manual deployment and configuration management, the operator automates installation, updates, and scaling across clusters. Enterprise hardening includes security scanning, SBOM generation, and CVE response through Red Hat's security processes. Multi-cluster federation configuration simplifies through operator CRDs rather than manual trust bundle exchange. Integration with OpenShift Service Mesh automatically provides SPIFFE identities to Envoy proxies. Professional support includes SLAs, assistance with migration planning, and escalation to SPIRE engineering team when needed.
 
-**Enterprise Features:**
+**Enterprise Capabilities:**
 - Supported SPIRE distribution
 - OpenShift integration
 - OperatorHub installation
@@ -670,7 +670,7 @@ SPIFFE improves compliance through detailed audit trails and cryptographic non-r
 
 ### Red Hat's SPIFFE/SPIRE Contributions
 
-Red Hat engineers serve as SPIRE maintainers and contribute core functionality including Kubernetes workload attestation enhancements, OIDC federation features, and observability improvements. Red Hat contributed OpenShift-specific integrations enabling SPIRE operator deployment, service mesh integration, and platform authentication. Engineering investment includes ~8 dedicated engineers working on upstream SPIRE and SPIFFE ecosystem projects. Red Hat's contributions focus on enterprise requirements: high availability configurations, upgrade path management, multi-cluster federation patterns, and integration with enterprise identity systems (LDAP, Active Directory, Keycloak).
+Red Hat engineers serve as SPIRE maintainers and contribute core functionality including Kubernetes workload attestation enhancements, OIDC federation capabilities, and observability improvements. Red Hat contributed OpenShift-specific integrations enabling SPIRE operator deployment, service mesh integration, and platform authentication. Engineering investment includes ~8 dedicated engineers working on upstream SPIRE and SPIFFE ecosystem projects. Red Hat's contributions focus on enterprise requirements: high availability configurations, upgrade path management, multi-cluster federation patterns, and integration with enterprise identity systems (LDAP, Active Directory, Keycloak).
 
 ### SPIFFE Community Leadership
 

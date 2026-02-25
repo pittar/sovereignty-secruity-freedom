@@ -77,7 +77,7 @@ AI workloads amplify sovereignty concerns beyond traditional applications:
 
 **Vendor Lock-in and Strategic Risk:**
 - Proprietary AI platforms use vendor-specific APIs, formats, and tooling
-- Models trained with platform-specific features can't easily migrate
+- Models trained with platform-specific capabilities can't easily migrate
 - Pricing changes, service discontinuations, or geopolitical events create business continuity risk
 - Lack of portability prevents multi-cloud strategies and negotiating leverage
 
@@ -159,7 +159,7 @@ Organizations with diverse GPU hardware across different data centers and cloud 
 
 ### Red Hat OpenShift AI
 
-**Red Hat OpenShift AI** provides a comprehensive MLOps platform for the complete AI/ML lifecycle, integrating development, training, deployment, and monitoring capabilities on the OpenShift Kubernetes platform. Built on the upstream Kubeflow project and extended with enterprise features, OpenShift AI enables data scientists and ML engineers to build and deploy models at scale while IT operations maintain security, governance, and infrastructure control.
+**Red Hat OpenShift AI** provides a comprehensive MLOps platform for the complete AI/ML lifecycle, integrating development, training, deployment, and monitoring capabilities on the OpenShift Kubernetes platform. Built on the upstream Kubeflow project and extended with enterprise capabilities, OpenShift AI enables data scientists and ML engineers to build and deploy models at scale while IT operations maintain security, governance, and infrastructure control.
 
 **Platform Architecture:**
 
@@ -359,7 +359,7 @@ Red Hat invests significantly in open source AI/ML infrastructure projects, ensu
 
 **Engineering Investment**:
 - ~20 Red Hat engineers dedicated to AI/ML open source projects full-time
-- Focus on enterprise features: security, multi-tenancy, air-gap support
+- Focus on enterprise capabilities: security, multi-tenancy, air-gap support
 - Upstream-first development philosophy
 
 ---
