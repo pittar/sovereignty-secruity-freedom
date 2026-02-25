@@ -1,6 +1,6 @@
 # The AI/ML Platform: Enterprise AI with Digital Sovereignty
 
-[← Workload Identity](10-workload-identity.md) | [Table of Contents](../OUTLINE.md) | [Next: Conclusion →](13-post-quantum-cryptography.md)
+[← Workload Identity](10-workload-identity.md) | [Table of Contents](../OUTLINE.md) | [Next: Ansible Automation →](12-ansible-automation.md)
 
 ---
 
@@ -424,4 +424,4 @@ Red Hat invests significantly in open source AI/ML infrastructure projects, ensu
 
 ---
 
-**Next:** [13. Post-Quantum Cryptography: Future-Proofing Digital Sovereignty →](12-post-quantum-cryptography.md)
+**Next:** [12. Automate Everything: Ansible Automation Platform →](12-ansible-automation.md)

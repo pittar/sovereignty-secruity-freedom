@@ -1,6 +1,6 @@
 # Post-Quantum Cryptography: Future-Proofing Digital Sovereignty
 
-[← AI Platform](11-ai-platform.md) | [Table of Contents](../OUTLINE.md) | [Next: Conclusion →](14-conclusion.md)
+[← Ansible Automation](12-ansible-automation.md) | [Table of Contents](../OUTLINE.md) | [Next: Conclusion →](14-conclusion.md)
 
 ---
 
