@@ -4,6 +4,10 @@
 
 ---
 
+> **Platform Pillar:** Modern Application and Virtualization Platform (Red Hat OpenShift)
+
+---
+
 ## Executive Summary
 
 "Works on my machine" is more than a developer joke—it's a symptom of fragmented development environments causing lost productivity, security vulnerabilities, and compliance gaps. Each developer configuring their own local machine creates inconsistency: different tool versions, missing dependencies, varied security practices. New developers spend days setting up environments before writing their first line of code. Secrets leak into local files, unpatched tools introduce vulnerabilities, and enforcing organizational security policies becomes impossible.

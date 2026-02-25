@@ -4,6 +4,10 @@
 
 ---
 
+> **Platform Pillars:** All Pillars (Cross-Cutting Security Capability)
+
+---
+
 ## Executive Summary
 
 Software supply chain attacks have emerged as one of the most effective threat vectors for compromising systems at scale. SolarWinds demonstrated how a single compromised build system could affect 18,000 organizations, while Log4Shell showed how a vulnerability in a ubiquitous dependency could create global exposure overnight. Traditional security focused on perimeter defense; modern threats exploit the trust relationships in software dependencies and build pipelines.

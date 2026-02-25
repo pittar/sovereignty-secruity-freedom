@@ -4,6 +4,10 @@
 
 ---
 
+> **Platform Pillars:** Modern Application Platform (Red Hat OpenShift) + Automation Platform (Ansible)
+
+---
+
 ## Executive Summary
 
 Traditional CI/CD tools like Jenkins tie build processes to specific infrastructure—plugins for AWS services, Azure integrations, GCP-specific deployments. This infrastructure coupling creates lock-in at the automation layer. When organizations switch clouds or adopt hybrid strategies, they must rewrite pipelines, reconfigure integrations, and retrain teams. Cloud-native CI/CD with Tekton solves this by running pipelines as Kubernetes resources—portable across any Kubernetes cluster, any cloud, any infrastructure.

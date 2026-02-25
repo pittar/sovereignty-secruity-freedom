@@ -4,6 +4,10 @@
 
 ---
 
+> **Platform Pillar:** Modern Application and Virtualization Platform (Red Hat OpenShift)
+
+---
+
 ## Executive Summary
 
 Secrets are the weakest link in modern security. API keys leaked in GitHub commits, database passwords shared across teams, long-lived tokens with excessive permissions—every secret represents an attack surface. Organizations manage thousands of credentials across hundreds of services, relying on manual rotation schedules rarely followed and access controls frequently misconfigured. When secrets leak (not if, but when), detecting and recovering from compromise is expensive and often incomplete. Traditional secret management tools mitigate symptoms but don't solve the fundamental problem: secrets are shareable, copyable, and stealable.

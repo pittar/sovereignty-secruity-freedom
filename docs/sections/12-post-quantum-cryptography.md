@@ -4,6 +4,10 @@
 
 ---
 
+> **Platform Pillar:** Ubiquitous Operating System (Red Hat Enterprise Linux)
+
+---
+
 ## Executive Summary
 
 Today's encryption—the foundation of digital security, privacy, and sovereignty—faces an existential threat. RSA, elliptic curve cryptography, and other public-key algorithms securing internet communications, VPNs, digital signatures, and encrypted data will become obsolete when large-scale quantum computers arrive. Cryptographers estimate this quantum threat will materialize within 10-20 years, but adversaries are already acting. The "harvest now, decrypt later" attack collects encrypted data today for future decryption when quantum computers become available—meaning sensitive government data, intellectual property, and citizen information encrypted with current algorithms face retroactive compromise years from now.

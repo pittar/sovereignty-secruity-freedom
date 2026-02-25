@@ -4,6 +4,10 @@
 
 ---
 
+> **Platform Pillar:** Modern Application and Virtualization Platform (Red Hat OpenShift)
+
+---
+
 ## Executive Summary
 
 Cloud providers offer powerful managed services, but using them creates dependencies that restrict portability and inflate switching costs. For Canadian government organizations seeking digital sovereignty, infrastructure abstraction is essential—a consistent platform that works identically across AWS, Azure, Google Cloud, and on-premises Canadian data centers. Kubernetes provides this abstraction through its declarative API model, but vanilla Kubernetes lacks critical enterprise capabilities for production operations.

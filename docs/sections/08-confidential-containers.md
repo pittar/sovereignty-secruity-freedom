@@ -4,6 +4,10 @@
 
 ---
 
+> **Platform Pillars:** Ubiquitous Operating System (RHEL) + Modern Application Platform (OpenShift)
+
+---
+
 ## Executive Summary
 
 Security professionals have long secured data at rest through disk encryption and data in transit through TLS. Yet the most critical state—data in use during active processing—has remained exposed. Application memory contains plaintext data accessible to privileged users, hypervisors, and cloud administrators. For Canadian government workloads processing citizen data, healthcare records, financial transactions, and classified information, this exposure creates unacceptable risk and potential regulatory non-compliance.

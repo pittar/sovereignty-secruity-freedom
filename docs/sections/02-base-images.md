@@ -4,6 +4,10 @@
 
 ---
 
+> **Platform Pillar:** Ubiquitous Operating System (Red Hat Enterprise Linux)
+
+---
+
 ## Executive Summary
 
 The foundation of any containerized application is its base image. Poor choices here create security vulnerabilities, licensing complications, and portability challenges. Red Hat Universal Base Images (UBI) and Project Hummingbird provide freely redistributable, enterprise-grade base images that enable true cloud independence while maintaining the highest security standards.

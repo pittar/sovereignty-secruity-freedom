@@ -4,6 +4,10 @@
 
 ---
 
+> **Platform Pillar:** Modern Application and Virtualization Platform (Red Hat OpenShift)
+
+---
+
 ## Executive Summary
 
 Developers today navigate dozens of tools, services, and platforms just to deploy a simple application. GitHub for code, Jenkins or Tekton for builds, multiple Kubernetes clusters, separate monitoring tools, scattered documentation across wikis and repos—the cognitive load is staggering. Platform engineering emerged to solve this: dedicated teams building internal developer platforms (IDPs) that provide self-service infrastructure with "golden paths"—opinionated, secure defaults that make the right way the easy way.

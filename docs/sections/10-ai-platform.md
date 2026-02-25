@@ -4,6 +4,10 @@
 
 ---
 
+> **Platform Pillar:** AI/ML Platform (Red Hat Enterprise Linux AI + Red Hat OpenShift AI)
+
+---
+
 ## Executive Summary
 
 Artificial intelligence and machine learning transform business capabilities—from fraud detection and personalized recommendations to predictive maintenance and intelligent automation. However, traditional AI deployment creates severe digital sovereignty risks: training data uploaded to cloud AI services exposes proprietary information and customer PII, model inference through external APIs leaks sensitive queries and intellectual property, and vendor-specific AI platforms create lock-in while preventing workload portability. Organizations deploying AI face a fundamental tension—innovation demands powerful AI capabilities, while sovereignty requires retaining complete control over data, models, and infrastructure.
