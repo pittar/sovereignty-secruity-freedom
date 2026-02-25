@@ -1,6 +1,6 @@
 # Introduction: The Digital Sovereignty Imperative
 
-[← Executive Overview](00-executive-overview.md) | [Table of Contents](../OUTLINE.md) | [Next: Base Images →](02-base-images.md)
+[← Executive Overview](00-executive-overview.md) | [Table of Contents](../OUTLINE.md) | [Next: Base Images →](02-rhel-foundation.md)
 
 ---
 
@@ -176,4 +176,4 @@ All anchored in the power of enterprise-grade open source, deployable wherever y
 
 ---
 
-**Next:** [2. Foundation: Trusted Base Images →](02-base-images.md)
+**Next:** [2. Digital Sovereignty Begins at the Operating System →](02-rhel-foundation.md)
