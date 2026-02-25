@@ -20,6 +20,7 @@
 ## Read by Topic
 
 ### Foundational Technologies
+- [Operating System Foundation (RHEL)](sections/02-rhel-foundation.md)
 - [Trusted Base Images (UBI, Hummingbird)](sections/03-base-images.md)
 - [Supply Chain Security (Sigstore)](sections/04-supply-chain.md)
 
@@ -60,6 +61,7 @@ Read all sections in full, with special focus on:
 - [Confidential Containers](sections/09-confidential-containers.md)
 
 ### For Security Professionals
+- [Operating System Foundation (RHEL)](sections/02-rhel-foundation.md) - OS-level security, SELinux, FIPS, STIGs
 - [Supply Chain Security](sections/04-supply-chain.md)
 - [Confidential Containers](sections/09-confidential-containers.md)
 - [Workload Identity](sections/10-workload-identity.md)
@@ -71,6 +73,7 @@ Read all sections in full, with special focus on:
 - [Developer Experience](sections/07-developer-experience.md)
 - [CI/CD](sections/06-cicd.md)
 - [Kubernetes Platform](sections/05-kubernetes-platform.md)
+- [Operating System Foundation (RHEL)](sections/02-rhel-foundation.md)
 
 ### For Developers
 - [Developer Experience](sections/07-developer-experience.md)
