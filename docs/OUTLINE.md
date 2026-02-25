@@ -10,6 +10,16 @@
 High-level summary for executives and decision-makers covering the strategic imperatives of digital sovereignty, the role of open source, and Red Hat's unique position in enabling cloud independence.
 
 ### [1. Introduction: The Digital Sovereignty Imperative](sections/01-introduction.md)
+
+### [2. Digital Sovereignty Begins at the Operating System](sections/02-rhel-foundation.md)
+**Executive Summary:** The operating system as the foundation for all sovereignty
+**Technical Deep Dive:**
+- RHEL as consistent OS across cloud, on-premises, edge, and air-gapped
+- Security hardening: SELinux, FIPS, Common Criteria, STIGs, post-quantum crypto
+- Lifecycle management: 10+ year support with predictable phases
+- Multi-architecture support: x86_64, ARM64, s390x, ppc64le
+- Subscription model vs. lock-in: Support without runtime restrictions
+- Linux kernel leadership and upstream contributions
 **Executive Summary:** Why digital sovereignty matters now
 **Technical Deep Dive:**
 - The changing landscape of cloud computing and vendor lock-in
@@ -17,7 +27,7 @@ High-level summary for executives and decision-makers covering the strategic imp
 - The role of open source in achieving independence
 - Global IP freedom and the power of community-driven innovation
 
-### [2. Foundation: Trusted Base Images](sections/02-base-images.md)
+### [3. Foundation: Trusted Base Images](sections/03-base-images.md)
 **Executive Summary:** Building on secure, portable foundations
 **Technical Deep Dive:**
 - Red Hat Universal Base Images (UBI): Free, redistributable, and enterprise-grade
@@ -26,7 +36,7 @@ High-level summary for executives and decision-makers covering the strategic imp
 - Multi-architecture support for true portability
 - Lifecycle management and security patching at scale
 
-### [3. Securing the Software Supply Chain](sections/03-supply-chain.md)
+### [4. Securing the Software Supply Chain](sections/04-supply-chain.md)
 **Executive Summary:** Trust and transparency in every artifact
 **Technical Deep Dive:**
 - Open source standards with Sigstore (Cosign, Rekor, Fulcio)
@@ -35,7 +45,7 @@ High-level summary for executives and decision-makers covering the strategic imp
 - Vulnerability scanning and remediation workflows
 - Integration with enterprise compliance frameworks
 
-### [4. Cloud Independence: Enterprise Kubernetes](sections/04-kubernetes-platform.md)
+### [5. Cloud Independence: Enterprise Kubernetes](sections/05-kubernetes-platform.md)
 **Executive Summary:** One platform, any infrastructure
 **Technical Deep Dive:**
 - OpenShift as the enterprise Kubernetes distribution
@@ -44,7 +54,7 @@ High-level summary for executives and decision-makers covering the strategic imp
 - The upstream-first approach: Contributing to Kubernetes and CNCF projects
 - High availability, disaster recovery, and multi-cluster management
 
-### [5. CI/CD: The Enabler of Cloud Agnostic Development](sections/05-cicd.md)
+### [6. CI/CD: The Enabler of Cloud Agnostic Development](sections/06-cicd.md)
 **Executive Summary:** Build once, deploy anywhere
 **Technical Deep Dive:**
 - Tekton/OpenShift Pipelines: Cloud-native CI/CD
@@ -53,7 +63,7 @@ High-level summary for executives and decision-makers covering the strategic imp
 - Artifact promotion and environment parity
 - Integration with supply chain security (signing, scanning, attestation)
 
-### [6. Standardizing the Developer Experience](sections/06-developer-experience.md)
+### [7. Standardizing the Developer Experience](sections/07-developer-experience.md)
 **Executive Summary:** Secure, consistent development environments for all developers
 **Technical Deep Dive:**
 - OpenShift Dev Spaces / Eclipse Che: Cloud-native development environments
@@ -62,7 +72,7 @@ High-level summary for executives and decision-makers covering the strategic imp
 - Pre-configured, project-specific development environments
 - Integration with enterprise identity and access management
 
-### [7. Platform Engineering with Backstage](sections/07-platform-engineering.md)
+### [8. Platform Engineering with Backstage](sections/08-platform-engineering.md)
 **Executive Summary:** Self-service infrastructure at enterprise scale
 **Technical Deep Dive:**
 - Red Hat Developer Hub powered by Backstage
@@ -72,7 +82,7 @@ High-level summary for executives and decision-makers covering the strategic imp
 - Metrics, observability, and platform analytics
 - AI-assisted development and GenAI integration points
 
-### [8. Advanced Security: Confidential Containers](sections/08-confidential-containers.md)
+### [9. Advanced Security: Confidential Containers](sections/09-confidential-containers.md)
 **Executive Summary:** Protecting workloads with hardware-based security
 **Technical Deep Dive:**
 - Confidential computing fundamentals
@@ -81,7 +91,7 @@ High-level summary for executives and decision-makers covering the strategic imp
 - Use cases: Regulated workloads, multi-party computation, sensitive AI/ML
 - Integration with Kubernetes and OpenShift
 
-### [9. Zero Trust Workload Identity](sections/09-workload-identity.md)
+### [10. Zero Trust Workload Identity](sections/10-workload-identity.md)
 **Executive Summary:** Identity-based security for cloud-native applications
 **Technical Deep Dive:**
 - SPIFFE/SPIRE: Universal identity framework for workloads
@@ -91,7 +101,7 @@ High-level summary for executives and decision-makers covering the strategic imp
 - Federation across clouds and clusters
 - Integration with service mesh and API gateways
 
-### [10. The AI-Enabled Platform](sections/10-ai-platform.md)
+### [11. The AI-Enabled Platform](sections/11-ai-platform.md)
 **Executive Summary:** GenAI and predictive capabilities for platform engineering
 **Technical Deep Dive:**
 - AI-assisted developer productivity in Developer Hub
@@ -101,7 +111,7 @@ High-level summary for executives and decision-makers covering the strategic imp
 - Responsible AI and model governance on sovereign infrastructure
 - Running AI workloads securely with confidential containers
 
-### [12. Post-Quantum Cryptography: Future-Proofing Digital Sovereignty](sections/12-post-quantum-cryptography.md)
+### [13. Post-Quantum Cryptography: Future-Proofing Digital Sovereignty](sections/13-post-quantum-cryptography.md)
 **Executive Summary:** Protecting data from quantum computing threats
 **Technical Deep Dive:**
 - The quantum computing threat and "harvest now, decrypt later" attacks
@@ -112,7 +122,7 @@ High-level summary for executives and decision-makers covering the strategic imp
 - Canadian government PQC adoption strategies and timelines
 - Migration patterns for federal departments and agencies
 
-### [13. Conclusion: The Path to Digital Sovereignty](sections/13-conclusion.md)
+### [14. Conclusion: The Path to Digital Sovereignty](sections/14-conclusion.md)
 **Executive Summary:** Bringing it all together
 **Key Takeaways:**
 - The strategic value of enterprise-grade open source
