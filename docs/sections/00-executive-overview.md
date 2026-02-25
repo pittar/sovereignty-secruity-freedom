@@ -54,7 +54,7 @@ Red Hat's sovereignty and portability strategy rests on four integrated platform
    - On-premises model training and inference with full data control
    - Portable ML workloads across environments for regulatory compliance
 
-These four pillars work together to deliver complete sovereignty: RHEL provides the secure foundation, OpenShift enables portable applications, Ansible automates operations at scale, and the AI platform enables modern ML workloads without sacrificing control. Each pillar operates consistently across public cloud, on-premises, and hybrid environments—ensuring organizations maintain sovereignty regardless of deployment location.
+These four pillars work together to deliver complete sovereignty: RHEL provides the secure foundation, OpenShift enables portable applications and virtual machines, Ansible automates operations at scale, and the AI platform enables modern ML workloads without sacrificing control. Each pillar operates consistently across public cloud, on-premises, and hybrid environments—ensuring organizations maintain sovereignty regardless of deployment location.
 
 ### Making Existing Clouds More Secure
 
