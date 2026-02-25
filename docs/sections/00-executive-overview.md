@@ -120,7 +120,7 @@ This paper explores the complete journey from Red Hat Enterprise Linux (RHEL) as
 
 **Start with foundations**: Standardize on RHEL as your consistent operating system across all infrastructure (cloud, on-premises, edge). Build applications with freely redistributable base images (UBI) for portable, containerized workloads. These foundational choices establish sovereignty without vendor commitment.
 
-**Build incrementally**: Add supply chain security, cloud-native CI/CD, and platform engineering capabilities as your team's practices mature.
+**Build incrementally**: Add supply chain security, cloud-native CI/CD, and platform engineering capabilities as your team's practices mature. **Automate operations with Ansible to make sovereignty practical at scale.**
 
 **Engage with Red Hat**: Explore how enterprise support, training, and services can accelerate your sovereignty journey while maintaining full technical control.
 
