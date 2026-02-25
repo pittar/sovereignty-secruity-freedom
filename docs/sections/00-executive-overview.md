@@ -30,6 +30,32 @@ Cloud infrastructure has become essential to operations across Canadian governme
 
 Red Hat's enterprise open source model solves the sovereignty challenge by combining the global freedom of open source with enterprise-grade security, support, and lifecycle management. Unlike proprietary platforms that lock customers into specific clouds or vendors, Red Hat builds on upstream open source projects—contributing engineering resources, maintaining packages, and hardening code for production use. Organizations gain portable, transparent infrastructure that runs identically across any environment, with the option to purchase enterprise support without sacrificing control or flexibility.
 
+### The Four Platform Pillars
+
+Red Hat's sovereignty and portability strategy rests on four integrated platform pillars that span the complete technology stack:
+
+1. **Ubiquitous Operating System: Red Hat Enterprise Linux (RHEL)**
+   - Foundation for all workloads across cloud, on-premises, edge, and air-gapped environments
+   - Consistent security model, lifecycle management, and operational tooling
+   - RHEL 10.1 introduces post-quantum cryptography enabled by default for future-proof security
+
+2. **Modern Application and Virtualization Platform: Red Hat OpenShift**
+   - Enterprise Kubernetes providing identical APIs and operations across any infrastructure
+   - Enables cloud-to-on-premises portability with zero application changes
+   - Integrates traditional VMs and modern containers on a unified platform
+
+3. **Automation Platform: Ansible Automation Platform**
+   - Infrastructure and application lifecycle automation at scale
+   - Codified operational knowledge enabling consistent deployments
+   - Integration with CI/CD pipelines for end-to-end automation
+
+4. **AI/ML Platform: Red Hat Enterprise Linux AI and Red Hat OpenShift AI**
+   - Sovereign AI capabilities without vendor lock-in to proprietary cloud ML services
+   - On-premises model training and inference with full data control
+   - Portable ML workloads across environments for regulatory compliance
+
+These four pillars work together to deliver complete sovereignty: RHEL provides the secure foundation, OpenShift enables portable applications, Ansible automates operations at scale, and the AI platform enables modern ML workloads without sacrificing control. Each pillar operates consistently across public cloud, on-premises, and hybrid environments—ensuring organizations maintain sovereignty regardless of deployment location.
+
 ### Making Existing Clouds More Secure
 
 For Canadian organizations already operating on public cloud infrastructure (AWS, Azure, Google Cloud), Red Hat provides advanced security technologies that dramatically enhance protection without requiring immediate migration. **Confidential containers** use hardware-based encryption (Intel TDX, AMD SEV-SNP) to protect data even while it's being processed—ensuring that cloud administrators cannot access sensitive government data even with full infrastructure privileges. **Zero trust workload identity** eliminates vulnerable API keys and passwords, replacing them with cryptographically-verified identities that can't be stolen or leaked. These technologies enable Canadian departments to process sensitive citizen data on public clouds with cryptographic guarantees of protection, meeting sovereignty requirements while leveraging cloud economics and scale.
@@ -38,7 +64,7 @@ For Canadian organizations already operating on public cloud infrastructure (AWS
 
 Red Hat's platform provides a natural migration path from public cloud back to on-premises infrastructure when sovereignty, cost, or policy requirements dictate. Because OpenShift delivers identical Kubernetes APIs and operational models across all environments, applications built on public cloud run unchanged in Canadian government data centers. Organizations can start in the cloud for rapid deployment and experimentation, then repatriate workloads to on-premises infrastructure without application rewrites, vendor negotiations, or operational disruptions. This flexibility transforms cloud deployment from a one-way commitment into a strategic choice—use cloud providers when advantageous, move to sovereign infrastructure when required, maintaining full control over deployment decisions.
 
-### Key Pillars
+### Foundational Principles
 
 1. **Open Source Foundation**
    - Global IP freedom
