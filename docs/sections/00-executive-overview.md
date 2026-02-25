@@ -118,7 +118,7 @@ This paper explores the complete journey from Red Hat Enterprise Linux (RHEL) as
 
 **Assess your current position**: Evaluate vendor dependencies, cloud portability, and regulatory compliance gaps in your existing infrastructure.
 
-**Start with foundations**: Begin with freely redistributable base images (UBI) and containerized workloads to establish portability without vendor commitment.
+**Start with foundations**: Standardize on RHEL as your consistent operating system across all infrastructure (cloud, on-premises, edge). Build applications with freely redistributable base images (UBI) for portable, containerized workloads. These foundational choices establish sovereignty without vendor commitment.
 
 **Build incrementally**: Add supply chain security, cloud-native CI/CD, and platform engineering capabilities as your team's practices mature.
 
