@@ -487,27 +487,178 @@ Detailed reference architectures and deployment patterns are available through:
 - OpenShift Architecture Patterns: https://docs.openshift.com/
 - CNCF Reference Architectures: https://www.cncf.io/blog/category/architecture/
 
-### D. Additional Resources
+### D. Complete References and Resources
 
-**Red Hat Resources:**
-- OpenShift Documentation
-- Developer Hub Documentation
-- OpenShift AI Documentation
-- Training and Certification
+This comprehensive reference section consolidates all resources cited throughout the paper, organized by category for easy navigation.
 
-**Upstream Projects:**
-- Kubernetes
-- CNCF Projects
-- Sigstore
-- SPIFFE/SPIRE
-- Backstage
-- Eclipse Che
+---
 
-**Industry Standards:**
-- SLSA Framework
-- NIST Cybersecurity Framework
-- Zero Trust Architecture
-- Confidential Computing Consortium
+#### Red Hat Product Documentation
+
+**Red Hat Enterprise Linux:**
+- [Red Hat Enterprise Linux Product Page](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)
+- [RHEL Lifecycle and Update Policies](https://access.redhat.com/support/policy/updates/errata)
+- [RHEL Security Certifications](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/certifications)
+- [FIPS 140-2 Validation](https://access.redhat.com/articles/2918071)
+- [Common Criteria Certification](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/certifications#common-criteria)
+- [Red Hat Container Security Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/building_running_and_managing_containers/index)
+
+**Red Hat OpenShift:**
+- [Red Hat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift)
+- [OpenShift Documentation](https://docs.openshift.com/)
+- [OpenShift Pipelines Documentation](https://docs.openshift.com/pipelines/latest/)
+- [OpenShift GitOps Documentation](https://docs.openshift.com/gitops/latest/)
+- [Red Hat Advanced Cluster Management](https://www.redhat.com/en/technologies/management/advanced-cluster-management)
+
+**Red Hat AI and Developer Tools:**
+- [Red Hat Enterprise Linux AI](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/ai)
+- [Red Hat OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai)
+- [OpenShift Dev Spaces Documentation](https://docs.redhat.com/en/documentation/red_hat_openshift_dev_spaces/)
+- [Red Hat Developer Hub Documentation](https://docs.redhat.com/en/documentation/red_hat_developer_hub/)
+
+**Red Hat Security Solutions:**
+- [Red Hat Trusted Software Supply Chain](https://www.redhat.com/en/solutions/trusted-software-supply-chain)
+- [Red Hat Zero Trust Workload Identity Manager](https://www.redhat.com/en/technologies/cloud-computing/openshift/zero-trust)
+
+**Red Hat Universal Base Images:**
+- [Red Hat Universal Base Images Documentation](https://developers.redhat.com/products/rhel/ubi)
+- [Red Hat UBI FAQ](https://developers.redhat.com/articles/ubi-faq)
+- [Introducing Red Hat Universal Base Image (Blog)](https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image)
+
+**Red Hat Open Source Contributions:**
+- [Red Hat's Commitment to Open Source](https://www.redhat.com/en/about/open-source)
+- [Red Hat's Linux Kernel Contributions](https://www.redhat.com/en/blog/supporting-open-source-kernel-projects)
+
+---
+
+#### Post-Quantum Cryptography (Red Hat)
+
+- [Post-quantum cryptography in Red Hat Enterprise Linux 10](https://www.redhat.com/en/blog/post-quantum-cryptography-red-hat-enterprise-linux-10)
+- [What's new in post-quantum cryptography in RHEL 10.1](https://www.redhat.com/en/blog/whats-new-post-quantum-cryptography-rhel-101)
+- [From if to how: A year of post-quantum reality](https://www.redhat.com/en/blog/if-how-year-post-quantum-reality)
+- [How Red Hat is integrating post-quantum cryptography into our products](https://www.redhat.com/en/blog/how-red-hat-integrating-post-quantum-cryptography-our-products)
+- [The road to quantum-safe cryptography in Red Hat OpenShift](https://www.redhat.com/en/blog/road-to-quantum-safe-cryptography-red-hat-openshift)
+
+---
+
+#### Canadian Government Policy and Regulation
+
+- [Directive on Automated Decision-Making](https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=32592) - Treasury Board of Canada Secretariat
+- [Responsible use of artificial intelligence in government](https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/responsible-use-ai.html) - Government of Canada
+- [Canada's 2026 privacy priorities: data sovereignty, open banking and AI](https://www.osler.com/en/insights/reports/2025-legal-outlook/canadas-2026-privacy-priorities-data-sovereignty-open-banking-and-ai/) - Osler Legal Analysis
+
+---
+
+#### Standards Bodies and Frameworks
+
+**NIST (National Institute of Standards and Technology):**
+- [NIST Post-Quantum Cryptography Standards (FIPS 203, 204, 205)](https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards)
+- [NIST Post-Quantum Cryptography Project](https://csrc.nist.gov/projects/post-quantum-cryptography)
+- [NIST IR 8547: Transition to Post-Quantum Cryptography Standards](https://nvlpubs.nist.gov/nistpubs/ir/2024/NIST.IR.8547.ipd.pdf)
+- [NIST Application Container Security Guide (SP 800-190)](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf)
+- [NIST Secure Software Development Framework (SSDF)](https://csrc.nist.gov/Projects/ssdf)
+- [Zero Trust Architecture (NIST SP 800-207)](https://csrc.nist.gov/publications/detail/sp/800-207/final)
+
+**International Standards:**
+- [SLSA Framework (Supply chain Levels for Software Artifacts)](https://slsa.dev/)
+- [OCI Image Format Specification](https://github.com/opencontainers/image-spec)
+- [GitOps Principles](https://opengitops.dev/)
+- [EU AI Act](https://artificialintelligenceact.eu/)
+- [OECD AI Principles](https://oecd.ai/en/ai-principles)
+
+**Privacy and Data Protection:**
+- [GDPR Official Text](https://gdpr-info.eu/)
+- [European Commission Digital Sovereignty Strategy](https://digital-strategy.ec.europa.eu/en/policies/digital-sovereignty)
+- [Executive Order 14028 on Cybersecurity](https://www.whitehouse.gov/briefing-room/presidential-actions/2021/05/12/executive-order-on-improving-the-nations-cybersecurity/)
+
+---
+
+#### Cloud Native Computing Foundation (CNCF)
+
+**CNCF Overview:**
+- [CNCF Projects](https://www.cncf.io/projects/)
+- [CNCF Annual Survey 2023](https://www.cncf.io/reports/cncf-annual-survey-2023/)
+- [CNCF Reference Architectures](https://www.cncf.io/blog/category/architecture/)
+- [CNCF Backstage Project](https://www.cncf.io/projects/backstage/)
+- [CNCF SPIFFE/SPIRE](https://www.cncf.io/projects/spiffe/)
+- [CNCF Confidential Containers Project](https://github.com/confidential-containers)
+
+**Kubernetes:**
+- [Kubernetes](https://kubernetes.io/)
+- [Kubernetes Operators](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/)
+- [OperatorHub.io](https://operatorhub.io/)
+
+---
+
+#### Upstream Open Source Projects
+
+**CI/CD and GitOps:**
+- [Tekton Project](https://tekton.dev/)
+- [Tekton Chains for Supply Chain Security](https://tekton.dev/docs/chains/)
+- [ArgoCD](https://argoproj.github.io/cd/)
+- [Continuous Delivery Foundation](https://cd.foundation/)
+
+**Supply Chain Security:**
+- [Sigstore Project](https://www.sigstore.dev/)
+
+**Identity and Security:**
+- [SPIFFE](https://spiffe.io/)
+- [SPIRE Project](https://spiffe.io/docs/latest/spire-about/)
+- [Confidential Computing Consortium](https://confidentialcomputing.io/)
+
+**Developer Experience:**
+- [Eclipse Che](https://www.eclipse.org/che/)
+- [Devfile.io Standard](https://devfile.io/)
+- [Backstage](https://backstage.io/)
+
+**Container Runtime:**
+- [Podman Project](https://podman.io)
+- [Kata Containers](https://katacontainers.io/)
+
+**AI/ML Platforms:**
+- [InstructLab](https://instructlab.ai/) - Open source LLM alignment
+- [Kubeflow](https://www.kubeflow.org/) - ML toolkit for Kubernetes
+- [KServe](https://kserve.github.io/) - Standardized model serving
+- [vLLM](https://github.com/vllm-project/vllm) - High-performance LLM inference
+- [MLflow](https://mlflow.org/) - ML lifecycle management
+
+**System Components:**
+- [systemd Project](https://systemd.io)
+- [SELinux Project](https://github.com/SELinuxProject)
+
+---
+
+#### Hardware Security Technologies
+
+- [Intel TDX Documentation](https://www.intel.com/content/www/us/en/developer/tools/trust-domain-extensions/overview.html)
+- [AMD SEV Documentation](https://www.amd.com/en/developer/sev.html)
+
+---
+
+#### Linux Foundation and Industry Research
+
+- [Linux Foundation State of Open Source Report](https://www.linuxfoundation.org/research)
+- [Linux Foundation Kernel Development Report](https://www.linuxfoundation.org/resources/publications/linux-kernel-development-report)
+- [Platform Engineering](https://platformengineering.org/)
+- [Team Topologies](https://teamtopologies.com/)
+
+---
+
+#### Architecture Patterns and Solution Designs
+
+- [Red Hat Solution Architectures](https://redhat-solution-patterns.github.io/)
+- [OpenShift Architecture Patterns](https://docs.openshift.com/)
+- [Cloud Development Environment Patterns (CNCF Blog)](https://www.cncf.io/blog/)
+
+---
+
+## About This Paper
+
+This paper was researched and written to provide Canadian government departments, agencies, and organizations with a comprehensive technical foundation for achieving digital sovereignty through enterprise-grade open source solutions.
+
+**For questions, feedback, or consultation:**
+- Red Hat Canada: [www.redhat.com/en/global/canada](https://www.redhat.com/en/global/canada)
+- Red Hat Public Sector Solutions: [www.redhat.com/en/solutions/public-sector](https://www.redhat.com/en/solutions/public-sector)
 
 ---
 
