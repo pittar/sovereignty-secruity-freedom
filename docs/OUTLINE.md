@@ -111,6 +111,17 @@ High-level summary for executives and decision-makers covering the strategic imp
 - Responsible AI and model governance on sovereign infrastructure
 - Running AI workloads securely with confidential containers
 
+### [12. Automate Everything: Ansible Automation Platform](sections/12-ansible-automation.md)
+**Executive Summary:** Operational sovereignty through automation
+**Technical Deep Dive:**
+- Ansible Automation Platform for hybrid cloud operations
+- Infrastructure as Code for RHEL, OpenShift, networks, and security
+- Multi-cloud orchestration without vendor-specific tools
+- Event-Driven Ansible for self-healing infrastructure
+- Security and compliance automation at scale
+- Integration across all platform pillars (RHEL, OpenShift, AI/ML)
+- Real-world Canadian government cloud migration automation
+
 ### [13. Post-Quantum Cryptography: Future-Proofing Digital Sovereignty](sections/13-post-quantum-cryptography.md)
 **Executive Summary:** Protecting data from quantum computing threats
 **Technical Deep Dive:**

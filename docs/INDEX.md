@@ -14,8 +14,9 @@
 10. [Advanced Security: Confidential Containers](sections/09-confidential-containers.md)
 11. [Zero Trust Workload Identity](sections/10-workload-identity.md)
 12. [The AI/ML Platform: Enterprise AI with Digital Sovereignty](sections/11-ai-platform.md)
-13. [Post-Quantum Cryptography: Future-Proofing Digital Sovereignty](sections/13-post-quantum-cryptography.md)
-14. [Conclusion: The Path to Digital Sovereignty](sections/14-conclusion.md)
+13. [Automate Everything: Ansible Automation Platform](sections/12-ansible-automation.md)
+14. [Post-Quantum Cryptography: Future-Proofing Digital Sovereignty](sections/13-post-quantum-cryptography.md)
+15. [Conclusion: The Path to Digital Sovereignty](sections/14-conclusion.md)
 
 ## Read by Topic
 
@@ -27,6 +28,7 @@
 ### Platform Infrastructure
 - [Enterprise Kubernetes (OpenShift)](sections/05-kubernetes-platform.md)
 - [CI/CD and GitOps](sections/06-cicd.md)
+- [Ansible Automation Platform](sections/12-ansible-automation.md)
 
 ### Developer Productivity
 - [Developer Experience (Dev Spaces)](sections/07-developer-experience.md)
@@ -57,12 +59,14 @@
 Read all sections in full, with special focus on:
 - [Enterprise Kubernetes](sections/05-kubernetes-platform.md)
 - [CI/CD](sections/06-cicd.md)
+- [Ansible Automation Platform](sections/12-ansible-automation.md)
 - [Platform Engineering](sections/08-platform-engineering.md)
 - [Confidential Containers](sections/09-confidential-containers.md)
 
 ### For Security Professionals
 - [Operating System Foundation (RHEL)](sections/02-rhel-foundation.md) - OS-level security, SELinux, FIPS, STIGs
 - [Supply Chain Security](sections/04-supply-chain.md)
+- [Ansible Automation Platform](sections/12-ansible-automation.md) - Security and compliance automation
 - [Confidential Containers](sections/09-confidential-containers.md)
 - [Workload Identity](sections/10-workload-identity.md)
 - [Post-Quantum Cryptography](sections/13-post-quantum-cryptography.md)
@@ -70,6 +74,7 @@ Read all sections in full, with special focus on:
 
 ### For Platform Engineers
 - [Platform Engineering](sections/08-platform-engineering.md)
+- [Ansible Automation Platform](sections/12-ansible-automation.md)
 - [Developer Experience](sections/07-developer-experience.md)
 - [CI/CD](sections/06-cicd.md)
 - [Kubernetes Platform](sections/05-kubernetes-platform.md)
