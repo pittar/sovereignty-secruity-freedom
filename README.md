@@ -2,7 +2,7 @@
 
 ## A Technical Opinion Paper on Enterprise-Grade Open Source Platform Engineering
 
-**Version 1.0** | February 2026
+**Version 0.1** | February 2026
 
 ---
 
@@ -27,14 +27,14 @@ Red Hat's enterprise platform is built on four foundational pillars that work to
 ### 1. **Red Hat Enterprise Linux (RHEL)** — Ubiquitous Operating System
 The consistent, secure foundation that runs identically across all infrastructure—public cloud (AWS, Azure, GCP), on-premises data centers, edge devices, and air-gapped government installations. RHEL provides 10+ year lifecycle support, comprehensive security certifications (FIPS, Common Criteria, STIGs), and multi-architecture support (x86_64, ARM64, s390x, ppc64le). Digital sovereignty begins at the operating system.
 
-### 2. **Red Hat OpenShift** — Application Platform
+### 2. **Red Hat OpenShift** — Modern Application and Virtualization Platform
 Enterprise Kubernetes distribution providing cloud-agnostic application orchestration. Abstracts infrastructure differences between clouds and on-premises, enabling true "build once, deploy anywhere" portability. OpenShift runs on RHEL CoreOS (RHCOS), maintaining consistency from OS through application layer.
 
 ### 3. **Red Hat Ansible Automation Platform** — Automation Engine
 Infrastructure-as-code automation that works consistently across heterogeneous environments. Automates everything from RHEL security hardening to multi-cloud OpenShift deployment to application configuration—enabling operational consistency at scale.
 
-### 4. **Red Hat AI/ML Platform** — Sovereign AI Infrastructure
-Enterprise AI capabilities running on sovereign infrastructure. Includes RHEL AI for edge inference, OpenShift AI for MLOps, and integration with confidential computing for protecting sensitive AI workloads. Enables organizations to leverage AI innovation without sending data to external model providers.
+### 4. **RHEL AI / OpenShift AI** — Sovereign AI Infrastructure
+Enterprise AI capabilities running on sovereign infrastructure. Includes RHEL AI for edge inference, OpenShift AI as an end-to-end AI/MLOps platform, and integration with confidential computing for protecting sensitive AI workloads. Enables organizations to leverage AI innovation without sending data to external model providers.
 
 ---
 
