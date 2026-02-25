@@ -1,6 +1,6 @@
 # Cloud Independence: Enterprise Kubernetes
 
-[← Supply Chain](03-supply-chain.md) | [Table of Contents](../OUTLINE.md) | [Next: CI/CD →](05-cicd.md)
+[← Supply Chain](04-supply-chain.md) | [Table of Contents](../OUTLINE.md) | [Next: CI/CD →](06-cicd.md)
 
 ---
 
@@ -275,7 +275,7 @@ Example architecture diagram:
 - Data sovereignty compliance
 ```
 
-**→ See the complete example:** [Multi-Cloud OpenShift Deployment](../examples/04-kubernetes-platform/multi-cloud-deployment.md) for cluster configurations across AWS, Azure, and on-premises, with GitOps deployment and storage abstraction.
+**→ See the complete example:** [Multi-Cloud OpenShift Deployment](../examples/05-kubernetes-platform/multi-cloud-deployment.md) for cluster configurations across AWS, Azure, and on-premises, with GitOps deployment and storage abstraction.
 
 ---
 
@@ -293,7 +293,7 @@ OpenShift's OperatorHub provides certified operators for databases (PostgreSQL, 
 
 Organizations build custom operators using Operator SDK, which scaffolds operator projects in Go, Ansible, or Helm. Custom operators codify institutional knowledge—automating deployments according to organizational standards, integrating with internal systems, and implementing company-specific operational procedures. Operators become portable automation that moves with applications across clusters and clouds, maintaining consistent operations regardless of infrastructure.
 
-**→ See the complete example:** [Custom Operator: Deploying and Managing Complex Applications](../examples/04-kubernetes-platform/operator-custom-deployment.md) for deploying PostgreSQL clusters with operators, including HA, backups, and failover automation.
+**→ See the complete example:** [Custom Operator: Deploying and Managing Complex Applications](../examples/05-kubernetes-platform/operator-custom-deployment.md) for deploying PostgreSQL clusters with operators, including HA, backups, and failover automation.
 
 ---
 
@@ -348,4 +348,4 @@ DR testing validates recovery procedures and measures Recovery Time Objectives (
 
 ---
 
-**Next:** [5. CI/CD: The Enabler of Cloud Agnostic Development →](05-cicd.md)
+**Next:** [6. CI/CD: The Enabler of Cloud Agnostic Development →](06-cicd.md)

@@ -1,6 +1,6 @@
 # Foundation: Trusted Base Images
 
-[← Introduction](01-introduction.md) | [Table of Contents](../OUTLINE.md) | [Next: Supply Chain →](03-supply-chain.md)
+[← RHEL Foundation](02-rhel-foundation.md) | [Table of Contents](../OUTLINE.md) | [Next: Supply Chain →](04-supply-chain.md)
 
 ---
 
@@ -178,7 +178,7 @@ CMD ["python3", "main.py"]
 
 This example demonstrates best practices: `microdnf clean all` reduces image size, the layering sequence optimizes build caching (system packages → dependencies → code), and `registry.access.redhat.com` requires no authentication. The `:latest` tag works for development; production should pin to specific versions (`ubi9/ubi-minimal:9.3-1361`), specify non-root users (`USER 1001`), and use multi-stage builds. Consider Hummingbird for stateless applications.
 
-**→ See the complete example:** [Dockerfile: Python Application with UBI Minimal](../examples/02-base-images/dockerfile-ubi-python.md) for production-ready configurations, multi-stage builds, and best practices.
+**→ See the complete example:** [Dockerfile: Python Application with UBI Minimal](../examples/03-base-images/dockerfile-ubi-python.md) for production-ready configurations, multi-stage builds, and best practices.
 
 ---
 
@@ -227,4 +227,4 @@ The broader impact extends to standardization: by providing freely available ent
 
 ---
 
-**Next:** [3. Securing the Software Supply Chain →](03-supply-chain.md)
+**Next:** [4. Securing the Software Supply Chain →](04-supply-chain.md)

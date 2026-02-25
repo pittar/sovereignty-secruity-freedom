@@ -1,6 +1,6 @@
 # CI/CD: The Enabler of Cloud Agnostic Development
 
-[← Kubernetes Platform](04-kubernetes-platform.md) | [Table of Contents](../OUTLINE.md) | [Next: Developer Experience →](06-developer-experience.md)
+[← Kubernetes Platform](05-kubernetes-platform.md) | [Table of Contents](../OUTLINE.md) | [Next: Developer Experience →](07-developer-experience.md)
 
 ---
 
@@ -155,7 +155,7 @@ spec:
           value: $(params.image-name)
 ```
 
-**→ See the complete example:** [Tekton: Secure Build Pipeline with Image Signing and SBOM Generation](../examples/05-cicd/tekton-secure-build-pipeline.md) for complete pipeline with security scanning, image signing, provenance attestation, and event triggers.
+**→ See the complete example:** [Tekton: Secure Build Pipeline with Image Signing and SBOM Generation](../examples/06-cicd/tekton-secure-build-pipeline.md) for complete pipeline with security scanning, image signing, provenance attestation, and event triggers.
 
 ### Multi-Cloud Deployment Strategies
 
@@ -214,7 +214,7 @@ spec:
 
 This Application manifest tells ArgoCD to monitor the Git repository, sync manifests from kubernetes/production path to the production namespace, and automatically prune resources removed from Git while self-healing resources modified in-cluster. Changes committed to Git trigger automated deployments—no manual kubectl apply required. ArgoCD detects drift when cluster state diverges from Git and corrects it automatically.
 
-**→ See the complete example:** [ArgoCD: GitOps Continuous Deployment](../examples/05-cicd/argocd-gitops-deployment.md) for multi-environment and multi-cluster deployments, progressive delivery with Argo Rollouts, and automated notifications.
+**→ See the complete example:** [ArgoCD: GitOps Continuous Deployment](../examples/06-cicd/argocd-gitops-deployment.md) for multi-environment and multi-cluster deployments, progressive delivery with Argo Rollouts, and automated notifications.
 
 ---
 
@@ -384,4 +384,4 @@ spec:
 
 ---
 
-**Next:** [6. Standardizing the Developer Experience →](06-developer-experience.md)
+**Next:** [7. Standardizing the Developer Experience →](07-developer-experience.md)

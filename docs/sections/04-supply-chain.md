@@ -1,6 +1,6 @@
 # Securing the Software Supply Chain
 
-[← Base Images](02-base-images.md) | [Table of Contents](../OUTLINE.md) | [Next: Kubernetes Platform →](04-kubernetes-platform.md)
+[← Base Images](03-base-images.md) | [Table of Contents](../OUTLINE.md) | [Next: Kubernetes Platform →](05-kubernetes-platform.md)
 
 ---
 
@@ -73,7 +73,7 @@ cosign sign --key cosign.key registry.example.com/myapp:v1.0
 cosign verify --key cosign.pub registry.example.com/myapp:v1.0
 ```
 
-**→ See the complete example:** [Cosign: Basic Container Image Signing and Verification](../examples/03-supply-chain/cosign-signing.md) for key-based signing, keyless signing, and advanced workflows.
+**→ See the complete example:** [Cosign: Basic Container Image Signing and Verification](../examples/04-supply-chain/cosign-signing.md) for key-based signing, keyless signing, and advanced workflows.
 
 ### Keyless Signing with Fulcio
 
@@ -108,7 +108,7 @@ syft registry.example.com/myapp:v1.0 -o spdx-json > sbom.json
 cosign attach sbom --sbom sbom.json registry.example.com/myapp:v1.0
 ```
 
-**→ See the complete example:** [SBOM Generation with Syft and Cosign](../examples/03-supply-chain/sbom-generation.md) for SPDX and CycloneDX formats, automated generation, and verification workflows.
+**→ See the complete example:** [SBOM Generation with Syft and Cosign](../examples/04-supply-chain/sbom-generation.md) for SPDX and CycloneDX formats, automated generation, and verification workflows.
 
 ---
 
@@ -246,7 +246,7 @@ spec:
             - --mysql_uri=trillian:password@tcp(mysql.sigstore.svc.cluster.local:3306)/trillian
 ```
 
-**→ See the complete example:** [On-Premises Sigstore Deployment](../examples/03-supply-chain/onprem-sigstore-deployment.md) for complete deployment with Fulcio, Rekor, and Trillian, including HA configuration and enterprise integration.
+**→ See the complete example:** [On-Premises Sigstore Deployment](../examples/04-supply-chain/onprem-sigstore-deployment.md) for complete deployment with Fulcio, Rekor, and Trillian, including HA configuration and enterprise integration.
 
 **Integration with Organizational PKI:**
 
@@ -323,7 +323,7 @@ cosign verify --key /secure/verification-key.pub \
   registry.airgap.corp/myapp:v1.0
 ```
 
-**→ See the complete example:** [Air-Gapped Signing Workflow](../examples/03-supply-chain/airgap-signing-workflow.md) for complete workflows including image transfer, signature verification, and policy enforcement in disconnected environments.
+**→ See the complete example:** [Air-Gapped Signing Workflow](../examples/04-supply-chain/airgap-signing-workflow.md) for complete workflows including image transfer, signature verification, and policy enforcement in disconnected environments.
 
 ### Image Mirroring for Air-Gapped Environments
 
@@ -573,7 +573,7 @@ Sigstore addresses multiple NIST SSDF requirements: cryptographic verification (
 
 **For Canadian organizations**, Sigstore's transparency log model supports TBS audit requirements and Office of the Auditor General reviews. When departments deploy applications, auditors can query Rekor to verify when artifacts were signed, by whom, and under what attestation conditions—creating cryptographic audit trails that satisfy government accountability standards. CCCS guidance on supply chain security emphasizes "trust but verify" principles; Sigstore's open transparency logs enable verification without requiring trust in vendor-controlled infrastructure. Because Sigstore is open source and can be deployed on-premises (as demonstrated in the air-gapped deployment sections), Canadian departments maintain complete control over their supply chain security infrastructure while leveraging industry-standard tooling. This approach balances security rigor with sovereignty—meeting compliance requirements without creating dependencies on foreign security services.
 
-**→ See the complete example:** [Tekton Secure Pipeline](../examples/03-supply-chain/tekton-secure-pipeline.md) for end-to-end pipeline with automated signing, SBOM generation, and vulnerability scanning.
+**→ See the complete example:** [Tekton Secure Pipeline](../examples/04-supply-chain/tekton-secure-pipeline.md) for end-to-end pipeline with automated signing, SBOM generation, and vulnerability scanning.
 
 ---
 
@@ -653,4 +653,4 @@ Sigstore has achieved widespread adoption beyond its original contributors. GitH
 
 ---
 
-**Next:** [4. Cloud Independence: Enterprise Kubernetes →](04-kubernetes-platform.md)
+**Next:** [5. Cloud Independence: Enterprise Kubernetes →](05-kubernetes-platform.md)

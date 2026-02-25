@@ -1,6 +1,6 @@
 # Standardizing the Developer Experience
 
-[← CI/CD](05-cicd.md) | [Table of Contents](../OUTLINE.md) | [Next: Platform Engineering →](07-platform-engineering.md)
+[← CI/CD](06-cicd.md) | [Table of Contents](../OUTLINE.md) | [Next: Platform Engineering →](08-platform-engineering.md)
 
 ---
 
@@ -158,7 +158,7 @@ commands:
 
 This devfile defines a Python development environment with PostgreSQL database. The `components` section specifies two containers—Python runtime and PostgreSQL—with resource limits and environment variables. The `commands` section defines common tasks (install dependencies, run app, run tests) that developers execute through IDE commands or CLI. The volume component provides persistent storage for Python virtual environments. When a developer starts this workspace, Dev Spaces provisions both containers, mounts source code, and presents a ready-to-code environment with database connectivity.
 
-**→ See the complete example:** [Devfile: Python Web Application Development Environment](../examples/06-developer-experience/devfile-python-webapp.md) for comprehensive development environment with multi-container setup, integrated security scanning, and development commands.
+**→ See the complete example:** [Devfile: Python Web Application Development Environment](../examples/07-developer-experience/devfile-python-webapp.md) for comprehensive development environment with multi-container setup, integrated security scanning, and development commands.
 
 ### Devfile Registry
 
@@ -319,4 +319,4 @@ Organizations build custom stack images extending UBI base images with organizat
 
 ---
 
-**Next:** [7. Platform Engineering with Backstage →](07-platform-engineering.md)
+**Next:** [8. Platform Engineering with Backstage →](08-platform-engineering.md)

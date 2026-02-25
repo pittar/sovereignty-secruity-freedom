@@ -1,6 +1,6 @@
 # Platform Engineering with Backstage
 
-[← Developer Experience](06-developer-experience.md) | [Table of Contents](../OUTLINE.md) | [Next: Confidential Containers →](08-confidential-containers.md)
+[← Developer Experience](07-developer-experience.md) | [Table of Contents](../OUTLINE.md) | [Next: Confidential Containers →](09-confidential-containers.md)
 
 ---
 
@@ -423,4 +423,4 @@ Software templates integrate seamlessly with GitOps workflows. Templates generat
 
 ---
 
-**Next:** [8. Advanced Security: Confidential Containers →](08-confidential-containers.md)
+**Next:** [9. Advanced Security: Confidential Containers →](09-confidential-containers.md)

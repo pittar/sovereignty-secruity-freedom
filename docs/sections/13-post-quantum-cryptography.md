@@ -1,6 +1,6 @@
 # Post-Quantum Cryptography: Future-Proofing Digital Sovereignty
 
-[← AI Platform](10-ai-platform.md) | [Table of Contents](../OUTLINE.md) | [Next: Conclusion →](13-conclusion.md)
+[← AI Platform](11-ai-platform.md) | [Table of Contents](../OUTLINE.md) | [Next: Conclusion →](14-conclusion.md)
 
 ---
 
@@ -413,4 +413,4 @@ Digital sovereignty in the quantum era demands quantum-resistant cryptography. R
 
 ---
 
-**Next:** [13. Conclusion: The Path to Digital Sovereignty →](13-conclusion.md)
+**Next:** [14. Conclusion: The Path to Digital Sovereignty →](14-conclusion.md)

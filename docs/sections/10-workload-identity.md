@@ -1,6 +1,6 @@
 # Zero Trust Workload Identity
 
-[← Confidential Containers](08-confidential-containers.md) | [Table of Contents](../OUTLINE.md) | [Next: AI Platform →](10-ai-platform.md)
+[← Confidential Containers](09-confidential-containers.md) | [Table of Contents](../OUTLINE.md) | [Next: AI Platform →](11-ai-platform.md)
 
 ---
 
@@ -323,7 +323,7 @@ func main() {
 }
 ```
 
-**→ See the complete example:** [SPIRE Deployment: Zero Trust Workload Identity](../examples/09-workload-identity/spire-deployment.md) for complete SPIRE deployment on Kubernetes, workload registration, and service-to-service mutual TLS authentication with code examples.
+**→ See the complete example:** [SPIRE Deployment: Zero Trust Workload Identity](../examples/10-workload-identity/spire-deployment.md) for complete SPIRE deployment on Kubernetes, workload registration, and service-to-service mutual TLS authentication with code examples.
 
 ### Service Mesh Integration
 
@@ -769,4 +769,4 @@ The hybrid architecture enabled regulatory compliance (customer PII stays on-pre
 
 ---
 
-**Next:** [10. The AI-Enabled Platform →](10-ai-platform.md)
+**Next:** [11. The AI-Enabled Platform →](11-ai-platform.md)

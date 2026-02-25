@@ -1,6 +1,6 @@
 # The AI/ML Platform: Enterprise AI with Digital Sovereignty
 
-[← Workload Identity](09-workload-identity.md) | [Table of Contents](../OUTLINE.md) | [Next: Conclusion →](11-conclusion.md)
+[← Workload Identity](10-workload-identity.md) | [Table of Contents](../OUTLINE.md) | [Next: Conclusion →](13-post-quantum-cryptography.md)
 
 ---
 
@@ -141,7 +141,7 @@ Red Hat AI delivers enterprise-grade AI/ML infrastructure built on open source f
 - Rapid prototyping and development on developer workstations
 - Legacy system integration where containerization isn't feasible
 
-**→ See the complete example:** [RHEL AI: Running LLMs with InstructLab](../examples/10-ai-platform/rhel-ai-instructlab.md) for installation, model customization, GPU acceleration, and production deployment considerations including air-gap scenarios.
+**→ See the complete example:** [RHEL AI: Running LLMs with InstructLab](../examples/11-ai-platform/rhel-ai-instructlab.md) for installation, model customization, GPU acceleration, and production deployment considerations including air-gap scenarios.
 
 ### Red Hat AI Inference Server
 
@@ -159,7 +159,7 @@ The **Red Hat AI Inference Server**, based on the open source vLLM project, prov
 
 Organizations with diverse GPU hardware across different data centers and cloud regions use a single inference stack. A model validated on NVIDIA L4 GPUs in AWS can deploy identically on AMD Instinct GPUs on-premises, maximizing hardware utilization without maintaining multiple inference frameworks.
 
-**→ See the complete example:** [AI Inference Server: vLLM Deployment on OpenShift](../examples/10-ai-platform/ai-inference-server-deployment.md) for scalable LLM serving with GPU acceleration, auto-scaling configuration, multi-model serving, and performance optimization strategies.
+**→ See the complete example:** [AI Inference Server: vLLM Deployment on OpenShift](../examples/11-ai-platform/ai-inference-server-deployment.md) for scalable LLM serving with GPU acceleration, auto-scaling configuration, multi-model serving, and performance optimization strategies.
 
 ### Red Hat OpenShift AI
 
@@ -264,25 +264,25 @@ This section demonstrates a complete AI workflow using Red Hat AI, from initial 
 
 Data scientists use Jupyter notebooks in OpenShift AI, with GPU access for experimentation.
 
-**→ See the complete example:** [Jupyter Notebook: AI Development Environment on OpenShift AI](../examples/10-ai-platform/jupyter-notebook-deployment.md) for GPU-accelerated development environment, data access patterns, complete fraud detection model development workflow, and production considerations including resource quotas and idle notebook culling.
+**→ See the complete example:** [Jupyter Notebook: AI Development Environment on OpenShift AI](../examples/11-ai-platform/jupyter-notebook-deployment.md) for GPU-accelerated development environment, data access patterns, complete fraud detection model development workflow, and production considerations including resource quotas and idle notebook culling.
 
 ### Phase 2: Automated Training Pipeline
 
 Once the model architecture is validated, data scientists define a Kubeflow Pipeline for reproducible training with hyperparameter tuning.
 
-**→ See the complete example:** [Kubeflow Pipeline: Automated ML Training Workflow](../examples/10-ai-platform/kubeflow-pipeline-definition.md) for complete pipeline definition with data preprocessing, GPU-accelerated training, quality gates, MLflow integration, hyperparameter tuning, scheduled retraining, and data drift detection.
+**→ See the complete example:** [Kubeflow Pipeline: Automated ML Training Workflow](../examples/11-ai-platform/kubeflow-pipeline-definition.md) for complete pipeline definition with data preprocessing, GPU-accelerated training, quality gates, MLflow integration, hyperparameter tuning, scheduled retraining, and data drift detection.
 
 ### Phase 3: Model Deployment with KServe
 
 Deploy the trained model to production using KServe for scalable inference serving.
 
-**→ See the complete example:** [KServe: Production Model Deployment](../examples/10-ai-platform/kserve-model-deployment.md) for complete InferenceService configuration, GitOps deployment with ArgoCD, auto-scaling setup, canary deployments, multi-model serving, monitoring with Prometheus, and performance optimization strategies.
+**→ See the complete example:** [KServe: Production Model Deployment](../examples/11-ai-platform/kserve-model-deployment.md) for complete InferenceService configuration, GitOps deployment with ArgoCD, auto-scaling setup, canary deployments, multi-model serving, monitoring with Prometheus, and performance optimization strategies.
 
 ### Phase 4: Production Inference with SPIFFE Authentication
 
 Applications call the fraud detection model via authenticated mTLS using SPIFFE workload identities for zero-trust security.
 
-**→ See complete client implementation in:** [KServe: Production Model Deployment](../examples/10-ai-platform/kserve-model-deployment.md#client-application-inference-with-spiffe-authentication) for SPIFFE-authenticated inference client with error handling, timeout management, and risk classification logic.
+**→ See complete client implementation in:** [KServe: Production Model Deployment](../examples/11-ai-platform/kserve-model-deployment.md#client-application-inference-with-spiffe-authentication) for SPIFFE-authenticated inference client with error handling, timeout management, and risk classification logic.
 
 ---
 
@@ -344,7 +344,7 @@ On-premises deployment provides complete data control, meeting regulatory requir
 
 **Air-Gapped Deployment Patterns:**
 
-**→ See the complete example:** [Air-Gapped Model Transfer: Secure Model Deployment in Disconnected Environments](../examples/10-ai-platform/airgap-model-transfer.md) for complete export/import workflows with cryptographic verification, model cards, SBOM generation, encrypted transfer procedures, and InferenceService deployment in air-gapped government environments.
+**→ See the complete example:** [Air-Gapped Model Transfer: Secure Model Deployment in Disconnected Environments](../examples/11-ai-platform/airgap-model-transfer.md) for complete export/import workflows with cryptographic verification, model cards, SBOM generation, encrypted transfer procedures, and InferenceService deployment in air-gapped government environments.
 
 ---
 
@@ -424,4 +424,4 @@ Red Hat invests significantly in open source AI/ML infrastructure projects, ensu
 
 ---
 
-**Next:** [12. Post-Quantum Cryptography: Future-Proofing Digital Sovereignty →](12-post-quantum-cryptography.md)
+**Next:** [13. Post-Quantum Cryptography: Future-Proofing Digital Sovereignty →](12-post-quantum-cryptography.md)
