@@ -105,7 +105,7 @@ Red Hat's platform provides a natural migration path from public cloud back to o
 
 ## What This Paper Covers
 
-This paper explores the complete journey from seccure enterprise operating system to foundational container images through to enterprise-grade AI/ML platforms and post-quantum cryptography, demonstrating how organizations can achieve true digital sovereignty while maintaining enterprise-grade security and operational excellence. Each section addresses deployment across public cloud, on-premises data centers, hybrid architectures, edge, and air-gapped environments—ensuring sovereignty regardless of infrastructure location and protecting data not just today, but through the quantum computing transition and beyond.
+This paper explores the complete journey from Red Hat Enterprise Linux (RHEL) as the foundational operating system through trusted container images, enterprise Kubernetes, platform engineering, and advanced security capabilities including post-quantum cryptography. Each section demonstrates how organizations can achieve true digital sovereignty while maintaining enterprise-grade security and operational excellence. All capabilities are designed for deployment across public cloud, on-premises data centers, hybrid architectures, edge, and air-gapped environments—ensuring sovereignty regardless of infrastructure location and protecting data not just today, but through the quantum computing transition and beyond.
 
 **Reading paths:**
 - **Executives**: Read this overview and each section's executive summary (20 minutes)
